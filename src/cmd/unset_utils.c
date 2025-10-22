@@ -51,19 +51,14 @@ void	process_unset_args(char **args, char **envp, t_node *node, int *flag)
 
 void	handle_unset_option_error(char **args)
 {
-	char	unset_error[25];
-	char	invalid1[35];
-	char	invalid2[30];
-	char	usage[15];
+    char	prefix[25];
+    char	msg[20];
 
-	ft_strlcpy(unset_error, "minishell: unset: ", 25);
-	ft_putstr_fd(unset_error, STDERR_FILENO);
-	ft_putstr_fd(args[1], STDERR_FILENO);
-	ft_strlcpy(invalid1, ": invalid option\nunset: usage: unset ", 35);
-	ft_putstr_fd(invalid1, STDERR_FILENO);
-	ft_strlcpy(invalid2, "[-f] [-v] [-n] ", 30);
-	ft_putstr_fd(invalid2, STDERR_FILENO);
-	ft_strlcpy(usage, "[name ...]\n", 15);
-	ft_putstr_fd(usage, STDERR_FILENO);
-	set_exit_status(2);
+    /* Match bash behavior: just print "invalid option" line */
+    ft_strlcpy(prefix, "minishell: unset: ", 25);
+    ft_putstr_fd(prefix, STDERR_FILENO);
+    ft_putstr_fd(args[1], STDERR_FILENO);
+    ft_strlcpy(msg, ": invalid option\n", 20);
+    ft_putstr_fd(msg, STDERR_FILENO);
+    set_exit_status(2);
 }

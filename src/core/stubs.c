@@ -27,6 +27,13 @@ char	*expand_wildcard_redir(char *pattern, t_node *node)
 	return (ft_strdup(pattern));
 }
 
+char	**expand_wildcard(char **args, char **envp, t_node *node)
+{
+	(void)envp;
+	(void)node;
+	return (args);
+}
+
 char	**get_file_list(bool hidden)
 {
 	char	**files;

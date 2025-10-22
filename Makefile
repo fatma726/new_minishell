@@ -1,7 +1,7 @@
 # Minishell Makefile
 
 CC      := cc
-CFLAGS  := -Wall -Wextra -Werror -I./include -DBUILD_BONUS -I./bonus/include
+CFLAGS  := -Wall -Wextra -Werror -I./include
 
 # Readline (detect macOS homebrew paths)
 UNAME_S := $(shell uname -s)
@@ -26,7 +26,7 @@ LIBFT_SRCS := ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 LIBFT_OBJS := $(addprefix $(LIBFT_DIR)/, $(LIBFT_SRCS:.c=.o))
 
 # Source files
-MAIN   = env_utils env_utils2 env_helpers global state exit_status nontext \
+MAIN   = env_utils env_utils2 env_helpers global state exit_status exit_file nontext \
          input input_helpers main process_command process_command_helpers \
          process_command_standalone core_utils strarrutils stubs signals \
          cleanup hash_handler
@@ -91,12 +91,13 @@ BONUS_OBJS := $(BONUS_SRCS:%.c=$(OBJ_DIR)/%.o)
 NAME       := minishell
 BONUS_NAME := minishell_bonus
 
-all: $(NAME) $(BONUS_NAME)
+# Default build: mandatory only
+all: $(NAME)
 
-$(NAME): $(OBJS) $(BONUS_OBJS) $(LIBFT)
-	@$(CC) $(filter-out $(OBJ_DIR)/src/core/stubs.o, $(OBJS)) \
-	       $(BONUS_OBJS) -L$(LIBFT_DIR) -lft $(READLINE_LIBS) -o $@
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(OBJS) -L$(LIBFT_DIR) -lft $(READLINE_LIBS) -o $@
 
+# Bonus build links mandatory + bonus objects and defines BUILD_BONUS for bonus objs
 $(BONUS_NAME): $(OBJS) $(BONUS_OBJS) $(LIBFT)
 	@$(CC) $(filter-out $(OBJ_DIR)/src/core/stubs.o, $(OBJS)) \
 	       $(BONUS_OBJS) -L$(LIBFT_DIR) -lft $(READLINE_LIBS) -o $@

@@ -6,7 +6,7 @@
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:12 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/22 18:50:00 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ char	**handle_parentheses(char **args, char **envp, t_node *node)
 	if (!args || !args[0] || !is_open_paren(args[0]))
 		return (NULL);
 	new_args = extract_paren_content(args, node);
+	node->is_subshell = true;
 	envp = execute(new_args, envp, node);
+	node->is_subshell = false;
 	strarrfree(new_args);
 	return (envp);
 }

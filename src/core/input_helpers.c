@@ -28,6 +28,7 @@ char	*get_continuation_line(char *prompt)
 		{
 			if (current_prompt != prompt)
 				free(current_prompt);
+			result = NULL;
 			return (NULL);
 		}
 		if (st == 0)
@@ -37,22 +38,33 @@ char	*get_continuation_line(char *prompt)
 			return (result);
 		}
 	}
-	return (result);
 }
 
 int	append_line(char **result, char *line)
 {
 	char	*tmp;
+	char	*joined;
 
+	tmp = NULL;
+	joined = NULL;
 	if (*result)
 	{
 		tmp = ft_strjoin(*result, "\n");
+		if (!tmp)
+			return (free(line), 0);
 		free(*result);
-		*result = ft_strjoin(tmp, line);
+		joined = ft_strjoin(tmp, line);
 		free(tmp);
+		if (!joined)
+			return (free(line), 0);
+		*result = joined;
 	}
 	else
+	{
 		*result = ft_strdup(line);
+		if (!*result)
+			return (free(line), 0);
+	}
 	free(line);
-	return (*result != NULL);
+	return (1);
 }

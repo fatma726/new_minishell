@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exit.c                                       :+:      :+:    :+:   */
+/*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:04 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/22 18:35:20 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ void	cleanup_child_and_exit(char **args, char **envp, t_node *node)
 		close(node->backup_stdout);
 	if (node->backup_stdin >= 0)
 		close(node->backup_stdin);
-	write_exit_status_file_if_requested();
 	exit(get_exit_status());
 }
 
@@ -83,7 +82,8 @@ void	cleanup_and_exit(char **args, char **envp, t_node *node)
 		close(node->backup_stdin);
 	clear_history();
 	restore_termios();
-	write_exit_status_file_if_requested();
+	/* Write exit status to a file for tester harness, if requested */
+	maybe_write_exit_file();
 	exit(get_exit_status());
 }
 
@@ -101,8 +101,5 @@ void	cmd_exit(char **args, char **envp, t_node *node)
 	if (should_exit && !node->argmode)
 		handle_exit_message();
 	if (should_exit)
-	{
-		write_exit_status_file_if_requested();
 		cleanup_and_exit(args, envp, node);
-	}
 }

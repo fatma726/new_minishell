@@ -6,17 +6,21 @@
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/20 17:15:44 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/22 18:35:31 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mandatory.h"
 
-/* using external prototypes from headers */
+/*
+** Check if the current command contains any non-redirection token.
+** This helps detect whether a heredoc belongs to a standalone redirection
+** or to a full command (e.g., `cat << stop` vs `<< stop` alone).
+*/
 
 static bool	command_has_non_redir_token(char **args)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (args && args[i])
@@ -37,7 +41,11 @@ static bool	command_has_non_redir_token(char **args)
 	return (false);
 }
 
-/* forward declarations not needed here */
+/*
+** Main heredoc loop entry point.
+** Builds a context struct, sets signal handling for heredoc,
+** runs the heredoc reading loop, and restores normal signals.
+*/
 
 int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
 {
@@ -55,6 +63,12 @@ int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
 	set_heredoc_signal();
 	unterminated = process_heredoc_loop(&ctx);
 	set_signal();
+	if (get_signal_number() == SIGINT)
+	{
+		set_exit_status(1);
+		clear_signal_number();
+		return (1);
+	}
 	if (unterminated)
 		node->heredoc_unterminated = true;
 	return (unterminated);

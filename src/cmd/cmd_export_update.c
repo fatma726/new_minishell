@@ -36,24 +36,32 @@ char	**handle_env_update(char *arg, char **envp, char *name, int j)
 
 bool	validate_export_identifier(char *arg)
 {
-	int	j;
+    int	j;
 
-	j = 0;
-	if (!is_valid_identifier_start(arg[0]))
-	{
-		print_invalid_identifier_error(arg);
-		return (false);
-	}
-	while (arg[j] && arg[j] != '=')
-	{
-		if (!is_valid_identifier_char(arg[j]))
-		{
-			print_invalid_identifier_error(arg);
-			return (false);
-		}
-		j++;
-	}
-	return (true);
+    j = 0;
+    if (!is_valid_identifier_start(arg[0]))
+    {
+        print_invalid_identifier_error(arg);
+        return (false);
+    }
+    while (arg[j] && arg[j] != '=')
+    {
+        /* allow a single '+' only if it's immediately before '=' (NAME+=VALUE) */
+        if (arg[j] == '+')
+        {
+            if (arg[j + 1] == '=')
+                break ;
+            print_invalid_identifier_error(arg);
+            return (false);
+        }
+        if (!is_valid_identifier_char(arg[j]))
+        {
+            print_invalid_identifier_error(arg);
+            return (false);
+        }
+        j++;
+    }
+    return (true);
 }
 
 bool	process_export_arg(char *arg, char ***envp, t_node *node)

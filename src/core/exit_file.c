@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   exit_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/22 17:19:55 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/22 22:10:00 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "mandatory.h"
 
-char	*ft_strdup(const char *s1)
+void	maybe_write_exit_file(void)
 {
-	char	*s2;
-	int		i;
+    const char	*path;
+    int         fd;
+    char        *s;
 
-	i = 0;
-	while (s1 && s1[i])
-		i++;
-	s2 = malloc((i + 1) * sizeof(char));
-	if (!s1 || !s2)
-		return (s2);
-	ft_strlcpy(s2, s1, ft_strlen(s1) + 1);
-	return (s2);
+    path = getenv("MINISHELL_EXIT_FILE");
+    if (!path || !*path)
+        return ;
+    fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+    if (fd < 0)
+        return ;
+    s = ft_itoa(get_exit_status());
+    if (s)
+    {
+        write(fd, s, ft_strlen(s));
+        free(s);
+    }
+    close(fd);
 }
+

@@ -26,22 +26,22 @@ LIBFT_SRCS := ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 LIBFT_OBJS := $(addprefix $(LIBFT_DIR)/, $(LIBFT_SRCS:.c=.o))
 
 # Source files
-MAIN   = env_utils env_utils2 env_helpers global state exit_status exit_file nontext \
-         input input_helpers main process_command process_command_helpers \
+MAIN   = env_utils env_helpers global_state signal_utils exit_status exit_file nontext \
+         input input_helpers main process_command \
          process_command_standalone core_utils strarrutils stubs signals \
-         cleanup hash_handler
-CMD    = cmd_cd cmd_cd_helpers cmd_cd_utils cmd_cd_tilde basic_commands cmd_utils env cmd_exec cmd_exec_helpers \
-         cmd_exec_proc cmd_exec_error cmd_exit cmd_exit_helpers cmd_exit_parse \
+         cleanup hash_handler shlvl_utils
+CMD    = cmd_cd cmd_cd_helpers cmd_cd_utils basic_commands cmd_utils env cmd_exec cmd_exec_helpers \
+         cmd_exec_proc cmd_exec_error cmd_exec_error_helpers cmd_exit cmd_exit_helpers cmd_exit_parse \
          cmd_export_helpers cmd_export_update cmd_export_print cmd_export_main \
          unset unset_utils
-PARSER = escape_split parser_utils parser parser_wildcard_phase prompt_helpers \
-         parser_tokens_redir_basic parser_tokens_helpers parser_tokens_group \
-         parser_tokens_checks parser_spacing_amp parser_spacing_redir_helpers \
-         parser_spacing_redir parser_spacing_logical parser_spacing_logical_helpers parser_expand_scan parser_quotes_expand parser_quotes_core \
+PARSER = escape_split parser_utils parser \
+         parser_tokens_redir_basic \
+         parser_tokens_checks parser_tokens_consolidated parser_spacing_redir_helpers \
+         parser_spacing_redir parser_logical_operators parser_expand_scan parser_quotes_expand parser_quotes_core \
          parser_quotes_helpers parser_quotes_utils syntax_utils syntax_helpers_utils syntax syntax_helpers3 syntax_helpers4
 REDIR  = cmd_redir exec_redir heredoc_utils heredoc_helpers heredoc_loop heredoc_norm_utils redir_helpers redir_utils utils_redir \
          utils_redir2 utils_redir3
-PIPE   = pipe_core pipe_utils pipe_helpers parentheses
+PIPE   = pipe_core pipe_utils pipe_helpers
 
 SRCS   = $(addsuffix .c, $(addprefix src/core/, $(MAIN))) \
          $(addsuffix .c, $(addprefix src/cmd/, $(CMD))) \

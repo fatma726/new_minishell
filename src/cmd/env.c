@@ -97,7 +97,7 @@ char	**cmd_env(char **args, char **envs, t_node *node)
 	{
 		i = -1;
 		while (envs[++i])
-			if (ft_strchr(envs[i], '='))
+			if (ft_strchr(envs[i], '=') && ft_strncmp(envs[i], "OLDPWD=", 7))
 				ft_putendl_fd(envs[i], STDOUT_FILENO);
 		envs = ft_setenv_envp("_", "env", envs);
 		set_exit_status(EXIT_SUCCESS);

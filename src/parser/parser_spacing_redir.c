@@ -71,3 +71,9 @@ char	*add_spaces_around_redirections(char *str, t_node *node)
 	free(str);
 	return (result);
 }
+
+char	*add_spaces_around_ampersand(char *str, t_node *node)
+{
+	(void)node;
+	return (str);
+}

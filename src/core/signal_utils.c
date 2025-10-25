@@ -1,34 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_file.c                                       :+:      :+:    :+:   */
+/*   signal_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/22 22:10:00 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/24 17:30:00 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mandatory.h"
 
-void	maybe_write_exit_file(void)
+int	get_signal_number(void)
 {
-	const char	*path;
-	int			fd;
-	char		*s;
+	return ((int)ms_slots()->signal_number);
+}
 
-	path = getenv("MINISHELL_EXIT_FILE");
-	if (!path || !*path)
-		return ;
-	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd < 0)
-		return ;
-	s = ft_itoa(get_exit_status());
-	if (s)
-	{
-		write(fd, s, ft_strlen(s));
-		free(s);
-	}
-	close(fd);
+void	clear_signal_number(void)
+{
+	ms_slots()->signal_number = 0;
+}
+
+void	set_signal_number(int sig)
+{
+	ms_slots()->signal_number = (sig_atomic_t)sig;
 }

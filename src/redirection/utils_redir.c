@@ -35,8 +35,6 @@ int	redir_syntax_check(char **args)
 			|| islrr(args[i]) || isrr(args[i]) || istlr(args[i]);
 		if (is_redir)
 		{
-			if (args[i + 1] && (is_ampersand(args[i + 1]) || isda(args[i + 1])))
-				return (0);
 			if ((!args[i + 1] || !args[i + 1][0])
 				&& (isrr(args[i]) || isdrr(args[i]) || islr(args[i])))
 				return (0);

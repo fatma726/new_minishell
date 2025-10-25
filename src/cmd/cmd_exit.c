@@ -6,7 +6,7 @@
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/22 18:35:20 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/24 18:39:59 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ bool	exit_will_terminate(char **args)
 	argc = strarrlen(args);
 	if (argc <= 1)
 		return (true);
-	if (!ft_isalldigit(args[1]))
-		return (true);
-	if (argc == 2)
+	if (argc == 2 && ft_isalldigit(args[1]))
 		return (true);
 	return (false);
 }
@@ -82,7 +80,6 @@ void	cleanup_and_exit(char **args, char **envp, t_node *node)
 		close(node->backup_stdin);
 	clear_history();
 	restore_termios();
-	/* Write exit status to a file for tester harness, if requested */
 	maybe_write_exit_file();
 	exit(get_exit_status());
 }
@@ -95,7 +92,14 @@ void	cmd_exit(char **args, char **envp, t_node *node)
 		return ;
 	should_exit = true;
 	if (strarrlen(args) > 1)
+	{
+		if (!ft_isalldigit(args[1]))
+		{
+			handle_numeric_error(args[1]);
+			return ;
+		}
 		should_exit = handle_exit_with_args(args);
+	}
 	else
 		set_exit_status(EXIT_SUCCESS);
 	if (should_exit && !node->argmode)

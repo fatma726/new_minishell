@@ -82,8 +82,6 @@ char	**repeat(char **args, char **envp, t_node *node)
 
 char	**execute(char **args, char **envp, t_node *node)
 {
-	char	**result;
-
 	if (args && args[0] && !ft_strncmp(args[0], "exit", 5))
 	{
 		if (exit_will_terminate(args))
@@ -92,9 +90,6 @@ char	**execute(char **args, char **envp, t_node *node)
 			cmd_exit(args, envp, node);
 		}
 	}
-	result = handle_parentheses(args, envp, node);
-	if (result)
-		return (result);
 	node->backup_stdout = dup(STDOUT_FILENO);
 	node->backup_stdin = dup(STDIN_FILENO);
 	envp = repeat(args, envp, node);

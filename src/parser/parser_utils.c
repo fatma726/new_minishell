@@ -13,31 +13,9 @@
 
 char	*expand_prompt(char *fmt, char **envp, t_node *node)
 {
-	int		l;
-	char	*new_fmt;
-	char	*pwd;
-	char	*pwd_orig;
-
-	if (ft_getenv("PWD", envp))
-		pwd_orig = ft_getenv("PWD", envp);
-	else
-		pwd_orig = node->pwd;
-	pwd = get_pwd_for_prompt(envp, node);
-	l = promptlen(fmt, envp, pwd, 0);
-	if (!l)
-	{
-		free(fmt);
-		if (pwd != pwd_orig)
-			free(pwd);
-		return (NULL);
-	}
-	new_fmt = expand_loop(fmt, malloc((size_t)(l + 1)),
-			ft_getenv("USER", envp), pwd);
-	new_fmt[l] = '\0';
-	free(fmt);
-	if (pwd != pwd_orig)
-		free(pwd);
-	return (new_fmt);
+	(void)envp;
+	(void)node;
+	return (fmt);
 }
 
 char	**find_command(char **args, char **envp, t_node *node)
@@ -89,6 +67,5 @@ char	*get_pwd_for_prompt(char **envp, t_node *node)
 		pwd = ft_getenv("PWD", envp);
 	else
 		pwd = node->pwd;
-	handle_pwd_path(&pwd, envp);
 	return (pwd);
 }

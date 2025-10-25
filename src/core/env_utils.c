@@ -57,27 +57,6 @@ char	**setpwd(t_node *node, char **envp)
 	return (handle_pwd_change(node, envp, curdir));
 }
 
-char	**shlvl_mod(int mod, char **envp)
-{
-	int		newval;
-	char	*tmp;
-	char	*shlvl_env;
-
-	shlvl_env = ft_getenv("SHLVL", envp);
-	if (shlvl_env)
-		newval = ft_atoi(shlvl_env) + mod;
-	else
-		newval = 1 + mod;
-	if (newval > 1000)
-		newval = 1;
-	if (newval < 0)
-		newval = 0;
-	tmp = ft_itoa(newval);
-	envp = ft_setenv_envp("SHLVL", tmp, envp);
-	free(tmp);
-	return (envp);
-}
-
 char	*ft_getenv(const char *name, char **envp)
 {
 	int		i;

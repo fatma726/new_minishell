@@ -70,7 +70,6 @@ bool	validate_cd_args(char **args, int offset)
 bool	checks(char **args, char **envp, t_node *node, int offset)
 {
 	char	*path;
-	char	*expanded_path;
 	char	*current_dir;
 	int		chdir_result;
 
@@ -79,9 +78,7 @@ bool	checks(char **args, char **envp, t_node *node, int offset)
 	if (!ft_strncmp(args[1 + offset], "-", 2))
 		return (handle_oldpwd_cd(args, envp, node, offset));
 	path = args[1 + offset];
-	expanded_path = expand_tilde(path, envp);
-	chdir_result = chdir(expanded_path);
-	free(expanded_path);
+	chdir_result = chdir(path);
 	if (chdir_result == -1)
 		return (handle_chdir_error(args, offset));
 	current_dir = getcwd(NULL, 0);

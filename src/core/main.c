@@ -26,11 +26,12 @@ static char	*get_and_process_prompt(char **envp, t_node *n)
 	const char	*prompt;
 	char		*prompt_copy;
 
+	(void)n;
 	prompt = ft_getenv("PS1", envp);
 	if (!prompt)
 		prompt = "minishell🍭$ ";
 	prompt_copy = ft_strdup(prompt);
-	return (expand_prompt(prompt_copy, envp, n));
+	return (prompt_copy);
 }
 
 static char	**main_loop(char **envp, t_node *n)
@@ -62,7 +63,6 @@ static char	**bootstrap_env(char **argv, char **envp, t_node *node)
 	set_exit_status(0);
 	envp = strarrdup(envp);
 	envp = shlvl_plus_plus(setpwd(node, envp));
-	envp = ft_setenv_envp("OLDPWD", NULL, envp);
 	envp = ft_setenv_envp("_", argv[0], envp);
 	node->path_fallback = NULL;
 	node->line_nbr = 0;

@@ -66,16 +66,9 @@ const char	*check_final_token(char **args, int i)
 {
 	if (i > 0 && args[i])
 	{
-		if (is_open_paren(args[i]) || is_close_paren(args[i])
-			|| is_open_brace(args[i]) || is_close_brace(args[i]))
-			return (args[i]);
-		if (isdp(args[i]))
-			return ("||");
-		if (isda(args[i]))
-			return ("&&");
 		if (isrr(args[i]) || isdrr(args[i]) || islr(args[i]) || isdlr(args[i]))
 			return ("newline");
-		if (isp(args[i]) || is_ampersand(args[i]))
+		if (isp(args[i]))
 			return ("newline");
 	}
 	return ("newline");

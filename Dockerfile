@@ -6,20 +6,21 @@ RUN apt-get update && apt-get install -y \
     valgrind \
     gcc \
     make \
+    vim \
     libreadline-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /minishell
 
-# Copy source code
+# Copy the minishell source code
 COPY . .
 
-# Clean and build minishell
-RUN make clean && make bonus
+# Build the project
+RUN make re
 
-# Set up for testing
-RUN chmod +x minishell_bonus
+# Set file descriptor limit
+RUN ulimit -n 1024
 
 # Default command
-CMD ["bash"]
+CMD ["/bin/bash"]

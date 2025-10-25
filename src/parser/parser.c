@@ -46,12 +46,9 @@ static char	**process_parser_input(char *str, char **envp, t_node *node)
 	char	charset[4];
 
 	str = expand_envvar(str, envp, node);
-	str = add_spaces_around_ampersand(str, node);
 	str = add_spaces_around_redirections(str, node);
-	str = add_spaces_around_logical_operators(str, node);
 	ft_strlcpy(charset, " \t", 4);
 	args = escape_split(str, charset, node);
-	args = apply_wildcard_phase(args, envp, node, str);
 	if (!args)
 		return (NULL);
 	free(str);

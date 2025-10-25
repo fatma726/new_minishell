@@ -24,38 +24,10 @@ static char	**report_syntax_token(const char *tok, char **envp,
 	return (envp);
 }
 
-static char	**check_standalone_parens(char *line, int i, char **envp, t_node *n)
-{
-	if (line[i] == '(' && (line[i + 1] == '\0' || line[i + 1] == '\n'))
-		return (report_syntax_token("newline", envp, n, line));
-	if (line[i] == ')' && (line[i + 1] == '\0' || line[i + 1] == '\n'))
-		return (report_syntax_token(")", envp, n, line));
-	return (NULL);
-}
-
-static char	**check_standalone_logical(char *line, int i,
-				char **envp, t_node *n)
-{
-	int	j;
-
-	j = i;
-	while (line[j] && ft_strchr(" \t", line[j]))
-		j++;
-	if (line[j] == '&' && line[j + 1] == '&' && i == j)
-		return (report_syntax_token("&&", envp, n, line));
-	if (line[j] == '|' && line[j + 1] == '|' && i == j)
-		return (report_syntax_token("||", envp, n, line));
-	return (NULL);
-}
-
 static char	**check_standalone_misc(char *line, int i, char **envp, t_node *n)
 {
 	if (line[i] == '|' && (line[i + 1] == '\0' || line[i + 1] == '\n'))
 		return (report_syntax_token("|", envp, n, line));
-	if (line[i] == ';' && (line[i + 1] == '\0' || line[i + 1] == '\n'))
-		return (report_syntax_token(";", envp, n, line));
-	if (line[i] == '&' && (line[i + 1] == '\0' || line[i + 1] == '\n'))
-		return (report_syntax_token("&", envp, n, line));
 	return (NULL);
 }
 
@@ -71,12 +43,6 @@ char	**check_standalone_operators(char *line, char **envp, t_node *n)
 		return (NULL);
 	if (!quote_check(line, i, n))
 	{
-		r = check_standalone_parens(line, i, envp, n);
-		if (r)
-			return (r);
-		r = check_standalone_logical(line, i, envp, n);
-		if (r)
-			return (r);
 		r = check_standalone_misc(line, i, envp, n);
 		if (r)
 			return (r);

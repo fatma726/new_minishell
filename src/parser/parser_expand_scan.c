@@ -57,6 +57,11 @@ static void	no_env(int *i, char *str, char *str2)
 static void	process_var_value(char **str, char *var_value, int *i,
 							t_node *node)
 {
+	bool	needs_quoting;
+
+	needs_quoting = ft_strchr(var_value, ' ') != NULL;
+	if (needs_quoting)
+		str[1][i[1]++] = '"';
 	while (*var_value)
 	{
 		if (ft_strchr("<>|", *var_value))
@@ -66,6 +71,8 @@ static void	process_var_value(char **str, char *var_value, int *i,
 		}
 		str[1][i[1]++] = *var_value++;
 	}
+	if (needs_quoting)
+		str[1][i[1]++] = '"';
 }
 
 static void	handle_envvar(int *i, char **str, char **envp, t_node *node)

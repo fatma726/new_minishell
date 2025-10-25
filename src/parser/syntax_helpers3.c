@@ -60,16 +60,6 @@ static const char	*evaluate_position(char **args, int i)
 	result = check_invalid_operator_sequences(args, i);
 	if (result)
 		return (result);
-	if ((isrr(args[i]) || isdrr(args[i]) || islr(args[i]) || isdlr(args[i]))
-		&& args[i + 1])
-	{
-		if (is_ampersand(args[i + 1]))
-			return ("&");
-		if (ft_strncmp(args[i + 1], "&&", 3) == 0)
-			return ("&&");
-		if (ft_strncmp(args[i + 1], "||", 3) == 0)
-			return ("||");
-	}
 	return (NULL);
 }
 

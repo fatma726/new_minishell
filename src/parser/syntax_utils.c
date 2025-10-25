@@ -13,11 +13,12 @@
 
 bool	check_leading_operators_syntax(char **a)
 {
-	if (a[0] && (isp(a[0]) || istr(a[0])
-			|| isdp(a[0]) || isda(a[0]) || is_ampersand(a[0])))
+	if (a[0] && (isp(a[0]) || istr(a[0])))
 		return (false);
 	if (a[0] && (islr(a[0]) || isrr(a[0]) || isdrr(a[0]) || isdlr(a[0]))
 		&& !a[1])
+		return (false);
+	if (a[0] && (is_oror(a[0]) || is_andand(a[0])))
 		return (false);
 	return (true);
 }
@@ -39,8 +40,7 @@ bool	check_trailing_operators_syntax(char **a)
 	while (a[i] && a[i + 1])
 		i++;
 	if (i >= 0 && a[i] && (isp(a[i]) || islr(a[i]) || isrr(a[i])
-			|| isdlr(a[i]) || isdrr(a[i]) || isdp(a[i]) || isda(a[i])
-			|| is_ampersand(a[i]))
+			|| isdlr(a[i]) || isdrr(a[i]))
 		&& !ft_strchr(a[i], '\'') && !ft_strchr(a[i], '"'))
 		return (false);
 	return (true);
@@ -54,9 +54,7 @@ static bool	is_bare_operator(char *s)
 		return (false);
 	return (
 		isp(s) || islr(s) || isrr(s) || isdlr(s)
-		|| isdrr(s) || isdp(s) || isda(s) || is_ampersand(s)
-		|| is_open_paren(s) || is_close_paren(s)
-		|| is_open_brace(s) || is_close_brace(s)
+		|| isdrr(s) || is_oror(s) || is_andand(s)
 	);
 }
 

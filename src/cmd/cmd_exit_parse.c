@@ -6,11 +6,10 @@
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:04 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/24 17:20:03 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
-
 #include <limits.h>
 
 static size_t	skip_spaces(const char *s, size_t i)
@@ -101,5 +100,3 @@ bool	handle_exit_with_args(char **args)
 	set_exit_status((int)((unsigned char)exit_num));
 	return (true);
 }
-
-/* exit_will_terminate moved to cmd_exit_logic.c to satisfy function count */

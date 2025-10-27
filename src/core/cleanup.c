@@ -26,6 +26,9 @@ void	cleanup_env(char **envp, t_node *node)
 		node->ori_args = NULL;
 	}
 	clear_history();
+	#if defined(RL_READLINE_VERSION)
+	rl_free_line_state();
+	#endif
 	restore_termios();
 	set_exit_status(0);
 	if (node)

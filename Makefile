@@ -1,4 +1,6 @@
-# Minishell Makefile
+##############################
+# Minishell Makefile (mandatory-first)
+##############################
 
 CC      := cc
 CFLAGS  := -Wall -Wextra -Werror -I./include
@@ -25,7 +27,7 @@ LIBFT_SRCS := ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
               ft_lstnew.c ft_lstadd_back.c ft_lstsize.c ft_lstlast.c
 LIBFT_OBJS := $(addprefix $(LIBFT_DIR)/, $(LIBFT_SRCS:.c=.o))
 
-# Source files
+# Source files (mandatory subset only)
 MAIN   = env_utils env_utils2 env_helpers core_state core_state2 core_state3 \
          input input_helpers main process_command process_command_helpers \
          process_command_standalone core_utils strarrutils stubs signals \
@@ -35,15 +37,18 @@ CMD    = cmd_cd cmd_cd_helpers cmd_cd_utils cmd_cd_utils2 cmd_cd_tilde basic_com
          cmd_export_consolidated cmd_export_consolidated2 cmd_export_update cmd_export_print \
          unset unset_utils
 EXEC   = exec/builtins_dispatch
-BENV   = builtins/env_array/env_array builtins/wrappers/builtin_wrappers
-PARSER = escape_split parser_utils parser parser_wildcard_phase prompt_helpers \
+BENV   = builtins/env_array/env_ident builtins/env_array/env_access builtins/env_array/env_copy \
+        builtins/wrappers/builtin_wrappers builtins/wrappers/builtin_wrappers2
+# Exclude wildcard/globbing from mandatory (parser_wildcard_phase)
+PARSER = escape_split parser_utils parser prompt_helpers wildcard_stub parser_reject \
          parser_tokens_redir_basic parser_tokens_consolidated parser_tokens_consolidated2 \
          parser_tokens_checks parser_spacing_amp parser_spacing_redir_helpers \
-         parser_spacing_redir parser_spacing_logical parser_spacing_logical_helpers parser_expand_scan parser_quotes_expand parser_quotes_core \
+         parser_spacing_redir parser_expand_scan parser_quotes_expand parser_quotes_core \
          parser_quotes_helpers parser_quotes_utils syntax_utils syntax_helpers_utils syntax syntax_helpers3 syntax_helpers4
 REDIR  = cmd_redir exec_redir heredoc_utils heredoc_helpers heredoc_loop heredoc_norm_utils redir_helpers redir_utils utils_redir \
          utils_redir2 utils_redir3
-PIPE   = pipe_core pipe_utils pipe_helpers parentheses
+# Exclude subshell parentheses from mandatory
+PIPE   = pipe_core pipe_utils pipe_helpers parentheses_stub
 
 SRCS   = $(addsuffix .c, $(addprefix src/core/, $(MAIN))) \
          $(addsuffix .c, $(addprefix src/cmd/, $(CMD))) \
@@ -93,20 +98,12 @@ BONUS_OBJS := $(BONUS_SRCS:%.c=$(OBJ_DIR)/%.o)
 
 # Targets
 NAME       := minishell
-BONUS_NAME := minishell_bonus
 
 # Default build: mandatory only
 all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(OBJS) -L$(LIBFT_DIR) -lft $(READLINE_LIBS) -o $@
-
-# Bonus build links mandatory + bonus objects and defines BUILD_BONUS for bonus objs
-$(BONUS_NAME): $(OBJS) $(BONUS_OBJS) $(LIBFT)
-	@$(CC) $(filter-out $(OBJ_DIR)/src/core/stubs.o, $(OBJS)) \
-	       $(BONUS_OBJS) -L$(LIBFT_DIR) -lft $(READLINE_LIBS) -o $@
-
-bonus: $(BONUS_NAME)
 
 $(LIBFT): $(LIBFT_OBJS)
 	@ar rcs $@ $^
@@ -132,4 +129,14 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+# Mandatory-only target alias
+mandatory: all
+
+# Forbidden API check
+.PHONY: check_forbidden
+check_forbidden:
+	@./tools/check_forbidden.sh .
+
+.PHONY: all bonus clean fclean re mandatory
+docker-check:
+	tools/docker/run_in_container.sh 'make fclean || true; make re && ./tools/compare_with_bash.sh && ./tools/run_valgrind_smoke.sh && ./tools/verify_valgrind_clean.sh && ./tools/check_forbidden.sh . && norminette | sed -n "1,200p"'

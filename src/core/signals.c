@@ -51,9 +51,9 @@ static void	sigquit_handler(int sig)
 static void	sigint_handler_heredoc(int sig)
 {
     (void)sig;
-    /* Ctrl+C inside heredoc: newline, set status 1, and mark SIGINT */
+    /* Ctrl+C inside heredoc: newline, set status 130, and mark SIGINT */
     write(STDOUT_FILENO, "\n", 1);
-    set_exit_status(1);
+    set_exit_status(130);
     set_signal_number(SIGINT);
 }
 

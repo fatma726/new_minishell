@@ -1,0 +1,47 @@
+name: minishell-ci
+
+on:
+  push:
+    branches: [ main, chore/builtins-main-env-exit-parity ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: minishell-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  docker-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t minishell-ci -f tools/docker/Dockerfile .
+
+      - name: Run checks in container (one-shot)
+        run: |
+          tools/docker/run_in_container.sh '
+            make fclean || true;
+            make re && \
+            ./tools/compare_with_bash.sh > parity.log 2>&1 && \
+            ./tools/run_valgrind_smoke.sh && \
+            ./tools/verify_valgrind_clean.sh && \
+            ./tools/check_forbidden.sh . && \
+            norminette | sed -n "1,200p"; \
+            cp /tmp/vg.out ./vg.out || true'
+
+      - name: Upload parity log
+        uses: actions/upload-artifact@v4
+        with:
+          name: parity-log
+          path: parity.log
+          retention-days: 7
+
+      - name: Upload valgrind out
+        uses: actions/upload-artifact@v4
+        with:
+          name: valgrind-out
+          path: vg.out
+          retention-days: 7

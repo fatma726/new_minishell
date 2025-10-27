@@ -14,20 +14,39 @@
 
 char	*read_line_non_tty(void)
 {
-	char	*buf;
-	size_t	cap;
-	ssize_t	nread;
+	char		*buf;
+	size_t		cap;
+	size_t		len;
+	int			ch;
 
-	buf = NULL;
-	cap = 0;
-	nread = getline(&buf, &cap, stdin);
-	if (nread < 0)
+	cap = 64;
+	len = 0;
+	buf = (char *)malloc(cap);
+	if (!buf)
+		return (NULL);
+	while ((ch = fgetc(stdin)) != EOF)
+	{
+		if (ch == '\n')
+			break ;
+		if (len + 1 >= cap)
+		{
+			char *nbuf = (char *)realloc(buf, cap * 2);
+			if (!nbuf)
+			{
+				free(buf);
+				return (NULL);
+			}
+			buf = nbuf;
+			cap *= 2;
+		}
+		buf[len++] = (char)ch;
+	}
+	if (len == 0 && ch == EOF)
 	{
 		free(buf);
 		return (NULL);
 	}
-	if (nread > 0 && buf[nread - 1] == '\n')
-		buf[nread - 1] = '\0';
+	buf[len] = '\0';
 	return (buf);
 }
 
@@ -38,12 +57,17 @@ void	handle_eof_exit(char **envp, t_node *node)
 		free(node->pwd);
 		free(node->path_fallback);
 	}
-	if (envp)
-		strarrfree(envp);
-	clear_history();
-	restore_termios();
-	maybe_write_exit_file();
-	exit(get_exit_status());
+		if (envp)
+		{
+			strarrfree(envp);
+		}
+		clear_history();
+		#if defined(RL_READLINE_VERSION)
+		rl_free_line_state();
+		#endif
+		restore_termios();
+		maybe_write_exit_file();
+		exit(get_exit_status());
 }
 
 int	process_read_line(char **result, char **cur_prompt, char *orig)

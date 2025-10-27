@@ -55,20 +55,28 @@ static int	handle_main_redirs(char **args, char **envp, t_node *node)
 
 static int	handle_standalone_heredoc(char **args, char **envp, t_node *node)
 {
-	int	i;
-	int	ret;
+    int i;
+    (void)envp;
 
-	ret = 0;
-	i = -1;
-	while (args[++i]
-		&& !isp(node->ori_args[i])
-		&& !node->redir_stop
-		&& !ret)
-		if (isdlr(node->ori_args[i]))
-			ret = left_double_redir(args, envp, &i, node);
-	if (!ret)
-		set_exit_status(0);
-	return (ret);
+    /* If we reached here, no command token was found before redirs. */
+    i = -1;
+    while (args[++i] && !isp(node->ori_args[i]))
+    {
+        if (isdlr(node->ori_args[i]) || istlr(node->ori_args[i]))
+        {
+            /* Bash-like syntax error for stray heredoc without command */
+            ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
+            if (!args[i + 1] || !args[i + 1][0])
+                ft_putstr_fd("newline", STDERR_FILENO);
+            else
+                ft_putstr_fd("<<", STDERR_FILENO);
+            ft_putendl_fd("'", STDERR_FILENO);
+            set_exit_status(2);
+            node->redir_stop = 1;
+            return (1);
+        }
+    }
+    return (0);
 }
 
 /* moved to utils_redir3.c to balance function count */
@@ -83,8 +91,10 @@ int	exec_redir(char **args, char **envp, t_node *node)
 	ret = handle_heredoc_prepass(args, envp, node);
 	if (!ret)
 		ret = handle_main_redirs(args, envp, node);
-	if (!node->cmd && !ret)
-		ret = handle_standalone_heredoc(args, envp, node);
+    if (!node->cmd && !ret)
+    {
+        ret = handle_standalone_heredoc(args, envp, node);
+    }
 	if (node->redir_fd >= 0 && !node->semicolon_sequence)
 	{
 		cleanup_heredoc_file(node);

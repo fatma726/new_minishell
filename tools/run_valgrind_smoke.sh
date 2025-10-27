@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BIN=./minishell
-SUP=valgrind_script/ignore_readline_leaks.txt
+SCRIPT='/tmp/ms_script.txt'
+cat > "$SCRIPT" <<'EOS'
+echo hi
+export X=1
+unset X
+pwd
+exit
+EOS
 
-[[ -x "$BIN" ]] || { echo "Build first"; exit 1; }
-
-printf "echo hi\npwd\nenv\nexit\n" | \
 valgrind --trace-children=yes -s \
-  --suppressions="$SUP" \
+  --run-libc-freeres=yes \
   --leak-check=full --show-leak-kinds=all \
-  --track-origins=yes --track-fds=yes "$BIN" 2>&1 | tee /tmp/vg.out
+  --track-origins=yes --track-fds=yes \
+  --suppressions=valgrind_script/ignore_readline_leaks.txt \
+  ./minishell < "$SCRIPT" 2>&1 | tee /tmp/vg.out
 
 echo "----- HEAP SUMMARY -----"
 sed -n '/HEAP SUMMARY:/,$p' /tmp/vg.out
-

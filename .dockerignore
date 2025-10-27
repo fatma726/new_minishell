@@ -1,0 +1,15 @@
+.git
+.gitignore
+.obj/
+**/*.o
+**/*.a
+minishell
+minishell_tester/
+out.txt
+out.txt;
+err.txt
+*.log
+*.out
+.vscode/
+Dockerfile
+node_modules/

@@ -1,0 +1,11 @@
+system
+popen
+pclose
+posix_spawn
+execvp
+execvpe
+forkpty
+getline
+getdelim
+realpath
+printf_debug

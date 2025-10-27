@@ -65,17 +65,19 @@ char	**dispatch_builtin(char **args, char **envp, t_node *node)
 	}
 	else if (args[0] && args[0][0] && !ft_strncmp(args[0], "exit", 5))
 		cmd_exit(args, envp, node);
-	else if (args[0] && args[0][0] && is_builtin_name(args[0]))
-	{
-		t_cmd	cmd;
-		int		status;
+    else if (args[0] && args[0][0] && is_builtin_name(args[0]))
+    {
+        t_cmd	cmd;
 
-		cmd.argv = args;
-		cmd.infile = -1;
-		cmd.outfile = (node->redir_flag ? node->redir_fd : -1);
-		cmd.next = NULL;
-		run_builtin_dispatch(args, &envp, &cmd, &status);
-	}
+        cmd.argv = args;
+        cmd.infile = -1;
+        if (node->redir_flag)
+            cmd.outfile = node->redir_fd;
+        else
+            cmd.outfile = -1;
+        cmd.next = NULL;
+        (void)run_builtin_dispatch(args, &envp, &cmd);
+    }
 	else if (args[0] && args[0][0])
 		envp = cmd_exec(args, envp, node);
 	return (envp);

@@ -42,8 +42,8 @@ void	process_unset_args(char **args, char **envp, t_node *node, int *flag)
 		else
 			envp = delete_env(args[i], envp, node, flag);
 	}
-	if (has_error)
-		set_exit_status(EXIT_FAILURE);
+    if (has_error)
+        set_exit_status(EXIT_SUCCESS);
 	else if (*flag != 1)
 		set_exit_status(EXIT_FAILURE);
 	else

@@ -48,7 +48,6 @@ static char	**process_parser_input(char *str, char **envp, t_node *node)
 	str = expand_envvar(str, envp, node);
 	str = add_spaces_around_ampersand(str, node);
 	str = add_spaces_around_redirections(str, node);
-	str = add_spaces_around_logical_operators(str, node);
 	ft_strlcpy(charset, " \t", 4);
 	args = escape_split(str, charset, node);
 	args = apply_wildcard_phase(args, envp, node, str);
@@ -93,6 +92,8 @@ static char	**process_quotes_and_exec(char **args, char **envp, t_node *node)
 	return (envp);
 }
 
+int			parser_reject_non_mandatory(char **args);
+
 char	**parser(char *str, char **envp, t_node *node)
 {
 	char	**args;
@@ -105,5 +106,16 @@ char	**parser(char *str, char **envp, t_node *node)
 	args = process_parser_input(str, envp, node);
 	if (handle_parser_errors(args, envp, node))
 		return (envp);
+	if (parser_reject_non_mandatory(node->ori_args))
+	{
+		handle_syntax_error(envp, node);
+		strarrfree(args);
+		if (node->ori_args)
+		{
+			strarrfree(node->ori_args);
+			node->ori_args = NULL;
+		}
+		return (envp);
+	}
 	return (process_quotes_and_exec(args, envp, node));
 }

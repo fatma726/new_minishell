@@ -67,8 +67,8 @@ int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
 	set_signal();
     if (get_signal_number() == SIGINT)
     {
-        /* Heredoc Ctrl-C -> 1 (bash behavior) */
-        set_exit_status(1);
+        /* Heredoc Ctrl-C -> 130 */
+        set_exit_status(130);
         clear_signal_number();
         return (1);
     }

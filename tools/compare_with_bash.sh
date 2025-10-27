@@ -7,10 +7,14 @@ BIN=./minishell
 
 FAIL=0
 
+bash_status() {
+  /usr/bin/env bash -lc "$1" >/dev/null 2>&1; printf "%d" "$?"
+}
+
 run_case () {
   local CMD="$1"; local bs ms
+  bs="$(bash_status "$CMD")"
   set +e
-  bash -lc "$CMD" >/dev/null 2>&1; bs=$?
   printf "%s\n" "$CMD" | "$BIN" >/dev/null 2>&1; ms=$?
   set -e
   if [[ "$bs" == "$ms" ]]; then

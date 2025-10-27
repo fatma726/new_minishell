@@ -58,6 +58,9 @@ void	cleanup_child_and_exit(char **args, char **envp, t_node *node)
 		close(node->backup_stdout);
 	if (node->backup_stdin >= 0)
 		close(node->backup_stdin);
+	#if defined(RL_READLINE_VERSION)
+	rl_free_line_state();
+	#endif
 	exit(get_exit_status());
 }
 
@@ -81,6 +84,9 @@ void	cleanup_and_exit(char **args, char **envp, t_node *node)
 	if (node->backup_stdin >= 0)
 		close(node->backup_stdin);
 	clear_history();
+	#if defined(RL_READLINE_VERSION)
+	rl_free_line_state();
+	#endif
 	restore_termios();
 	maybe_write_exit_file();
 	exit(get_exit_status());
@@ -93,10 +99,12 @@ void	cmd_exit(char **args, char **envp, t_node *node)
 	if (!node->exit_flag)
 		return ;
 	should_exit = true;
-    if (strarrlen(args) > 1)
-        should_exit = handle_exit_with_args(args);
-    else
-        should_exit = true; /* exit with current last_status, do not override */
+	if (strarrlen(args) > 1)
+		should_exit = handle_exit_with_args(args);
+	else
+	{
+		should_exit = true; /* exit with current last_status, do not override */
+	}
 	if (should_exit && !node->argmode)
 		handle_exit_message();
 	if (should_exit)

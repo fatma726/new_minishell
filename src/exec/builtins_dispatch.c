@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_dispatch.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: minishell-bootstrap                         +#+  +:+       +#+        */
+/*   By: minishell-bootstrap                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 00:00:00 by bootstrap         #+#    #+#             */
 /*   Updated: 2025/10/27 00:00:00 by bootstrap        ###   ########.fr       */
@@ -13,70 +13,79 @@
 #include "minishell.h"
 #include <unistd.h>
 
-static int names_eq(const char *a, const char *b)
+int	is_builtin_name(const char *name)
 {
-    return (a && b && !ft_strncmp(a, b, ft_strlen(b) + 1));
+	if (!name)
+		return (0);
+	if (!ft_strncmp(name, "echo", 5))
+		return (1);
+	if (!ft_strncmp(name, "cd", 3))
+		return (1);
+	if (!ft_strncmp(name, "pwd", 4))
+		return (1);
+	if (!ft_strncmp(name, "export", 7))
+		return (1);
+	if (!ft_strncmp(name, "unset", 6))
+		return (1);
+	if (!ft_strncmp(name, "env", 4))
+		return (1);
+	if (!ft_strncmp(name, "exit", 5))
+		return (1);
+	return (0);
 }
 
-int is_builtin_name(const char *name)
+static void	redirect_stdout_fd(int fd, int *saved_fd)
 {
-    if (!name)
-        return (0);
-    return (names_eq(name, "echo") || names_eq(name, "cd")
-        || names_eq(name, "pwd") || names_eq(name, "export")
-        || names_eq(name, "unset") || names_eq(name, "env")
-        || names_eq(name, "exit"));
+	*saved_fd = -1;
+	if (fd >= 0)
+	{
+		*saved_fd = dup(STDOUT_FILENO);
+		if (*saved_fd >= 0)
+			dup2(fd, STDOUT_FILENO);
+	}
 }
 
-static void redirect_stdout_fd(int fd, int *saved_fd)
+static void	restore_stdout_if_needed(int saved_fd)
 {
-    *saved_fd = -1;
-    if (fd >= 0)
-    {
-        *saved_fd = dup(STDOUT_FILENO);
-        if (*saved_fd >= 0)
-            dup2(fd, STDOUT_FILENO);
-    }
+	if (saved_fd >= 0)
+	{
+		dup2(saved_fd, STDOUT_FILENO);
+		close(saved_fd);
+	}
 }
 
-static void restore_stdout_if_needed(int saved_fd)
+static int	call_builtin(char **argv, char ***penv)
 {
-    if (saved_fd >= 0)
-    {
-        dup2(saved_fd, STDOUT_FILENO);
-        close(saved_fd);
-    }
+	if (!ft_strncmp(argv[0], "echo", 5))
+		return (ft_echo(argv));
+	if (!ft_strncmp(argv[0], "pwd", 4))
+		return (ft_pwd());
+	if (!ft_strncmp(argv[0], "env", 4))
+		return (ft_env(*penv));
+	if (!ft_strncmp(argv[0], "cd", 3))
+		return (ft_cd(argv, penv));
+	if (!ft_strncmp(argv[0], "unset", 6))
+		return (bi_unset(argv, penv));
+	if (!ft_strncmp(argv[0], "export", 7))
+		return (bi_export(argv, penv));
+	return (1);
 }
 
-/* New API requested: uses t_cmd and returns via last_status */
-int run_builtin_dispatch(char **argv, char ***penv, t_cmd *cmd, int *last_status)
+int	run_builtin_dispatch(char **argv, char ***penv, t_cmd *cmd)
 {
-    int saved;
-    int status;
+	int		saved;
+	int		status;
+	int		outfd;
 
-    if (!argv || !argv[0] || !penv)
-        return (1);
-    redirect_stdout_fd(cmd ? cmd->outfile : -1, &saved);
-    status = 1;
-    if (names_eq(argv[0], "echo"))
-        status = ft_echo(argv);
-    else if (names_eq(argv[0], "pwd"))
-        status = ft_pwd();
-    else if (names_eq(argv[0], "env"))
-        status = ft_env(*penv);
-    else if (names_eq(argv[0], "cd"))
-        status = ft_cd(argv, penv);
-    else if (names_eq(argv[0], "unset"))
-        status = bi_unset(argv, penv);
-    else if (names_eq(argv[0], "export"))
-        status = bi_export(argv, penv);
-    restore_stdout_if_needed(saved);
-    if (names_eq(argv[0], "exit"))
-    {
-        /* Ensure stdout restored before exit behavior */
-        cmd_exit(argv, *penv, NULL);
-    }
-    if (last_status)
-        *last_status = status;
-    return (status);
+	if (!argv || !argv[0] || !penv)
+		return (1);
+	outfd = -1;
+	if (cmd)
+		outfd = cmd->outfile;
+	redirect_stdout_fd(outfd, &saved);
+	status = call_builtin(argv, penv);
+	restore_stdout_if_needed(saved);
+	if (!ft_strncmp(argv[0], "exit", 5))
+		cmd_exit(argv, *penv, NULL);
+	return (status);
 }

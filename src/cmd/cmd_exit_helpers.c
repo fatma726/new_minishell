@@ -34,7 +34,7 @@ void	handle_numeric_error(char *arg)
 	char	exit_error[30];
 	char	numeric_error[30];
 
-	set_exit_status(255);
+    set_exit_status(2);
 	ft_strlcpy(exit_error, "minishell: exit: ", 20);
 	ft_strlcpy(numeric_error, ": numeric argument required\n", 30);
 	ft_putstr_fd(exit_error, STDERR_FILENO);

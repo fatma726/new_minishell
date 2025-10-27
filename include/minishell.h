@@ -46,6 +46,6 @@ typedef struct s_shell_state
 
 /* builtins dispatcher using t_cmd */
 int is_builtin_name(const char *name);
-int run_builtin_dispatch(char **argv, char ***penv, t_cmd *cmd, int *last_status);
+int run_builtin_dispatch(char **argv, char ***penv, t_cmd *cmd);
 
 #endif

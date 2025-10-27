@@ -323,7 +323,23 @@ void	handle_cd_arguments(char **args, char **envp, t_node *node, int offset);
 
 /* builtins dispatcher (parent context) */
 int		is_builtin_name(const char *name);
-int		run_builtin_dispatch(char **argv, char ***penv, t_node *node);
+
+/* builtin wrappers */
+int		ft_echo(char **argv);
+int		ft_pwd(void);
+int		ft_env(char **env);
+int		ft_cd(char **argv, char ***penv);
+int		bi_unset(char **argv, char ***penv);
+int		bi_export(char **argv, char ***penv);
+
+/* env array helpers */
+int		is_valid_ident(const char *s);
+int		env_find_index(char **env, const char *key);
+int		env_set_kv(char ***penv, const char *key, const char *value);
+int		env_unset_key(char ***penv, const char *key);
+int		parse_name_value(const char *arg, char **key, char **value);
+char	**env_dup(char **env);
+void	env_free(char **env);
 
 
 /* input */

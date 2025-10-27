@@ -35,6 +35,7 @@ CMD    = cmd_cd cmd_cd_helpers cmd_cd_utils cmd_cd_utils2 cmd_cd_tilde basic_com
          cmd_export_consolidated cmd_export_consolidated2 cmd_export_update cmd_export_print \
          unset unset_utils
 EXEC   = exec/builtins_dispatch
+BENV   = builtins/env_array/env_array builtins/wrappers/builtin_wrappers
 PARSER = escape_split parser_utils parser parser_wildcard_phase prompt_helpers \
          parser_tokens_redir_basic parser_tokens_consolidated parser_tokens_consolidated2 \
          parser_tokens_checks parser_spacing_amp parser_spacing_redir_helpers \
@@ -47,6 +48,7 @@ PIPE   = pipe_core pipe_utils pipe_helpers parentheses
 SRCS   = $(addsuffix .c, $(addprefix src/core/, $(MAIN))) \
          $(addsuffix .c, $(addprefix src/cmd/, $(CMD))) \
          $(addsuffix .c, $(addprefix src/, $(EXEC))) \
+         $(addsuffix .c, $(addprefix src/, $(BENV))) \
          $(addsuffix .c, $(addprefix src/parser/, $(PARSER))) \
          $(addsuffix .c, $(addprefix src/redirection/, $(REDIR))) \
          $(addsuffix .c, $(addprefix src/pipe/, $(PIPE)))

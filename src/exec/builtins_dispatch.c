@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mandatory.h"
+#include "minishell.h"
 #include <unistd.h>
 
 static int names_eq(const char *a, const char *b)
@@ -28,14 +28,14 @@ int is_builtin_name(const char *name)
         || names_eq(name, "exit"));
 }
 
-static void redirect_stdout_if_needed(t_node *node, int *saved_fd)
+static void redirect_stdout_fd(int fd, int *saved_fd)
 {
     *saved_fd = -1;
-    if (node && node->redir_flag && node->redir_fd >= 0)
+    if (fd >= 0)
     {
         *saved_fd = dup(STDOUT_FILENO);
         if (*saved_fd >= 0)
-            dup2(node->redir_fd, STDOUT_FILENO);
+            dup2(fd, STDOUT_FILENO);
     }
 }
 
@@ -48,28 +48,35 @@ static void restore_stdout_if_needed(int saved_fd)
     }
 }
 
-int run_builtin_dispatch(char **argv, char ***penv, t_node *node)
+/* New API requested: uses t_cmd and returns via last_status */
+int run_builtin_dispatch(char **argv, char ***penv, t_cmd *cmd, int *last_status)
 {
     int saved;
+    int status;
 
     if (!argv || !argv[0] || !penv)
         return (1);
-    redirect_stdout_if_needed(node, &saved);
+    redirect_stdout_fd(cmd ? cmd->outfile : -1, &saved);
+    status = 1;
     if (names_eq(argv[0], "echo"))
-        cmd_echo(argv, node);
+        status = ft_echo(argv);
     else if (names_eq(argv[0], "pwd"))
-        cmd_pwd(node);
+        status = ft_pwd();
     else if (names_eq(argv[0], "env"))
-        *penv = cmd_env(argv, *penv, node);
+        status = ft_env(*penv);
     else if (names_eq(argv[0], "cd"))
-        *penv = cmd_cd(argv, *penv, node);
+        status = ft_cd(argv, penv);
     else if (names_eq(argv[0], "unset"))
-        *penv = cmd_unset(argv, *penv, node);
+        status = bi_unset(argv, penv);
     else if (names_eq(argv[0], "export"))
-        *penv = cmd_export(argv, *penv, node);
+        status = bi_export(argv, penv);
     restore_stdout_if_needed(saved);
     if (names_eq(argv[0], "exit"))
-        cmd_exit(argv, *penv, node);
-    return (get_exit_status());
+    {
+        /* Ensure stdout restored before exit behavior */
+        cmd_exit(argv, *penv, NULL);
+    }
+    if (last_status)
+        *last_status = status;
+    return (status);
 }
-

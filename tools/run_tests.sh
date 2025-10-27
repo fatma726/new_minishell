@@ -17,10 +17,10 @@ run_case() {
 run_case "echo hi" "echo hi" "exit"
 run_case "pwd" "pwd" "exit"
 run_case "env" "env" "exit"
-run_case "export/unset" "export TEST=abc" "env | grep ^TEST=" "unset TEST" "env | grep ^TEST=" "exit"
+run_case "export" "export TEST=abc" "env" "exit"
+run_case "unset" "export TEST=abc" "unset TEST" "env" "exit"
 run_case "exit status" "false" "echo $?" "exit"
 
 echo "Redirection test"
 printf "echo hi > out.txt\nexit\n" | "$BIN"
-echo "cat out.txt:"; cat out.txt || true
-
+echo "out.txt content:"; cat out.txt || true

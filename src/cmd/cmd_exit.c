@@ -93,10 +93,10 @@ void	cmd_exit(char **args, char **envp, t_node *node)
 	if (!node->exit_flag)
 		return ;
 	should_exit = true;
-	if (strarrlen(args) > 1)
-		should_exit = handle_exit_with_args(args);
-	else
-		set_exit_status(EXIT_SUCCESS);
+    if (strarrlen(args) > 1)
+        should_exit = handle_exit_with_args(args);
+    else
+        should_exit = true; /* exit with current last_status, do not override */
 	if (should_exit && !node->argmode)
 		handle_exit_message();
 	if (should_exit)

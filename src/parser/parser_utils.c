@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
+#include "minishell.h"
 
 char	*expand_prompt(char *fmt, char **envp, t_node *node)
 {
@@ -56,28 +57,27 @@ char	**find_command(char **args, char **envp, t_node *node)
 /* From parser_helpers2.c */
 char	**dispatch_builtin(char **args, char **envp, t_node *node)
 {
-	if (args[0] && args[0][0] && !ft_strncmp(args[0], "cd", 3))
-		envp = cmd_cd(args, envp, node);
-	else if (args[0] && args[0][0] && !ft_strncmp(args[0], "exit", 5))
-		cmd_exit(args, envp, node);
-	else if (args[0] && args[0][0] && !ft_strncmp(args[0], "env", 4))
-		envp = cmd_env(args, envp, node);
-	else if (args[0] && args[0][0] && !ft_strncmp(args[0], "export", 7))
-		envp = cmd_export(args, envp, node);
-	else if (args[0] && args[0][0] && !ft_strncmp(args[0], "pwd", 4))
-		cmd_pwd(node);
-	else if (args[0] && args[0][0] && !ft_strncmp(args[0], "echo", 5))
-		cmd_echo(args, node);
-	else if (args[0] && args[0][0] && !ft_strncmp(args[0], "unset", 6))
-		envp = cmd_unset(args, envp, node);
-	else if (args[0] && args[0][0])
-		envp = cmd_exec(args, envp, node);
-	else if (args[0] && !args[0][0])
+	if (args[0] && !args[0][0])
 	{
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		set_exit_status(127);
 	}
+	else if (args[0] && args[0][0] && !ft_strncmp(args[0], "exit", 5))
+		cmd_exit(args, envp, node);
+	else if (args[0] && args[0][0] && is_builtin_name(args[0]))
+	{
+		t_cmd	cmd;
+		int		status;
+
+		cmd.argv = args;
+		cmd.infile = -1;
+		cmd.outfile = (node->redir_flag ? node->redir_fd : -1);
+		cmd.next = NULL;
+		run_builtin_dispatch(args, &envp, &cmd, &status);
+	}
+	else if (args[0] && args[0][0])
+		envp = cmd_exec(args, envp, node);
 	return (envp);
 }
 

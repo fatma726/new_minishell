@@ -74,11 +74,12 @@ char	*get_heredoc_line(void)
 
 int	check_heredoc_signal(void)
 {
-	if (get_signal_number() == SIGINT)
-	{
-		clear_signal_number();
-		set_exit_status(130);
-		return (1);
-	}
-	return (0);
+    if (get_signal_number() == SIGINT)
+    {
+        /* Only report to caller; do not set status here.
+        ** The caller (heredoc_loop) will set exit status to 130 and clear
+        ** the signal in a single place to avoid inconsistent states. */
+        return (1);
+    }
+    return (0);
 }

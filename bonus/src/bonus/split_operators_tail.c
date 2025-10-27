@@ -9,7 +9,7 @@
 /*   Updated: 2025/10/06 21:32:02 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "bonus.h"
+#include "../../../bonus/include/bonus.h"
 #include "../../include/bonus.h"
 
 static char	**continue_split(char *s, size_t i, char **envp, t_node *n)

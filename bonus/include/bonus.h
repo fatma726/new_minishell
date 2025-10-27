@@ -14,6 +14,7 @@
 # define BONUS_H
 
 # include "mandatory.h"
+# include <dirent.h>
 
 /* Internal scanner context for wrapped groups */
 typedef struct s_wrap_scan
@@ -50,6 +51,8 @@ bool	syntax_err_pair(char *s, size_t i, t_node *n, int pair);
 char	**handle_syntax_errors(char *s, int i, char **envp, t_node *n);
 char	*handle_triple_redir_error(char *str, t_node *node);
 char	*handle_paren_error(char *str, int count, t_node *node);
+char	*create_clean_string(char *str, t_node *node, int length);
+int		validate_parens(char *str, t_node *node, int *length);
 
 /* Wildcard helpers */
 typedef struct s_match_data
@@ -84,6 +87,10 @@ int		add_sorted_matches_with_path(char **newargs, int *j,
 			char **matches, char *dir_path);
 int		add_matching_file(char **newargs, int *j, char *filename);
 void	cleanup_matches(char **matches, int i, DIR *dir);
+char	**get_file_list(bool hidden);
+void	wildcard_handler(char **args, char **newargs, int *i, t_node *node);
+void	tilde_handler(char **args, int *i, char **envp);
+char	**load_lst(struct dirent *dr, DIR *dir, bool hidden);
 
 /* Prototypes implemented across wildcard_parser_helpers*.c */
 void	break_on_first_pattern(char **args, char ***out, int *i, bool *skip);

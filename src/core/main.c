@@ -14,11 +14,26 @@
 
 static void	handle_signals(void)
 {
-	if (get_signal_number() == SIGINT)
-	{
-		set_exit_status(130);
-		clear_signal_number();
-	}
+    int sig;
+
+    sig = get_signal_number();
+    if (sig == SIGINT)
+    {
+        /*
+        ** SIGINT on empty prompt -> 1
+        ** SIGINT during command -> already set to 130 by handler
+        */
+        /* Only downgrade to 1 if we are truly idle and
+        ** no child just reported a signal-based termination (>=128). */
+        if (is_interactive_mode() && get_exit_status() < 128)
+            set_exit_status(1);
+        clear_signal_number();
+    }
+    else if (sig == SIGQUIT)
+    {
+        /* SIGQUIT handled in handler during execution; just clear here */
+        clear_signal_number();
+    }
 }
 
 static char	*get_and_process_prompt(char **envp, t_node *n)
@@ -38,9 +53,9 @@ static char	**main_loop(char **envp, t_node *n)
 	char	*line;
 	char	*prompt;
 
-	handle_signals();
 	prompt = get_and_process_prompt(envp, n);
 	set_interactive_mode(true);
+	handle_signals();
 	line = get_line(prompt);
 	set_interactive_mode(false);
 	if (prompt)
@@ -49,10 +64,7 @@ static char	**main_loop(char **envp, t_node *n)
 	if (!line)
 		handle_eof_exit(envp, n);
 	envp = process_command(line, envp, n);
-	if (isatty(STDIN_FILENO))
-	{
-		rl_reset_line_state();
-	}
+	set_interactive_mode(true);
 	return (envp);
 }
 

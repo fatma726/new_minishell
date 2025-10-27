@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_operators_helpers4.c                       :+:      :+:    :+:   */
+/*   subshell_consolidated2.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -9,46 +9,37 @@
 /*   Updated: 2025/10/06 21:32:02 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../../../bonus/include/bonus.h"
-#include "../../include/bonus.h"
 
-char	**handle_syntax_errors(char *s, int i, char **envp, t_node *n)
+char	*handle_triple_redir_error(char *str, t_node *node)
 {
-	if (handle_invalid_start_and_report(s, (size_t)i, n))
-		return (free(s), envp);
-	if (has_triple_ops(s, (size_t)i))
-	{
-		syntax_err_pair(s, (size_t)i, n, 0);
-		return (free(s), envp);
-	}
-	if (ft_strchr(s, '>') && !check_redirection_syntax(s, n))
-		return (free(s), envp);
-	return (NULL);
+	ft_putstr_fd("minishell: syntax error near unexpected token `>'\n",
+		STDERR_FILENO);
+	set_exit_status(2);
+	node->syntax_flag = true;
+	return (free(str), NULL);
 }
 
-bool	has_logical_operators_outside_parens(char *s, size_t l,
-	size_t r, t_node *n)
+char	*handle_paren_error(char *str, int count, t_node *node)
 {
-	size_t	i;
-	int		depth;
-
-	(void)l;
-	(void)r;
-	depth = 0;
-	i = 0;
-	while (s[i])
+	if (count == -2)
 	{
-		if (!quote_check(s, (int)i, n))
-		{
-			if (s[i] == '(')
-				depth++;
-			else if (s[i] == ')')
-				depth--;
-			else if (depth == 0 && is_operator_pair(s, i, n))
-				return (true);
-		}
-		i++;
+		ft_putstr_fd("minishell: syntax error near unexpected token `",
+			STDERR_FILENO);
+		ft_putendl_fd(")'", STDERR_FILENO);
+		set_exit_status(2);
+		node->syntax_flag = true;
+		return (free(str), NULL);
 	}
-	return (false);
+	if (count != 0)
+	{
+		ft_putstr_fd(
+			"minishell: syntax error near unexpected token `newline'",
+			STDERR_FILENO);
+		ft_putchar_fd('\n', STDERR_FILENO);
+		set_exit_status(2);
+		node->syntax_flag = true;
+		return (free(str), NULL);
+	}
+	return (str);
 }

@@ -26,16 +26,17 @@ LIBFT_SRCS := ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
 LIBFT_OBJS := $(addprefix $(LIBFT_DIR)/, $(LIBFT_SRCS:.c=.o))
 
 # Source files
-MAIN   = env_utils env_utils2 env_helpers global state exit_status exit_file nontext \
+MAIN   = env_utils env_utils2 env_helpers core_state core_state2 core_state3 \
          input input_helpers main process_command process_command_helpers \
          process_command_standalone core_utils strarrutils stubs signals \
          cleanup hash_handler
-CMD    = cmd_cd cmd_cd_helpers cmd_cd_utils cmd_cd_tilde basic_commands cmd_utils env cmd_exec cmd_exec_helpers \
+CMD    = cmd_cd cmd_cd_helpers cmd_cd_utils cmd_cd_utils2 cmd_cd_tilde basic_commands cmd_utils env cmd_exec cmd_exec_helpers \
          cmd_exec_proc cmd_exec_error cmd_exit cmd_exit_helpers cmd_exit_parse \
-         cmd_export_helpers cmd_export_update cmd_export_print cmd_export_main \
+         cmd_export_consolidated cmd_export_consolidated2 cmd_export_update cmd_export_print \
          unset unset_utils
+EXEC   = exec/builtins_dispatch
 PARSER = escape_split parser_utils parser parser_wildcard_phase prompt_helpers \
-         parser_tokens_redir_basic parser_tokens_helpers parser_tokens_group \
+         parser_tokens_redir_basic parser_tokens_consolidated parser_tokens_consolidated2 \
          parser_tokens_checks parser_spacing_amp parser_spacing_redir_helpers \
          parser_spacing_redir parser_spacing_logical parser_spacing_logical_helpers parser_expand_scan parser_quotes_expand parser_quotes_core \
          parser_quotes_helpers parser_quotes_utils syntax_utils syntax_helpers_utils syntax syntax_helpers3 syntax_helpers4
@@ -45,6 +46,7 @@ PIPE   = pipe_core pipe_utils pipe_helpers parentheses
 
 SRCS   = $(addsuffix .c, $(addprefix src/core/, $(MAIN))) \
          $(addsuffix .c, $(addprefix src/cmd/, $(CMD))) \
+         $(addsuffix .c, $(addprefix src/, $(EXEC))) \
          $(addsuffix .c, $(addprefix src/parser/, $(PARSER))) \
          $(addsuffix .c, $(addprefix src/redirection/, $(REDIR))) \
          $(addsuffix .c, $(addprefix src/pipe/, $(PIPE)))
@@ -62,12 +64,12 @@ BONUS_SRCS := bonus/src/bonus/split_operators_main.c \
               bonus/src/bonus/split_operators_helpers5.c \
               bonus/src/bonus/split_operators_tail.c \
               bonus/src/bonus/subshell_consolidated.c \
+              bonus/src/bonus/subshell_consolidated2.c \
               bonus/src/bonus/subshell_main.c \
               bonus/src/bonus/wildcard/wildcard_core.c \
               bonus/src/bonus/wildcard/expand_wildcard_helpers.c \
               bonus/src/bonus/wildcard/expand_wildcard_pattern.c \
               bonus/src/bonus/wildcard/expand_wildcard_sort.c \
-              bonus/src/bonus/wildcard/expand_wildcard_pattern_helpers.c \
 			 bonus/src/bonus/wildcard/expand_wildcard_utils3.c \
 			 bonus/src/bonus/wildcard/expand_wildcard_utils4.c \
 			 bonus/src/bonus/wildcard/expand_wildcard_utils5.c \

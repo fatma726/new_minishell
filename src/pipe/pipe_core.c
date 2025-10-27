@@ -45,7 +45,7 @@ void	exec_child(char **args, char **envp, t_node *node)
 	close(node->fds[1]);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	signal(SIGPIPE, SIG_IGN);
+	signal(SIGPIPE, SIG_DFL);
 	if (!node->child_die)
 	{
 		child_args = split_before_pipe_args(args, node);
@@ -60,13 +60,15 @@ void	exec_child(char **args, char **envp, t_node *node)
 void	exec_parents(char **args, char **envp, t_node *node)
 {
 	node->exit_flag = 0;
-	close(node->fds[1]);
-	dup2(node->fds[0], STDIN_FILENO);
-	close(node->fds[0]);
+	/* Parent stays in our signal regime; only children reset to defaults. */
+	/* Wire stdin to the read end only when a pipe is actually active. */
+	if (node->pipe_flag)
+	{
+		close(node->fds[1]);
+		dup2(node->fds[0], STDIN_FILENO);
+		close(node->fds[0]);
+	}
 	node->pipe_flag = 0;
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGPIPE, SIG_DFL);
 	envp = repeat(args, envp, node);
 	backup_restor(node);
 }

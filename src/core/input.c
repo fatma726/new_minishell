@@ -12,24 +12,6 @@
 
 #include "mandatory.h"
 
-static void	mark_nontext(const char *buf, size_t nread)
-{
-	size_t			i;
-	unsigned char	c;
-
-	i = 0;
-	while (i < nread)
-	{
-		c = (unsigned char)buf[i];
-		if (c != '\n' && ((c < 32 && c != '\t') || c >= 128))
-		{
-			set_nontext_input(true);
-			break ;
-		}
-		i++;
-	}
-}
-
 char	*read_line_non_tty(void)
 {
 	char	*buf;
@@ -44,7 +26,6 @@ char	*read_line_non_tty(void)
 		free(buf);
 		return (NULL);
 	}
-	mark_nontext(buf, (size_t)nread);
 	if (nread > 0 && buf[nread - 1] == '\n')
 		buf[nread - 1] = '\0';
 	return (buf);
@@ -61,7 +42,6 @@ void	handle_eof_exit(char **envp, t_node *node)
 		strarrfree(envp);
 	clear_history();
 	restore_termios();
-	/* Write exit status to a file for tester harness, if requested */
 	maybe_write_exit_file();
 	exit(get_exit_status());
 }

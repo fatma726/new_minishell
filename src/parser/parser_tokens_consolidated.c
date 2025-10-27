@@ -1,35 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_file.c                                       :+:      :+:    :+:   */
+/*   parser_tokens_consolidated.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/22 22:10:00 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/06 21:32:10 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "mandatory.h"
 
-void	maybe_write_exit_file(void)
+/* Basic token checks */
+bool	isp(char *str)
 {
-    const char	*path;
-    int         fd;
-    char        *s;
-
-    path = getenv("MINISHELL_EXIT_FILE");
-    if (!path || !*path)
-        return ;
-    fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    if (fd < 0)
-        return ;
-    s = ft_itoa(get_exit_status());
-    if (s)
-    {
-        write(fd, s, ft_strlen(s));
-        free(s);
-    }
-    close(fd);
+	return (str && !ft_strncmp(str, "|", 2));
 }
 
+bool	isdp(char *str)
+{
+	return (str && !ft_strncmp(str, "||", 3));
+}
+
+bool	isda(char *str)
+{
+	return (str && !ft_strncmp(str, "&&", 3));
+}
+
+bool	istlr(char *str)
+{
+	return (str && !ft_strncmp(str, "<<<", 4));
+}
+
+bool	islrr(char *str)
+{
+	return (str && !ft_strncmp(str, "<>", 3));
+}

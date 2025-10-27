@@ -1,41 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   global.c                                         :+:      :+:    :+:   */
+/*   parser_tokens_consolidated2.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:07 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/06 21:32:10 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
 
-#include <signal.h>
-
-/* global slots state is defined in state.c */
-
-int	get_signal_number(void)
+/* Group token checks */
+bool	is_ampersand(char *str)
 {
-	return ((int)ms_slots()->signal_number);
+	return (str && !ft_strncmp(str, "&", 2));
 }
 
-void	clear_signal_number(void)
+bool	is_open_paren(char *str)
 {
-	ms_slots()->signal_number = 0;
+	return (str && !ft_strncmp(str, "(", 2));
 }
 
-void	set_signal_number(int sig)
+bool	is_close_paren(char *str)
 {
-	ms_slots()->signal_number = (sig_atomic_t)sig;
+	return (str && !ft_strncmp(str, ")", 2));
 }
 
-bool	is_interactive_mode(void)
+bool	is_open_brace(char *str)
 {
-	return (ms_slots()->interactive != 0);
+	return (str && !ft_strncmp(str, "{", 2));
 }
 
-void	set_interactive_mode(bool value)
+bool	is_close_brace(char *str)
 {
-	ms_slots()->interactive = value;
+	return (str && !ft_strncmp(str, "}", 2));
 }

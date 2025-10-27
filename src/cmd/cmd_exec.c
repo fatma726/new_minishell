@@ -59,15 +59,13 @@ bool	exec_check(char **args, char **envp, t_node *node)
 
 static void	handle_signaled_status(int status)
 {
-	int	sig;
+    int	sig;
 
-	sig = WTERMSIG(status);
-	if (sig == SIGQUIT)
-		ft_putstr_fd("Quit: 3\n", STDOUT_FILENO);
-	else if (sig == SIGPIPE)
-	{
-	}
-	set_exit_status(128 + sig);
+    sig = WTERMSIG(status);
+    if (sig == SIGPIPE)
+    {
+    }
+    set_exit_status(128 + sig);
 }
 
 void	post_wait_set_status(int pid, int background)

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_export_main.c                                :+:      :+:    :+:   */
+/*   cmd_export_consolidated.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -36,8 +36,14 @@ void	process_export_args(char **args, char ***envp, t_node *node)
 	has_error = false;
 	while (args[++i] && (!node->pipe_idx || i + 1 < node->pipe_idx))
 	{
-		if (!process_export_arg(args[i], envp, node))
+		if (!validate_export_identifier(args[i]))
+		{
+			if (!has_error)
+				print_invalid_identifier_error(args[i]);
 			has_error = true;
+			continue ;
+		}
+		(void)process_export_arg(args[i], envp, node);
 	}
 	if (has_error)
 		set_exit_status(EXIT_FAILURE);

@@ -9,8 +9,8 @@
 /*   Updated: 2025/10/06 21:32:02 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "bonus.h"
-#include "../../include/bonus.h"
+
+#include "../../../bonus/include/bonus.h"
 
 int		validate_parens(char *str, t_node *node, int *length);
 char	*handle_triple_redir_error(char *str, t_node *node);

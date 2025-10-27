@@ -1,37 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_tokens_group.c                            :+:      :+:    :+:   */
+/*   core_state2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:10 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/10/06 21:32:07 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
 
-bool	is_ampersand(char *str)
+void	set_interactive_mode(bool value)
 {
-	return (str && !ft_strncmp(str, "&", 2));
+	ms_slots()->interactive = value;
 }
 
-bool	is_open_paren(char *str)
+int	_ms_exit_status(int op, int value)
 {
-	return (str && !ft_strncmp(str, "(", 2));
+	if (op)
+		ms_slots()->exit_status = value;
+	return (ms_slots()->exit_status);
 }
 
-bool	is_close_paren(char *str)
+int	get_exit_status(void)
 {
-	return (str && !ft_strncmp(str, ")", 2));
+	return (_ms_exit_status(0, 0));
 }
 
-bool	is_open_brace(char *str)
+void	set_exit_status(int status)
 {
-	return (str && !ft_strncmp(str, "{", 2));
-}
-
-bool	is_close_brace(char *str)
-{
-	return (str && !ft_strncmp(str, "}", 2));
+	(void)_ms_exit_status(1, status);
 }

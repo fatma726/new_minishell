@@ -9,7 +9,7 @@
 /*   Updated: 2025/10/06 21:32:02 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "bonus.h"
+#include "../../../bonus/include/bonus.h"
 #include "../../include/bonus.h"
 
 bool	is_operator_pair(char *s, size_t i, t_node *n)

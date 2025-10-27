@@ -9,11 +9,7 @@
 /*   Updated: 2025/10/06 21:32:02 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "bonus.h"
-#include "../../include/bonus.h"
-
-char	*create_clean_string(char *str, t_node *node, int length);
-int		validate_parens(char *str, t_node *node, int *length);
+#include "../../../bonus/include/bonus.h"
 
 char	*create_clean_string(char *str, t_node *node, int length)
 {
@@ -76,37 +72,4 @@ int	validate_parens(char *str, t_node *node, int *length)
 			(*length)++;
 	}
 	return (count);
-}
-
-char	*handle_triple_redir_error(char *str, t_node *node)
-{
-	ft_putstr_fd("minishell: syntax error near unexpected token `>'\n",
-		STDERR_FILENO);
-	set_exit_status(2);
-	node->syntax_flag = true;
-	return (free(str), NULL);
-}
-
-char	*handle_paren_error(char *str, int count, t_node *node)
-{
-	if (count == -2)
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `",
-			STDERR_FILENO);
-		ft_putendl_fd(")'", STDERR_FILENO);
-		set_exit_status(2);
-		node->syntax_flag = true;
-		return (free(str), NULL);
-	}
-	if (count != 0)
-	{
-		ft_putstr_fd(
-			"minishell: syntax error near unexpected token `newline'",
-			STDERR_FILENO);
-		ft_putchar_fd('\n', STDERR_FILENO);
-		set_exit_status(2);
-		node->syntax_flag = true;
-		return (free(str), NULL);
-	}
-	return (str);
 }

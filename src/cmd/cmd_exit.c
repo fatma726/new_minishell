@@ -82,7 +82,6 @@ void	cleanup_and_exit(char **args, char **envp, t_node *node)
 		close(node->backup_stdin);
 	clear_history();
 	restore_termios();
-	/* Write exit status to a file for tester harness, if requested */
 	maybe_write_exit_file();
 	exit(get_exit_status());
 }

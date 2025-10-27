@@ -1,0 +1,22 @@
+{
+   readline_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:malloc
+   ...
+   fun:rl_initialize
+   ...
+}
+
+{
+   readline_tty_leaks
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   fun:malloc
+   ...
+   fun:rl_callback_handler_install
+   ...
+}
+

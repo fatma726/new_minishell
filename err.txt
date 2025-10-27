@@ -1,0 +1,1 @@
+minishell: export: `1ABC=def': not a valid identifier

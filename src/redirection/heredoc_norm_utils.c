@@ -57,17 +57,23 @@ int	process_heredoc_iteration(struct s_hdctx *ctx)
 
 int	run_heredoc_loop(struct s_hdctx *ctx, int *lines_read, bool *got_sigint)
 {
-	int	result;
+    int	result;
 
-	*lines_read = 0;
-	*got_sigint = false;
-	while (1)
-	{
-		result = process_heredoc_iteration(ctx);
-		if (result == 0)
-			return (0);
-		if (result == 1)
-		{
+    *lines_read = 0;
+    *got_sigint = false;
+    while (1)
+    {
+        /* Ignore SIGQUIT inside heredoc: clear and break */
+        if (get_signal_number() == SIGQUIT)
+        {
+            clear_signal_number();
+            break ;
+        }
+        result = process_heredoc_iteration(ctx);
+        if (result == 0)
+            return (0);
+        if (result == 1)
+        {
 			(*lines_read)++;
 			continue ;
 		}

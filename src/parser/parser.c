@@ -102,13 +102,6 @@ char	**parser(char *str, char **envp, t_node *node)
 		free(str);
 		return (envp);
 	}
-	if (!isatty(STDIN_FILENO) && get_nontext_input())
-	{
-		clear_nontext_input();
-		set_exit_status(127);
-		free(str);
-		return (envp);
-	}
 	args = process_parser_input(str, envp, node);
 	if (handle_parser_errors(args, envp, node))
 		return (envp);

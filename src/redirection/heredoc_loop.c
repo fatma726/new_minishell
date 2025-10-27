@@ -52,10 +52,12 @@ int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
 	char			*clean_delimiter;
 	int				unterminated;
 	struct s_hdctx	ctx;
+    bool                is_standalone;
 
 	clean_delimiter = clean_delimiter_if_marked(args[*i + 1]);
 	ctx.args = args;
 	ctx.has_command = command_has_non_redir_token(args);
+    is_standalone = !ctx.has_command;
 	ctx.delimiter = clean_delimiter;
 	ctx.expand_vars = should_expand_vars(clean_delimiter);
 	ctx.envp = envp;
@@ -63,13 +65,19 @@ int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
 	set_heredoc_signal();
 	unterminated = process_heredoc_loop(&ctx);
 	set_signal();
-	if (get_signal_number() == SIGINT)
-	{
-		set_exit_status(1);
-		clear_signal_number();
-		return (1);
-	}
+    if (get_signal_number() == SIGINT)
+    {
+        /* Heredoc Ctrl-C -> 1 (bash behavior) */
+        set_exit_status(1);
+        clear_signal_number();
+        return (1);
+    }
 	if (unterminated)
+	{
 		node->heredoc_unterminated = true;
+		/* Standalone heredoc terminated by EOF without delimiter -> 1 */
+		if (is_standalone)
+			set_exit_status(1);
+	}
 	return (unterminated);
 }

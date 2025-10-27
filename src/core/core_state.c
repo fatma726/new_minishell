@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   nontext.c                                        :+:      :+:    :+:   */
+/*   core_state.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,20 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
+#include <signal.h>
 
-static int	g_nontext_input = 0;
-
-bool	get_nontext_input(void)
+/* Global state management */
+struct s_global_slots	*ms_slots(void)
 {
-	return (g_nontext_input != 0);
+	static struct s_global_slots	state = {0, 0, 0};
+
+	return (&state);
 }
 
-void	set_nontext_input(bool v)
+int	get_signal_number(void)
 {
-	g_nontext_input = (v != 0);
+	return ((int)ms_slots()->signal_number);
 }
 
-void	clear_nontext_input(void)
+void	clear_signal_number(void)
 {
-	g_nontext_input = 0;
+	ms_slots()->signal_number = 0;
+}
+
+void	set_signal_number(int sig)
+{
+	ms_slots()->signal_number = (sig_atomic_t)sig;
+}
+
+bool	is_interactive_mode(void)
+{
+	return (ms_slots()->interactive != 0);
 }

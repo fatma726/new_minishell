@@ -14,10 +14,19 @@
 
 bool	is_delimiter(const char *line, const char *delim)
 {
-	if (ft_strncmp(line, delim, ft_strlen(delim)) == 0
-		&& ft_strlen(line) == ft_strlen(delim))
-		return (true);
-	return (false);
+    size_t dlen;
+    const char *d = delim;
+
+    if (!line || !delim)
+        return (false);
+    dlen = ft_strlen(delim);
+    if (dlen >= 2 && ((delim[0] == '\'' && delim[dlen - 1] == '\'')
+                   || (delim[0] == '"' && delim[dlen - 1] == '"')))
+    {
+        d = delim + 1;
+        dlen -= 2;
+    }
+    return (ft_strlen(line) == dlen && ft_strncmp(line, d, dlen) == 0);
 }
 
 int	handle_exit_if_needed(struct s_hdctx *ctx, char *line)

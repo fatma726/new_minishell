@@ -54,12 +54,12 @@ int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
 	struct s_hdctx	ctx;
     bool                is_standalone;
 
-	clean_delimiter = clean_delimiter_if_marked(args[*i + 1]);
+    clean_delimiter = clean_delimiter_if_marked(node->ori_args[*i + 1]);
 	ctx.args = args;
 	ctx.has_command = command_has_non_redir_token(args);
     is_standalone = !ctx.has_command;
-	ctx.delimiter = clean_delimiter;
-	ctx.expand_vars = should_expand_vars(clean_delimiter);
+    ctx.delimiter = clean_delimiter;
+    ctx.expand_vars = should_expand_vars(node->ori_args[*i + 1]);
 	ctx.envp = envp;
 	ctx.node = node;
 	set_heredoc_signal();

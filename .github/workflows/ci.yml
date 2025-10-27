@@ -45,3 +45,13 @@ jobs:
           name: valgrind-out
           path: vg.out
           retention-days: 7
+
+      - name: Heredoc non-interactive tests
+        run: tools/docker/run_in_container.sh 'make -s re; bash tools/test_heredoc_inner.sh | sed -n "1,200p"'
+
+      - name: Upload heredoc test log
+        uses: actions/upload-artifact@v4
+        with:
+          name: heredoc.log
+          path: test-logs/heredoc.log
+          retention-days: 7

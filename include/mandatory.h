@@ -260,7 +260,7 @@ int	left_redir(char **args, char **envp, int *i, t_node *node);
 void	cleanup_heredoc_file(t_node *node);
 int	left_redir_error_public(const char *s, int type, char *tmp);
 char	*clean_delimiter_if_marked(char *delimiter);
-bool	should_expand_vars(char *clean_delimiter);
+bool	should_expand_vars(char *raw_delimiter);
 int	process_heredoc_loop(struct s_hdctx *ctx);
 char	*get_heredoc_line(void);
 int	check_heredoc_signal(void);

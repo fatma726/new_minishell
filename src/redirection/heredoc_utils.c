@@ -19,10 +19,15 @@ char	*clean_delimiter_if_marked(char *delimiter)
 	return (delimiter);
 }
 
-bool	should_expand_vars(char *clean_delimiter)
+bool	should_expand_vars(char *raw_delimiter)
 {
-	return (!ft_strchr(clean_delimiter, '"')
-		&& !ft_strchr(clean_delimiter, '\''));
+    if (!raw_delimiter)
+        return (true);
+    if (raw_delimiter[0] == (char)WILDMARK)
+        return (false);
+    if (ft_strchr(raw_delimiter, '"') || ft_strchr(raw_delimiter, '\''))
+        return (false);
+    return (true);
 }
 
 static char	*process_tty_input(void)
@@ -39,7 +44,8 @@ char	*get_heredoc_line(void)
 {
 	if (isatty(STDIN_FILENO))
 		return (process_tty_input());
-	return (readline(""));
+	/* Non-TTY: read a raw line from stdin (no readline state) */
+	return (read_line_non_tty());
 }
 
 int	check_heredoc_signal(void)

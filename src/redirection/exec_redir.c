@@ -11,17 +11,63 @@
 /* ************************************************************************** */
 #include "mandatory.h"
 
+/* local helper: does this argv contain any non-redirection token before a pipe? */
+static int has_non_redir_token_local(char **args, t_node *node)
+{
+    int i = 0;
+    while (args && args[i] && !isp(node->ori_args[i]))
+    {
+        if (isdlr(node->ori_args[i]) || isdrr(node->ori_args[i]) || islr(node->ori_args[i])
+            || islrr(node->ori_args[i]) || isrr(node->ori_args[i]) || istlr(node->ori_args[i]))
+        {
+            if (args[i + 1])
+                i += 2;
+            else
+                i += 1;
+            continue ;
+        }
+        if (args[i][0])
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
+/* print bash-like syntax error for stray heredoc */
+static int report_stray_heredoc_error(char **args, int i, t_node *node)
+{
+    ft_putstr_fd("minishell: syntax error near unexpected token `", STDERR_FILENO);
+    if (!args[i + 1] || !args[i + 1][0])
+        ft_putstr_fd("newline", STDERR_FILENO);
+    else
+        ft_putstr_fd("<<", STDERR_FILENO);
+    ft_putendl_fd("'", STDERR_FILENO);
+    set_exit_status(2);
+    node->redir_stop = 1;
+    return (1);
+}
+
 static int	handle_heredoc_prepass(char **args, char **envp, t_node *node)
 {
-	int	i;
-	int	ret;
+    int	i;
+    int	ret;
 
-	ret = 0;
-	i = -1;
-	while (args[++i]
-		&& !isp(node->ori_args[i])
-		&& !node->redir_stop
-		&& !ret)
+    ret = 0;
+    /* If there is no command token at all, a stray heredoc must be a syntax error (status 2). */
+    if (!has_non_redir_token_local(args, node))
+    {
+        i = -1;
+        while (args[++i] && !isp(node->ori_args[i]))
+        {
+            if (isdlr(node->ori_args[i]) || istlr(node->ori_args[i]))
+                return report_stray_heredoc_error(args, i, node);
+        }
+    }
+    i = -1;
+    while (args[++i]
+        && !isp(node->ori_args[i])
+        && !node->redir_stop
+        && !ret)
 		if (isdlr(node->ori_args[i]))
 			ret = left_double_redir(args, envp, &i, node);
 	return (ret);

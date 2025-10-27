@@ -44,7 +44,7 @@ int	finalize_loop_result(int lines_read, bool got_sigint, struct s_hdctx *ctx)
 			ctx->node->redir_fd = -1;
 		}
 		unlink(".temp");
-		return (2);
+		return (1);
 	}
-	return (2);
+	return (0);
 }

@@ -1,0 +1,13 @@
+.obj/
+minishell
+libs/Libft/*.o
+libs/Libft/libft.a
+*.o
+*.out
+*.log
+/out.txt
+/out.txt;
+/err.txt
+/.dist/
+/.DS_Store
+/.vscode/

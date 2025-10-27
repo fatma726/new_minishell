@@ -39,5 +39,8 @@ run_case "exit 42"
 run_case "exit a"
 run_case "exit 1 2; echo x"
 run_case "echo hi > out.txt; cat out.txt"
+run_case "| ls"
+run_case ">> |"
+run_case "echo \"unterminated"
 
 exit $FAIL

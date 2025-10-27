@@ -53,6 +53,8 @@ int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
 	int				unterminated;
 	struct s_hdctx	ctx;
     bool                is_standalone;
+    int                 saved_rl_catch = 0;
+    int                 rc = 0;
 
     clean_delimiter = clean_delimiter_if_marked(node->ori_args[*i + 1]);
 	ctx.args = args;
@@ -62,15 +64,21 @@ int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
     ctx.expand_vars = should_expand_vars(node->ori_args[*i + 1]);
 	ctx.envp = envp;
 	ctx.node = node;
+	/* Ensure readline does not override our SIGINT handler during heredoc */
+    #if defined(RL_READLINE_VERSION)
+    saved_rl_catch = rl_catch_signals;
+    rl_catch_signals = 0;
+    #endif
 	set_heredoc_signal();
 	unterminated = process_heredoc_loop(&ctx);
-	set_signal();
     if (get_signal_number() == SIGINT)
     {
         /* Heredoc Ctrl-C -> 130 */
         set_exit_status(130);
+        node->redir_stop = 1;
         clear_signal_number();
-        return (1);
+        rc = 130;
+        goto cleanup_heredoc;
     }
 	if (unterminated)
 	{
@@ -79,5 +87,12 @@ int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
 		if (is_standalone)
 			set_exit_status(1);
 	}
-	return (unterminated);
+	rc = unterminated;
+
+cleanup_heredoc:
+	set_signal(); /* restore prompt-mode handlers */
+    #if defined(RL_READLINE_VERSION)
+    rl_catch_signals = saved_rl_catch;
+    #endif
+	return (rc);
 }

@@ -55,3 +55,18 @@ jobs:
           name: heredoc.log
           path: test-logs/heredoc.log
           retention-days: 7
+
+      - name: Heredoc Ctrl-C PTY test
+        run: tools/docker/run_in_container.sh 'make -s re; python3 tools/test_heredoc_sigint_pty.py'
+
+      - name: Upload PTY heredoc output
+        if: always()
+        run: |
+          tools/docker/run_in_container.sh 'make -s re; python3 tools/test_heredoc_sigint_pty.py' > ci-artifacts/pty_heredoc.txt || true
+        shell: bash
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: pty_heredoc
+          path: ci-artifacts/pty_heredoc.txt
+          retention-days: 7

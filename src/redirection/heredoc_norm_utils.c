@@ -52,6 +52,9 @@ int	process_heredoc_iteration(struct s_hdctx *ctx)
 	{
 		if (check_heredoc_signal())
 			return (3);
+		/* Some readline builds return NULL with EINTR on SIGINT */
+		if (errno == EINTR)
+			return (3);
 		return (2);
 	}
 	handle_exit_if_needed(ctx, line);

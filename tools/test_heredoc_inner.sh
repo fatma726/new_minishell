@@ -116,6 +116,21 @@ t "pipe+heredoc: rhs provides data" 0 "^a$" -- \
   "a" \
   "X"
 
+# Multiple heredocs: last input redirection wins (stdin comes from last <<)
+t "multi-heredoc: last one wins (prints B only)" 0 "^X to B$" -- \
+  "cat <<A <<B" \
+  "X to B" \
+  "B" \
+  "Y to A" \
+  "A"
+
+t "multi-heredoc: last one wins (prints A only)" 0 "^Y to A$" -- \
+  "cat <<B <<A" \
+  "X to B" \
+  "B" \
+  "Y to A" \
+  "A"
+
 # Directory execute -> 126
 t "exec: /bin is directory -> 126" 126 "" -- \
   "/bin"

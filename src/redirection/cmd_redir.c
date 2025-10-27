@@ -55,9 +55,9 @@ int	left_redir(char **args, char **envp, int *i, t_node *node)
 
 int	left_double_redir(char **args, char **envp, int *i, t_node *node)
 {
-	if (isdlr(node->ori_args[*i]) || istlr(node->ori_args[*i]))
-	{
-		if (!args[*i + 1] || !args[*i + 1][0])
+    if (isdlr(node->ori_args[*i]) || istlr(node->ori_args[*i]))
+    {
+        if (!args[*i + 1] || !args[*i + 1][0])
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token `",
 				STDERR_FILENO);
@@ -67,14 +67,24 @@ int	left_double_redir(char **args, char **envp, int *i, t_node *node)
 			node->redir_stop = 1;
 			return (1);
 		}
-		if (node->redir_fd < 0 && setup_heredoc_file(node))
-			return (1);
-		if (heredoc_loop(args, envp, i, node))
-			return (1);
-		move_redir_args(args, node->ori_args, i);
-		*i -= 1;
-		set_exit_status(0);
-		return (0);
-	}
-	return (0);
+        if (node->redir_fd < 0 && setup_heredoc_file(node))
+            return (1);
+        {
+            int rc = heredoc_loop(args, envp, i, node);
+            if (rc == 130)
+                return (130);
+            if (rc)
+                return (1);
+        }
+        move_redir_args(args, node->ori_args, i);
+        *i -= 1;
+        if (node->redir_stop)
+        {
+            set_exit_status(130);
+            return (130);
+        }
+        set_exit_status(0);
+        return (0);
+    }
+    return (0);
 }

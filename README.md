@@ -17,6 +17,17 @@ Tools
     - allocs == frees
     - no open FD leaks
 
+Testing Heredoc
+
+- Non-interactive: `tools/test_heredoc_inner.sh`
+  - Covers syntax errors (`<<` and `<< WORD` without a command → status 2),
+    expansion on/off based on delimiter quoting, pipelines, and multi-heredoc
+    semantics (last input redirection wins).
+- Interactive Ctrl-C: `tools/test_heredoc_sigint_pty.py`
+  - Uses a PTY to simulate pressing Ctrl-C during heredoc.
+  - Expects status 130 on interrupt and no leftover temporary heredoc files.
+  - Includes a second scenario interrupting during the second heredoc of a multi-heredoc command.
+
 Notes
 
 - Builtins run in the parent process via a dispatcher (`src/exec/builtins_dispatch.c`) which safely

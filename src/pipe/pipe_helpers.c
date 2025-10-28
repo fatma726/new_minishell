@@ -41,27 +41,30 @@ static bool	has_non_redir_token(char **args)
 
 char	**one_commnad(char **args, char **envp, t_node *node)
 {
-	int	redir_ret;
+    int	redir_ret;
 
-	redir_ret = 0;
-	if (redir_chk(node->ori_args))
-		redir_ret = exec_redir(args, envp, node);
-	if (!has_non_redir_token(args))
-	{
-		if (redir_ret == 0 && get_exit_status() == 0)
-			set_exit_status(0);
-		if (args && args[0] && !args[0][0])
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			set_exit_status(127);
-		}
-		return (envp);
-	}
-	envp = find_command(args, envp, node);
-	if (node->redir_flag)
-		backup_restor(node);
-	return (envp);
+    redir_ret = 0;
+    if (redir_chk(node->ori_args))
+        redir_ret = exec_redir(args, envp, node);
+    if (!has_non_redir_token(args))
+    {
+        if (redir_ret == 0 && get_exit_status() == 0)
+            set_exit_status(0);
+        if (args && args[0] && !args[0][0])
+        {
+            ft_putstr_fd("minishell: ", STDERR_FILENO);
+            ft_putstr_fd(": command not found\n", STDERR_FILENO);
+            set_exit_status(127);
+        }
+        return (envp);
+    }
+    /* If a heredoc was aborted (Ctrl-C), skip executing the command. */
+    if (node->redir_stop)
+        return (envp);
+    envp = find_command(args, envp, node);
+    if (node->redir_flag)
+        backup_restor(node);
+    return (envp);
 }
 
 int	prepare_redirections(char **args, char **envp, t_node *node)

@@ -66,9 +66,10 @@ const char	*check_final_token(char **args, int i)
 {
 	if (i > 0 && args[i])
 	{
-		if (isrr(args[i]) || isdrr(args[i]) || islr(args[i]) || isdlr(args[i]))
+		if (isrr(args[i]) || isdrr(args[i])
+			|| islr(args[i]) || isdlr(args[i]))
 			return ("newline");
-		if (isp(args[i]))
+		if (isp(args[i]) || islor(args[i]))
 			return ("newline");
 	}
 	return ("newline");

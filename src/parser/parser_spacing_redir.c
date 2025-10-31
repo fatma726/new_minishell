@@ -11,8 +11,10 @@
 /* ************************************************************************** */
 #include "mandatory.h"
 
+/* struct moved to header (mandatory.h) */
+
 static bool	handle_redir_token(char *str, t_node *node, char *result,
-		struct s_redir_copy_state *st)
+				t_redir_copy_state *st)
 {
 	if (!quote_check(str, st->i, node))
 	{
@@ -38,7 +40,7 @@ static bool	handle_redir_token(char *str, t_node *node, char *result,
 
 static int	copy_with_redirections(char *str, t_node *node, char *result)
 {
-	struct s_redir_copy_state	st;
+	t_redir_copy_state	st;
 
 	st.i = 0;
 	st.j = 0;

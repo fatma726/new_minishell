@@ -11,25 +11,26 @@
 /* ************************************************************************** */
 #include "mandatory.h"
 
+static bool	is_forbidden_token(char *s)
+{
+	if (!s)
+		return (false);
+	if (!ft_strncmp(s, "&&", 3))
+		return (true);
+	if (!ft_strncmp(s, "<>", 3) || !ft_strncmp(s, "<<<", 4)
+		|| !ft_strncmp(s, ">>>", 4))
+		return (true);
+	return (false);
+}
+
 bool	check_leading_operators_syntax(char **a)
 {
-	if (a[0] && (isp(a[0]) || istr(a[0])))
+	if (a[0] && (isp(a[0]) || islor(a[0]) || is_forbidden_token(a[0])))
 		return (false);
 	if (a[0] && (islr(a[0]) || isrr(a[0]) || isdrr(a[0]) || isdlr(a[0]))
 		&& !a[1])
 		return (false);
-	if (a[0] && (is_oror(a[0]) || is_andand(a[0])))
-		return (false);
 	return (true);
-}
-
-bool	check_pipe_redir_combination(char **a, int i)
-{
-	if (ft_strchr(a[i], '|')
-		&& (ft_strchr(a[i + 1], '>') || ft_strchr(a[i + 1], '<'))
-		&& a[i + 2] && a[i + 2][0])
-		return (true);
-	return (false);
 }
 
 bool	check_trailing_operators_syntax(char **a)
@@ -40,7 +41,7 @@ bool	check_trailing_operators_syntax(char **a)
 	while (a[i] && a[i + 1])
 		i++;
 	if (i >= 0 && a[i] && (isp(a[i]) || islr(a[i]) || isrr(a[i])
-			|| isdlr(a[i]) || isdrr(a[i]))
+			|| isdlr(a[i]) || isdrr(a[i]) || islor(a[i]))
 		&& !ft_strchr(a[i], '\'') && !ft_strchr(a[i], '"'))
 		return (false);
 	return (true);
@@ -52,10 +53,8 @@ static bool	is_bare_operator(char *s)
 		return (false);
 	if (ft_strchr(s, '\'') || ft_strchr(s, '"'))
 		return (false);
-	return (
-		isp(s) || islr(s) || isrr(s) || isdlr(s)
-		|| isdrr(s) || is_oror(s) || is_andand(s)
-	);
+	return (isp(s) || islr(s) || isrr(s) || isdlr(s)
+		|| isdrr(s) || islor(s) || is_forbidden_token(s));
 }
 
 bool	check_consecutive_operators_syntax(char **a)
@@ -67,7 +66,9 @@ bool	check_consecutive_operators_syntax(char **a)
 	{
 		if (is_bare_operator(a[i]) && is_bare_operator(a[i + 1]))
 		{
-			if (check_pipe_redir_combination(a, i))
+			if (ft_strchr(a[i], '|')
+				&& (ft_strchr(a[i + 1], '>') || ft_strchr(a[i + 1], '<'))
+				&& a[i + 2] && a[i + 2][0])
 				i++;
 			else
 				return (false);

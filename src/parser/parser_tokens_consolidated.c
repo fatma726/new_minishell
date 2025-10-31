@@ -17,22 +17,7 @@ bool	isp(char *str)
 	return (str && !ft_strncmp(str, "|", 2));
 }
 
-bool	istlr(char *str)
-{
-	return (str && !ft_strncmp(str, "<<<", 4));
-}
-
-bool	islrr(char *str)
-{
-	return (str && !ft_strncmp(str, "<>", 3));
-}
-
-bool	is_oror(char *str)
+bool	islor(char *str)
 {
 	return (str && !ft_strncmp(str, "||", 3));
-}
-
-bool	is_andand(char *str)
-{
-	return (str && !ft_strncmp(str, "&&", 3));
 }

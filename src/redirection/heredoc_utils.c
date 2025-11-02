@@ -60,6 +60,7 @@ char	*get_heredoc_line(void)
 	if (isatty(STDIN_FILENO))
 		return (process_tty_input());
 	buf = NULL;
+	len = 0;
 	nread = getline(&buf, &len, stdin);
 	if (nread < 0)
 	{

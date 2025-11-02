@@ -1,0 +1,951 @@
+[
+{cmd:,expected:0,actual:0,result:PASS,category:syntax,description:Empty line (enter),memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd: ,expected:0,actual:0,result:PASS,category:syntax,description:Only spaces,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd: ,expected:0,actual:0,result:PASS,category:syntax,description:Only tabs,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd::,expected:0,actual:0,result:PASS,category:syntax,description:Colon character,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:!,expected:1,actual:1,result:PASS,category:syntax,description:Exclamation mark,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>,expected:2,actual:2,result:PASS,category:syntax,description:Single redirect out,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:<,expected:2,actual:2,result:PASS,category:syntax,description:Single redirect in,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>>,expected:2,actual:2,result:PASS,category:syntax,description:Double redirect out,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:<<,expected:2,actual:2,result:PASS,category:syntax,description:Heredoc alone,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:<>,expected:2,actual:2,result:PASS,category:syntax,description:Mixed redirects,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>>>>>,expected:2,actual:2,result:PASS,category:syntax,description:Multiple redirect out,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>>>>>>>>>>>>>>>,expected:2,actual:2,result:PASS,category:syntax,description:Many redirect out,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:<<<<<,expected:2,actual:2,result:PASS,category:syntax,description:Multiple heredoc,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:<<<<<<<<<<<<<<<<,expected:2,actual:2,result:PASS,category:syntax,description:Many heredoc,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:> > > >,expected:2,actual:2,result:PASS,category:syntax,description:Spaced redirect out,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>> >> >> >>,expected:2,actual:2,result:PASS,category:syntax,description:Spaced double redirect,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>>>> >> >> >>,expected:2,actual:2,result:PASS,category:syntax,description:Mixed spaced redirects,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:/,expected:126,actual:126,result:PASS,category:syntax,description:Root directory as command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd://,expected:126,actual:126,result:PASS,category:syntax,description:Double slash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:/.,expected:126,actual:126,result:PASS,category:syntax,description:Root dot,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:/./../../../../..,expected:126,actual:126,result:PASS,category:syntax,description:Complex path traversal,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:///////,expected:126,actual:126,result:PASS,category:syntax,description:Many slashes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:-,expected:127,actual:127,result:PASS,category:syntax,description:Dash as command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:|,expected:2,actual:2,result:PASS,category:syntax,description:Pipe alone,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:| hola,expected:2,actual:2,result:PASS,category:syntax,description:Pipe at start,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:| | |,expected:2,actual:2,result:PASS,category:syntax,description:Multiple pipes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:||,expected:2,actual:2,result:PASS,category:syntax,description:Double pipe,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:|||||,expected:2,actual:2,result:PASS,category:syntax,description:Many pipes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:|||||||||||||,expected:2,actual:2,result:PASS,category:syntax,description:Very many pipes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>>|><,expected:2,actual:2,result:PASS,category:syntax,description:Mixed operators,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+,
+,
+,
+{cmd:"hola",expected:127,actual:127,result:PASS,category:syntax,description:Quoted string as command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:'hola',expected:127,actual:127,result:PASS,category:syntax,description:Single quoted as command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:hola,expected:127,actual:127,result:PASS,category:syntax,description:Non-existent command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:hola que tal,expected:127,actual:127,result:PASS,category:syntax,description:Non-existent with args,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:Makefile,expected:127,actual:127,result:PASS,category:syntax,description:File as command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo,expected:0,actual:0,result:PASS,category:echo,description:Echo alone,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -n,expected:0,actual:0,result:PASS,category:echo,description:Echo -n alone,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo Hola,expected:0,actual:0,result:PASS,category:echo,description:Echo simple,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echoHola,expected:127,actual:127,result:PASS,category:echo,description:Echo without space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo-nHola,expected:127,actual:127,result:PASS,category:echo,description:Echo-n without space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -n Hola,expected:0,actual:0,result:PASS,category:echo,description:Echo -n with text,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "-n" Hola,expected:0,actual:0,result:PASS,category:echo,description:Echo quoted -n,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -nHola,expected:0,actual:0,result:PASS,category:echo,description:Echo -n joined,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo Hola -n,expected:0,actual:0,result:PASS,category:echo,description:Echo with -n after,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo Hola Que Tal,expected:0,actual:0,result:PASS,category:echo,description:Echo multiple words,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo Hola,expected:0,actual:0,result:PASS,category:echo,description:Echo with spaces before,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo Hola Que Tal,expected:0,actual:0,result:PASS,category:echo,description:Echo with many spaces,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -n -n,expected:0,actual:0,result:PASS,category:echo,description:Echo double -n,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -n -n Hola Que,expected:0,actual:0,result:PASS,category:echo,description:Echo double -n with text,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -p,expected:0,actual:0,result:PASS,category:echo,description:Echo invalid flag,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -nnnnn,expected:0,actual:0,result:PASS,category:echo,description:Echo multiple n,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -n -nnn -nnnn,expected:0,actual:0,result:PASS,category:echo,description:Echo mixed -n flags,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -n-nnn -nnnn,expected:0,actual:0,result:PASS,category:echo,description:Echo joined -n,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -n -nnn hola -nnnn,expected:0,actual:0,result:PASS,category:echo,description:Echo -n with text and more -n,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -n -nnn-nnnn,expected:0,actual:0,result:PASS,category:echo,description:Echo mixed -n joined,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo --------n,expected:0,actual:0,result:PASS,category:echo,description:Echo many dashes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -nnn --------n,expected:0,actual:0,result:PASS,category:echo,description:Echo -n with dashes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -nnn -----nn---nnnn,expected:0,actual:0,result:PASS,category:echo,description:Echo complex dashes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -nnn --------nnnn,expected:0,actual:0,result:PASS,category:echo,description:Echo dashes ending n,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $,expected:0,actual:0,result:PASS,category:echo,description:Echo dollar sign,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $?,expected:0,actual:0,result:PASS,category:echo,description:Echo exit code,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $?$,expected:0,actual:0,result:PASS,category:echo,description:Echo exit code with dollar,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $? | echo $? | echo $?,expected:0,actual:0,result:PASS,category:echo,description:Echo exit code piped,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo HOME variable,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo \\$HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo escaped HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo my shit terminal is [$TERM],expected:0,actual:0,result:PASS,category:echo,description:Echo with TERM,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo my shit terminal is [$TERM4,expected:0,actual:0,result:PASS,category:echo,description:Echo TERM4 no bracket,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo my shit terminal is [$TERM4],expected:0,actual:0,result:PASS,category:echo,description:Echo TERM4 with bracket,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $UID,expected:0,actual:0,result:PASS,category:echo,description:Echo UID,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $HOME9,expected:0,actual:0,result:PASS,category:echo,description:Echo HOME with digit,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $9HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo digit before HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $HOME%,expected:0,actual:0,result:PASS,category:echo,description:Echo HOME with percent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $UID$HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo UID and HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo Le path de mon HOME est $HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo sentence with HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $hola*,expected:0,actual:0,result:PASS,category:echo,description:Echo non-existent var with star,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo -nnnn $hola,expected:0,actual:0,result:PASS,category:echo,description:Echo -n with non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo > <,expected:2,actual:2,result:PASS,category:echo,description:Echo with redirect error,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo | |,expected:2,actual:2,result:PASS,category:echo,description:Echo with pipe error,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $"",expected:0,actual:0,result:PASS,category:echo,description:Echo dollar empty quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "$""",expected:0,actual:0,result:PASS,category:echo,description:Echo quoted dollar,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo '$''''',expected:0,actual:0,result:PASS,category:echo,description:Echo single quote mix,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $"HOME",expected:0,actual:0,result:PASS,category:echo,description:Echo dollar quoted HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $''HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo dollar empty single HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $""HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo dollar empty double HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "$HO"ME,expected:0,actual:0,result:PASS,category:echo,description:Echo partial quoted HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo '$HO'ME,expected:0,actual:0,result:PASS,category:echo,description:Echo single quoted HO,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "$HO""ME",expected:0,actual:0,result:PASS,category:echo,description:Echo split quoted HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo '$HO''ME',expected:0,actual:0,result:PASS,category:echo,description:Echo single split HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo ""$HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo empty before HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "" $HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo empty space HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo ''$HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo single empty HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo '' $HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo single empty space HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $"HO""ME",expected:0,actual:0,result:PASS,category:echo,description:Echo dollar split HOMME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $'HO''ME',expected:0,actual:0,result:PASS,category:echo,description:Echo dollar single split,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $'HOME',expected:0,actual:0,result:PASS,category:echo,description:Echo dollar single HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "$"HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo quoted dollar HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $=HOME,expected:0,actual:0,result:PASS,category:echo,description:Echo dollar equals HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $"HOLA",expected:0,actual:0,result:PASS,category:echo,description:Echo dollar quoted HOLA,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $'HOLA',expected:0,actual:0,result:PASS,category:echo,description:Echo dollar single HOLA,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo $DONTEXIST Hola,expected:0,actual:0,result:PASS,category:echo,description:Echo non-existent var,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "hola",expected:0,actual:0,result:PASS,category:echo,description:Echo double quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo 'hola',expected:0,actual:0,result:PASS,category:echo,description:Echo single quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo ''hola'',expected:0,actual:0,result:PASS,category:echo,description:Echo empty quotes around,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo ''h'o'la'',expected:0,actual:0,result:PASS,category:echo,description:Echo split quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "''h'o'la''",expected:0,actual:0,result:PASS,category:echo,description:Echo double wrap single,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "'"h'o'la"'",expected:0,actual:0,result:PASS,category:echo,description:Echo complex quote mix,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo"'hola'",expected:0,actual:0,result:PASS,category:echo,description:Echo joined quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "'hola'",expected:0,actual:0,result:PASS,category:echo,description:Echo double wrap single hola,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo '"hola"',expected:0,actual:0,result:PASS,category:echo,description:Echo single wrap double,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo '''ho"''''l"a''',expected:0,actual:0,result:PASS,category:echo,description:Echo complex quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola"""""""""",expected:0,actual:0,result:PASS,category:echo,description:Echo many empty doubles,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola"''''''''''",expected:0,actual:0,result:PASS,category:echo,description:Echo singles in doubles,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola'''''''''''',expected:0,actual:0,result:PASS,category:echo,description:Echo many empty singles,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola'"""""""""',expected:0,actual:0,result:PASS,category:echo,description:Echo doubles in singles,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:e"cho hola",expected:127,actual:127,result:PASS,category:echo,description:Command with quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:e'cho hola',expected:127,actual:127,result:PASS,category:echo,description:Command with single quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo ""hola,expected:0,actual:0,result:PASS,category:echo,description:Echo empty joined hola,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "" hola,expected:0,actual:0,result:PASS,category:echo,description:Echo empty space hola,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "" hola,expected:0,actual:0,result:PASS,category:echo,description:Echo empty spaces hola,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola""bonjour,expected:0,actual:0,result:PASS,category:echo,description:Echo joined words,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:"e"'c'ho 'b'"o"nj"o"'u'r,expected:0,actual:0,result:PASS,category:echo,description:Complex quote command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "$DONTEXIST"Makefile,expected:0,actual:0,result:PASS,category:echo,description:Echo empty var Makefile,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "$DONTEXIST""Makefile",expected:0,actual:0,result:PASS,category:echo,description:Echo empty var quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo "$DONTEXIST" "Makefile",expected:0,actual:0,result:PASS,category:echo,description:Echo empty var space quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:$?,expected:127,actual:127,result:PASS,category:variables,description:Dollar question as command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:$?$?,expected:127,actual:127,result:PASS,category:variables,description:Double dollar question,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:?$HOME,expected:127,actual:127,result:PASS,category:variables,description:Question mark HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:$,expected:127,actual:127,result:PASS,category:variables,description:Dollar alone,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:$HOME,expected:126,actual:126,result:PASS,category:variables,description:HOME as command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:$HOMEdskjhfkdshfsd,expected:0,actual:0,result:PASS,category:variables,description:HOME with garbage,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:"$HOMEdskjhfkdshfsd",expected:127,actual:127,result:PASS,category:variables,description:Quoted HOME garbage,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:'$HOMEdskjhfkdshfsd',expected:127,actual:127,result:PASS,category:variables,description:Single quoted HOME garbage,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:$DONTEXIST,expected:0,actual:0,result:PASS,category:variables,description:Non-existent variable,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:$LESS$VAR,expected:127,actual:0,result:FAIL_EXIT,category:variables,description:Multiple variables,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+,
+,
+,
+{cmd:env,expected:0,actual:0,result:PASS,category:env,description:Print environment,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export,expected:0,actual:0,result:PASS,category:export,description:Export list,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=bonjour,expected:0,actual:0,result:PASS,category:export,description:Export simple,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=bonjour,expected:0,actual:0,result:PASS,category:export,description:Export with spaces,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export Hola,expected:0,actual:0,result:PASS,category:export,description:Export without value,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export Hola9hey,expected:0,actual:0,result:PASS,category:export,description:Export alphanumeric,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export $DONTEXIST,expected:0,actual:0,result:PASS,category:export,description:Export non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export "",expected:1,actual:1,result:PASS,category:export,description:Export empty quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export =,expected:1,actual:1,result:PASS,category:export,description:Export equals alone,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export %,expected:1,actual:1,result:PASS,category:export,description:Export percent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export $?,expected:1,actual:1,result:PASS,category:export,description:Export exit code,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export ?=2,expected:1,actual:1,result:PASS,category:export,description:Export question equals,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export 9HOLA=,expected:1,actual:1,result:PASS,category:export,description:Export starts with digit,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA9=bonjour,expected:0,actual:0,result:PASS,category:export,description:Export digit in name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export _HOLA=bonjour,expected:0,actual:0,result:PASS,category:export,description:Export underscore start,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export ___HOLA=bonjour,expected:0,actual:0,result:PASS,category:export,description:Export multiple underscores,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export _HO_LA_=bonjour,expected:0,actual:0,result:PASS,category:export,description:Export underscores mixed,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOL@=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export with at sign,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export -HOLA=bonjour,expected:2,actual:2,result:PASS,category:export,description:Export invalid option,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export --HOLA=bonjour,expected:2,actual:2,result:PASS,category:export,description:Export double dash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA-=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export dash in name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HO-LA=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export dash middle,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOL.A=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export dot in name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOL}A=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export brace in name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOL{A=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export open brace,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HO*LA=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export star in name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HO#LA=bonjour,expected:1,actual:0,result:FAIL_EXIT,category:export,description:Export hash in name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HO@LA=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export at in name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HO$?LA=bonjour,expected:0,actual:0,result:PASS,category:export,description:Export with exit code,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export +HOLA=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export plus start,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOL+A=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export plus middle,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA =bonjour,expected:1,actual:1,result:PASS,category:export,description:Export space before equals,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA = bonjour,expected:1,actual:1,result:PASS,category:export,description:Export spaces around equals,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=bon jour,expected:0,actual:0,result:PASS,category:export,description:Export with space in value,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA= bonjour,expected:0,actual:0,result:PASS,category:export,description:Export space after equals,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=$HOME,expected:0,actual:0,result:PASS,category:export,description:Export HOME value,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=bonjour$HOME,expected:0,actual:0,result:PASS,category:export,description:Export concat HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=$HOMEbonjour,expected:0,actual:0,result:PASS,category:export,description:Export HOME prefix,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=bon$jour,expected:0,actual:0,result:PASS,category:export,description:Export non-existent var,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=bon@jour,expected:0,actual:0,result:PASS,category:export,description:Export at in value,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=bon""jour"",expected:0,actual:0,result:PASS,category:export,description:Export quoted value,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA$USER=bonjour,expected:0,actual:0,result:PASS,category:export,description:Export var in name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=bonjour BYE=casse-toi,expected:0,actual:0,result:PASS,category:export,description:Export multiple,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export $HOLA=bonjour,expected:0,actual:1,result:FAIL_EXIT,category:export,description:Export dollar var name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=""bonjour "",expected:0,actual:1,result:FAIL_EXIT,category:export,description:Export quoted spaces,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA="" -n bonjour "",expected:0,actual:1,result:FAIL_EXIT,category:export,description:Export -n in value,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA='""',expected:0,actual:0,result:PASS,category:export,description:Export quotes in quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=at,expected:0,actual:0,result:PASS,category:export,description:Export simple at,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export """" HOLA=bonjour,expected:1,actual:1,result:PASS,category:export,description:Export empty before name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=""cat Makefile | grep NAME"",expected:0,actual:1,result:FAIL_EXIT,category:export,description:Export command in value,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA="" bonjour hey "",expected:0,actual:1,result:FAIL_EXIT,category:export,description:Export spaced value,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOL=A=bonjour,expected:0,actual:0,result:PASS,category:export,description:Export equals in name,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOL=A="""",expected:0,actual:0,result:PASS,category:export,description:Export empty value,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export ""="",expected:1,actual:1,result:PASS,category:export,description:Export all empty,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export ''='',expected:1,actual:1,result:PASS,category:export,description:Export single empty,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export "="="=",expected:1,actual:1,result:PASS,category:export,description:Export triple equals,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export '='='=',expected:1,actual:1,result:PASS,category:export,description:Export single equals,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOLA,expected:0,actual:0,result:PASS,category:unset,description:Unset variable,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset "",expected:1,actual:1,result:PASS,category:unset,description:Unset empty,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset INEXISTANT,expected:0,actual:0,result:PASS,category:unset,description:Unset non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset PWD,expected:0,actual:0,result:PASS,category:unset,description:Unset PWD,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset OLDPWD,expected:0,actual:0,result:PASS,category:unset,description:Unset OLDPWD,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset 9HOLA,expected:1,actual:1,result:PASS,category:unset,description:Unset starts with digit,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOLA9,expected:0,actual:0,result:PASS,category:unset,description:Unset ends with digit,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL?A,expected:1,actual:1,result:PASS,category:unset,description:Unset with question,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOLA=,expected:1,actual:1,result:PASS,category:unset,description:Unset with equals,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL.A,expected:1,actual:1,result:PASS,category:unset,description:Unset with dot,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL+A,expected:1,actual:1,result:PASS,category:unset,description:Unset with plus,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL=A,expected:1,actual:1,result:PASS,category:unset,description:Unset with equals middle,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL{A,expected:1,actual:1,result:PASS,category:unset,description:Unset with open brace,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL}A,expected:1,actual:1,result:PASS,category:unset,description:Unset with close brace,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL-A,expected:1,actual:1,result:PASS,category:unset,description:Unset with dash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset -HOLA,expected:2,actual:2,result:PASS,category:unset,description:Unset invalid option,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset _HOLA,expected:0,actual:0,result:PASS,category:unset,description:Unset underscore start,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL_A,expected:0,actual:0,result:PASS,category:unset,description:Unset underscore middle,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOLA_,expected:0,actual:0,result:PASS,category:unset,description:Unset underscore end,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL*A,expected:1,actual:1,result:PASS,category:unset,description:Unset with star,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL#A,expected:1,actual:0,result:FAIL_EXIT,category:unset,description:Unset with hash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset $HOLA,expected:0,actual:0,result:PASS,category:unset,description:Unset dollar var,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset $PWD,expected:1,actual:1,result:PASS,category:unset,description:Unset dollar PWD,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL@,expected:1,actual:1,result:PASS,category:unset,description:Unset with at,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL^A,expected:1,actual:1,result:PASS,category:unset,description:Unset with caret,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOL$?A,expected:0,actual:0,result:PASS,category:unset,description:Unset with exit code,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset =,expected:0,actual:1,result:FAIL_EXIT,category:unset,description:Unset equals,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset ======,expected:0,actual:1,result:FAIL_EXIT,category:unset,description:Unset many equals,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset ++++++,expected:0,actual:1,result:FAIL_EXIT,category:unset,description:Unset many plus,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset _______,expected:0,actual:0,result:PASS,category:unset,description:Unset many underscores,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset export,expected:0,actual:0,result:PASS,category:unset,description:Unset export,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset echo,expected:0,actual:0,result:PASS,category:unset,description:Unset echo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset pwd,expected:0,actual:0,result:PASS,category:unset,description:Unset pwd,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset cd,expected:0,actual:0,result:PASS,category:unset,description:Unset cd,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset unset,expected:0,actual:0,result:PASS,category:unset,description:Unset unset,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset sudo,expected:0,actual:0,result:PASS,category:unset,description:Unset sudo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:/bin/echo,expected:0,actual:0,result:PASS,category:binaries,description:Absolute path echo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:/bin/echo Hola Que Tal,expected:0,actual:0,result:PASS,category:binaries,description:Absolute echo with args,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:/bin/env,expected:0,actual:0,result:PASS,category:binaries,description:Absolute path env,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:/bin/cd Desktop,expected:127,actual:127,result:PASS,category:binaries,description:Absolute cd doesn't exist,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd,expected:0,actual:0,result:PASS,category:pwd,description:Print working directory,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd hola,expected:0,actual:0,result:PASS,category:pwd,description:Pwd with args,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd ./hola,expected:0,actual:0,result:PASS,category:pwd,description:Pwd with path,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd hola que tal,expected:0,actual:0,result:PASS,category:pwd,description:Pwd multiple args,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd -p,expected:2,actual:0,result:FAIL_EXIT,category:pwd,description:Pwd invalid option,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd --p,expected:2,actual:0,result:FAIL_EXIT,category:pwd,description:Pwd double dash option,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd ---p,expected:2,actual:0,result:FAIL_EXIT,category:pwd,description:Pwd triple dash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd pwd pwd,expected:0,actual:0,result:PASS,category:pwd,description:Pwd multiple times,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd ls,expected:0,actual:0,result:PASS,category:pwd,description:Pwd with ls arg,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd ls env,expected:0,actual:0,result:PASS,category:pwd,description:Pwd multiple command args,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd,expected:0,actual:0,result:PASS,category:cd,description:Cd to HOME,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd .,expected:0,actual:0,result:PASS,category:cd,description:Cd current dir,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ./,expected:0,actual:0,result:PASS,category:cd,description:Cd current with slash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ./././.,expected:0,actual:0,result:PASS,category:cd,description:Cd multiple dots,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ././././,expected:0,actual:0,result:PASS,category:cd,description:Cd multiple dot slash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ..,expected:0,actual:0,result:PASS,category:cd,description:Cd parent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ../,expected:0,actual:0,result:PASS,category:cd,description:Cd parent with slash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ../..,expected:0,actual:0,result:PASS,category:cd,description:Cd two parents,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ../..,expected:0,actual:0,result:PASS,category:cd,description:Cd parent and current,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd .././././.,expected:0,actual:0,result:PASS,category:cd,description:Cd mixed traversal,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd srcs objs,expected:1,actual:0,result:FAIL_EXIT,category:cd,description:Cd too many arguments,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd 'srcs',expected:0,actual:0,result:PASS,category:cd,description:Cd single quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd "srcs",expected:0,actual:0,result:PASS,category:cd,description:Cd double quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd '/etc',expected:0,actual:0,result:PASS,category:cd,description:Cd absolute quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd /e'tc',expected:0,actual:0,result:PASS,category:cd,description:Cd partial quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd /e"tc",expected:0,actual:0,result:PASS,category:cd,description:Cd partial double quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd sr,expected:1,actual:1,result:PASS,category:cd,description:Cd non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd Makefile,expected:1,actual:1,result:PASS,category:cd,description:Cd to file,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ../minishell,expected:0,actual:1,result:FAIL_EXIT,category:cd,description:Cd parent then dir,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ../../../../../../..,expected:0,actual:0,result:PASS,category:cd,description:Cd to root via parents,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd /,expected:0,actual:0,result:PASS,category:cd,description:Cd to root,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd '/',expected:0,actual:0,result:PASS,category:cd,description:Cd to root quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ///,expected:0,actual:0,result:PASS,category:cd,description:Cd triple slash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ////////,expected:0,actual:0,result:PASS,category:cd,description:Cd many slashes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd '////////',expected:0,actual:0,result:PASS,category:cd,description:Cd many slashes quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd /minishell,expected:1,actual:0,result:FAIL_EXIT,category:cd,description:Cd absolute non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd _,expected:1,actual:1,result:PASS,category:cd,description:Cd underscore,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd -,expected:0,actual:0,result:PASS,category:cd,description:Cd to OLDPWD,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd ---,expected:2,actual:1,result:FAIL_EXIT,category:cd,description:Cd triple dash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd $HOME,expected:0,actual:0,result:PASS,category:cd,description:Cd HOME variable,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd $HOME $HOME,expected:1,actual:0,result:FAIL_EXIT,category:cd,description:Cd HOME twice,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd $HOME/42_works,expected:0,actual:1,result:FAIL_EXIT,category:cd,description:Cd HOME subdir,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd "$PWD/srcs",expected:0,actual:0,result:PASS,category:cd,description:Cd PWD quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd '$PWD/srcs',expected:1,actual:1,result:PASS,category:cd,description:Cd PWD single quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+,
+,
+{cmd:./Makefile,expected:126,actual:126,result:PASS,category:bastards,description:Execute non-executable,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls hola,expected:2,actual:2,result:PASS,category:bastards,description:Ls non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:./minishell,expected:0,actual:0,result:PASS,category:bastards,description:Execute minishell,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:env|"wc" -l,expected:0,actual:0,result:PASS,category:bastards,description:Env piped to wc,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:env|"wc "-l,expected:127,actual:127,result:PASS,category:bastards,description:Env piped malformed,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:expr 1 + 1,expected:0,actual:0,result:PASS,category:bastards,description:Expr addition,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:expr $? + $?,expected:0,actual:1,result:FAIL_EXIT,category:bastards,description:Expr with exit codes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit,expected:0,actual:0,result:PASS,category:exit,description:Exit simple,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit exit,expected:2,actual:2,result:PASS,category:exit,description:Exit with non-numeric,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit hola,expected:2,actual:2,result:PASS,category:exit,description:Exit with string,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit hola que tal,expected:2,actual:2,result:PASS,category:exit,description:Exit with multiple strings,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 42,expected:42,actual:42,result:PASS,category:exit,description:Exit with code,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 000042,expected:42,actual:42,result:PASS,category:exit,description:Exit with leading zeros,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 666,expected:154,actual:154,result:PASS,category:exit,description:Exit modulo 256,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 666 666,expected:1,actual:1,result:PASS,category:exit,description:Exit too many args,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -666 666,expected:1,actual:1,result:PASS,category:exit,description:Exit negative too many,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit hola 666,expected:2,actual:2,result:PASS,category:exit,description:Exit non-numeric first,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 666 666 666 666,expected:1,actual:1,result:PASS,category:exit,description:Exit many args,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 666 hola 666,expected:1,actual:1,result:PASS,category:exit,description:Exit numeric then string,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit hola 666 666,expected:2,actual:2,result:PASS,category:exit,description:Exit string then numbers,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 259,expected:3,actual:3,result:PASS,category:exit,description:Exit 259 mod 256,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -4,expected:252,actual:252,result:PASS,category:exit,description:Exit negative small,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -42,expected:214,actual:214,result:PASS,category:exit,description:Exit negative 42,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -0000042,expected:214,actual:214,result:PASS,category:exit,description:Exit negative with zeros,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -259,expected:253,actual:253,result:PASS,category:exit,description:Exit negative 259,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -666,expected:102,actual:102,result:PASS,category:exit,description:Exit negative 666,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit +666,expected:154,actual:154,result:PASS,category:exit,description:Exit plus 666,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 0,expected:0,actual:0,result:PASS,category:exit,description:Exit zero,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit +0,expected:0,actual:0,result:PASS,category:exit,description:Exit plus zero,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -0,expected:0,actual:0,result:PASS,category:exit,description:Exit minus zero,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit +42,expected:42,actual:42,result:PASS,category:exit,description:Exit plus 42,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -69 -96,expected:1,actual:1,result:PASS,category:exit,description:Exit two negatives,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit --666,expected:2,actual:2,result:PASS,category:exit,description:Exit double dash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit ++++666,expected:2,actual:2,result:PASS,category:exit,description:Exit many plus,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit ++++++0,expected:2,actual:2,result:PASS,category:exit,description:Exit many plus zero,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit ------0,expected:2,actual:2,result:PASS,category:exit,description:Exit many minus zero,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit "666",expected:154,actual:154,result:PASS,category:exit,description:Exit quoted number,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit '666',expected:154,actual:154,result:PASS,category:exit,description:Exit single quoted number,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit '-666',expected:102,actual:102,result:PASS,category:exit,description:Exit quoted negative,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit '+666',expected:154,actual:154,result:PASS,category:exit,description:Exit quoted plus,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit '----666',expected:2,actual:2,result:PASS,category:exit,description:Exit quoted many dash,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit '++++666',expected:2,actual:2,result:PASS,category:exit,description:Exit quoted many plus,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit '6'66,expected:154,actual:154,result:PASS,category:exit,description:Exit split quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit '2'66'32',expected:8,actual:8,result:PASS,category:exit,description:Exit multiple splits,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit "'666'",expected:2,actual:2,result:PASS,category:exit,description:Exit nested quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit '"666"',expected:2,actual:2,result:PASS,category:exit,description:Exit nested double in single,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit '666'"666"666,expected:170,actual:170,result:PASS,category:exit,description:Exit complex quotes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit +'666'"666"666,expected:170,actual:170,result:PASS,category:exit,description:Exit plus complex,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -'666'"666"666,expected:86,actual:86,result:PASS,category:exit,description:Exit minus complex,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 9223372036854775807,expected:255,actual:255,result:PASS,category:exit,description:Exit LONG_MAX,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit 9223372036854775808,expected:2,actual:2,result:PASS,category:exit,description:Exit overflow,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -9223372036854775808,expected:0,actual:0,result:PASS,category:exit,description:Exit LONG_MIN,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit -9223372036854775809,expected:2,actual:2,result:PASS,category:exit,description:Exit underflow,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat | cat | cat | ls,expected:0,actual:0,result:PASS,category:pipes,description:Multiple cats and ls,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls | exit,expected:0,actual:0,result:PASS,category:pipes,description:Ls pipe exit,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls | exit 42,expected:42,actual:42,result:PASS,category:pipes,description:Ls pipe exit 42,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit | ls,expected:0,actual:0,result:PASS,category:pipes,description:Exit pipe ls,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo | echo,expected:0,actual:0,result:PASS,category:pipes,description:Echo pipe echo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola | echo que tal,expected:0,actual:0,result:PASS,category:pipes,description:Echo pipe echo args,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd | echo hola,expected:0,actual:0,result:PASS,category:pipes,description:Pwd pipe echo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:env | echo hola,expected:0,actual:0,result:PASS,category:pipes,description:Env pipe echo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo oui | cat -e,expected:0,actual:0,result:PASS,category:pipes,description:Echo pipe cat,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo oui | echo non | echo hola | grep oui,expected:0,actual:0,result:PASS,category:pipes,description:Multiple pipes grep oui,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo oui | echo non | echo hola | grep non,expected:0,actual:0,result:PASS,category:pipes,description:Multiple pipes grep non,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo oui | echo non | echo hola | grep hola,expected:0,actual:0,result:PASS,category:pipes,description:Multiple pipes grep hola,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola | cat -e | cat -e | cat -e,expected:0,actual:0,result:PASS,category:pipes,description:Echo multiple cat -e,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd .. | echo "hola",expected:0,actual:0,result:PASS,category:pipes,description:Cd pipe echo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd / | echo "hola",expected:0,actual:0,result:PASS,category:pipes,description:Cd root pipe echo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cd .. | pwd,expected:0,actual:0,result:PASS,category:pipes,description:Cd pipe pwd,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ifconfig | grep ":",expected:0,actual:0,result:PASS,category:pipes,description:Ifconfig pipe grep,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ifconfig | grep hola,expected:1,actual:1,result:PASS,category:pipes,description:Ifconfig grep non-match,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:whoami | grep $USER,expected:0,actual:0,result:PASS,category:pipes,description:Whoami pipe grep USER,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls | hola,expected:127,actual:127,result:PASS,category:pipes,description:Ls pipe non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls | ls hola,expected:2,actual:2,result:PASS,category:pipes,description:Ls pipe ls error,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls | ls | hola,expected:127,actual:127,result:PASS,category:pipes,description:Double ls pipe error,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls | hola | ls,expected:0,actual:0,result:PASS,category:pipes,description:Ls error ls,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls | ls | hola | rev,expected:0,actual:0,result:PASS,category:pipes,description:Multiple pipe with error,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls | ls | echo hola | rev,expected:0,actual:0,result:PASS,category:pipes,description:Multiple pipe echo rev,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls -la | grep ".",expected:0,actual:0,result:PASS,category:pipes,description:Ls pipe grep dot,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ls -la | grep "'.'",expected:0,actual:0,result:PASS,category:pipes,description:Ls pipe grep quoted dot,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo test.c | cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e| cat -e|cat -e|cat -e|cat -e,expected:0,actual:0,result:PASS,category:pipes,description:Many cat -e pipes,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola | cat | cat | cat | cat | cat | grep hola,expected:0,actual:0,result:PASS,category:pipes,description:Many cats grep,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola | cat,expected:0,actual:0,result:PASS,category:pipes,description:Echo pipe cat simple,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola| cat,expected:0,actual:0,result:PASS,category:pipes,description:Echo pipe no space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola |cat,expected:0,actual:0,result:PASS,category:pipes,description:Echo pipe space after,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola|cat,expected:0,actual:0,result:PASS,category:pipes,description:Echo pipe no spaces,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola ||| cat,expected:2,actual:2,result:PASS,category:pipes,description:Triple pipe,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:ech|o hola | cat,expected:127,actual:0,result:FAIL_EXIT,category:pipes,description:Pipe in command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat Makefile | cat -e | cat -e,expected:0,actual:0,result:PASS,category:pipes,description:Cat file double cat -e,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat Makefile | grep srcs | cat -e,expected:0,actual:0,result:PASS,category:pipes,description:Cat grep cat,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat Makefile | grep srcs | grep srcs | cat -e,expected:0,actual:0,result:PASS,category:pipes,description:Cat double grep,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat Makefile | grep pr | head -n 5 | cd file_not_exist,expected:1,actual:1,result:PASS,category:pipes,description:Pipe to cd error,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat Makefile | grep pr | head -n 5 | hello,expected:127,actual:127,result:PASS,category:pipes,description:Pipe to non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export HOLA=bonjour | cat -e | cat -e,expected:0,actual:0,result:PASS,category:pipes,description:Export pipe cats,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:unset HOLA | cat -e,expected:0,actual:0,result:PASS,category:pipes,description:Unset pipe cat,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:export | echo hola,expected:0,actual:0,result:PASS,category:pipes,description:Export pipe echo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:sleep 3 | sleep 3,expected:0,actual:0,result:PASS,category:pipes,description:Sleep pipe sleep,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:sleep 3 | exit,expected:0,actual:0,result:PASS,category:pipes,description:Sleep pipe exit,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:exit | sleep 3,expected:0,actual:0,result:PASS,category:pipes,description:Exit pipe sleep,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola > bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Redirect out simple,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo que tal >> bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Redirect append,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat < bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Redirect in simple,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd>bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Redirect no space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:pwd > bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Redirect many spaces,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola > > bonjour,expected:2,actual:2,result:PASS,category:redirections,description:Double redirect space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola < < bonjour,expected:2,actual:2,result:PASS,category:redirections,description:Double redirect in space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola >>> bonjour,expected:2,actual:2,result:PASS,category:redirections,description:Triple redirect,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:> bonjour echo hola,expected:0,actual:0,result:PASS,category:redirections,description:Redirect before command,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:> bonjour | echo hola,expected:0,actual:0,result:PASS,category:redirections,description:Redirect pipe echo,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:prout hola > bonjour,expected:127,actual:127,result:PASS,category:redirections,description:Non-existent redirect,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola > hello >> hello >> hello,expected:0,actual:0,result:PASS,category:redirections,description:Multiple redirects,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola >> hello >> hello > hello,expected:0,actual:0,result:PASS,category:redirections,description:Mixed redirect order,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:> pwd,expected:0,actual:0,result:PASS,category:redirections,description:Create file pwd,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:< pwd,expected:1,actual:0,result:FAIL_EXIT,category:redirections,description:Read non-existent pwd,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat <pwd,expected:1,actual:0,result:FAIL_EXIT,category:redirections,description:Cat non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat >>,expected:2,actual:2,result:PASS,category:redirections,description:Cat append no file,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat >>>,expected:2,actual:2,result:PASS,category:redirections,description:Cat triple redirect,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat >> <<,expected:2,actual:2,result:PASS,category:redirections,description:Cat append heredoc,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat >> > >> << >>,expected:2,actual:2,result:PASS,category:redirections,description:Cat mixed operators,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat < ls,expected:1,actual:1,result:PASS,category:redirections,description:Cat redirect non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat < ls > ls,expected:1,actual:1,result:PASS,category:redirections,description:Cat redirect both,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat > ls1 < ls2,expected:1,actual:1,result:PASS,category:redirections,description:Cat out then in error,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>>hola,expected:0,actual:0,result:PASS,category:redirections,description:Append alone,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola >bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Echo redirect no space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat <bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Cat in no space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola>bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Echo redirect joined,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat<bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Cat in joined,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola> bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Echo redirect space after,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat< bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Cat in space after,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola >bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Echo many spaces redirect,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat< bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Cat many spaces in,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola > bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Echo spaces around redirect,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat < bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Cat spaces around in,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola > srcs/bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Echo redirect subdir,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat < srcs/bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Cat in subdir,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola >srcs/bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Echo redirect subdir no space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat <srcs/bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Cat in subdir no space,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:e'c'""h""o hola > bonjour,expected:0,actual:0,result:PASS,category:redirections,description:Quoted command redirect,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:cat 'bo'""n""jour,expected:0,actual:0,result:PASS,category:redirections,description:Cat quoted filename,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola > bonjour hey,expected:0,actual:0,result:PASS,category:redirections,description:Echo redirect with extra arg,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:<a cat <b <c,expected:0,actual:0,result:PASS,category:redirections,description:Multiple input redirects,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>a ls >b >>c >d,expected:0,actual:0,result:PASS,category:redirections,description:Multiple output redirects,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola > a > b > c,expected:0,actual:0,result:PASS,category:redirections,description:Echo multiple outs,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:<a,expected:0,actual:0,result:PASS,category:redirections,description:Input redirect alone,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>d cat <a >>e,expected:0,actual:0,result:PASS,category:redirections,description:Mixed redirects order,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:< a > b cat > hey >> d,expected:0,actual:0,result:PASS,category:redirections,description:Complex redirect order,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola <bonjour <hello,expected:0,actual:0,result:PASS,category:redirections,description:Echo double input,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo <bonjour <hello,expected:0,actual:0,result:PASS,category:redirections,description:Echo inputs only,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>bonjour >hello <prout,expected:1,actual:1,result:PASS,category:redirections,description:Multiple out with error in,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:>bonjour <prout >hello,expected:1,actual:1,result:PASS,category:redirections,description:Out error out,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:<bonjour cat | wc > bonjour,expected:0,actual:0,result:PASS,category:redirections,description:In pipe out same file,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+{cmd:cat <<,expected:2,actual:2,result:PASS,category:heredoc,description:Heredoc no delimiter,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+,
+,
+,
+,
+,
+{cmd:echo hola <<<< bonjour,expected:2,actual:2,result:PASS,category:heredoc,description:Four less-than,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+{cmd:echo hola <<<<< bonjour,expected:2,actual:2,result:PASS,category:heredoc,description:Five less-than,memory:no_log,timeouts:{nonvg:0,vg:0}}
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+,
+]

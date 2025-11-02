@@ -12,6 +12,44 @@
 
 #include "mandatory.h"
 
+static int debug_enabled(void)
+{
+    const char *d = getenv("DEBUG");
+    return (d && d[0] == '1');
+}
+
+static void debug_log_args(const char *tag, char **args)
+{
+    int i = 0;
+    if (!debug_enabled()) return;
+    ft_putstr_fd("DBG ", STDERR_FILENO);
+    ft_putstr_fd(tag, STDERR_FILENO);
+    ft_putstr_fd(": ", STDERR_FILENO);
+    while (args && args[i])
+    {
+        ft_putstr_fd(args[i], STDERR_FILENO);
+        if (args[i + 1]) ft_putstr_fd(" ", STDERR_FILENO);
+        i++;
+    }
+    ft_putstr_fd("\n", STDERR_FILENO);
+}
+
+static void debug_log_status(const char *tag, int status)
+{
+    char *n;
+    if (!debug_enabled()) return;
+    ft_putstr_fd("DBG ", STDERR_FILENO);
+    ft_putstr_fd(tag, STDERR_FILENO);
+    ft_putstr_fd(": ", STDERR_FILENO);
+    n = ft_itoa(status);
+    if (n)
+    {
+        ft_putstr_fd(n, STDERR_FILENO);
+        free(n);
+    }
+    ft_putstr_fd("\n", STDERR_FILENO);
+}
+
 void	backup_restor(t_node *node)
 {
 	dup2(node->backup_stdout, STDOUT_FILENO);
@@ -82,7 +120,21 @@ char	**repeat(char **args, char **envp, t_node *node)
 
 char	**execute(char **args, char **envp, t_node *node)
 {
-	if (args && args[0] && !ft_strncmp(args[0], "exit", 5))
+    debug_log_args("parsed", args);
+    /* If a command word contains an unquoted '|' (e.g., ech|o) and we
+     * truncated the pipeline, treat it as command-not-found and do not
+     * execute any further segments. */
+    if (args && args[0] && (node->pipe_word_has_bar ||
+        (ft_strchr(args[0], '|') != NULL && ft_strncmp(args[0], "|", 2) != 0)))
+    {
+        ft_putstr_fd("minishell: ", STDERR_FILENO);
+        ft_putstr_fd(args[0], STDERR_FILENO);
+        ft_putstr_fd(": command not found\n", STDERR_FILENO);
+        set_exit_status(127);
+        debug_log_status("early_guard", 127);
+        return (envp);
+    }
+    if (args && args[0] && !ft_strncmp(args[0], "exit", 5))
 	{
 		if (exit_will_terminate(args))
 		{
@@ -92,9 +144,12 @@ char	**execute(char **args, char **envp, t_node *node)
 	}
 	node->backup_stdout = dup(STDOUT_FILENO);
 	node->backup_stdin = dup(STDIN_FILENO);
-	envp = repeat(args, envp, node);
-	backup_restor(node);
-	close(node->backup_stdout);
-	close(node->backup_stdin);
-	return (envp);
+    envp = repeat(args, envp, node);
+    debug_log_status("final_status", get_exit_status());
+    backup_restor(node);
+    close(node->backup_stdout);
+    close(node->backup_stdin);
+    if (node->pipe_word_has_bar)
+        set_exit_status(127);
+    return (envp);
 }

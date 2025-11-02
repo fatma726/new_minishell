@@ -86,20 +86,28 @@ void	cleanup_and_exit(char **args, char **envp, t_node *node)
 
 void	cmd_exit(char **args, char **envp, t_node *node)
 {
-	bool	should_exit;
+    bool	should_exit;
 
-	if (!node->exit_flag)
-		return ;
+    /* In pipelines, do not terminate, but still set exit status
+     * according to the argument parsing rules. */
+    if (!node->exit_flag)
+    {
+        if (strarrlen(args) > 1)
+            (void)handle_exit_with_args(args, node);
+        else
+            set_exit_status(EXIT_SUCCESS);
+        return ;
+    }
 	should_exit = true;
-	if (strarrlen(args) > 1)
-	{
-		if (!ft_isalldigit(args[1]))
-		{
-			handle_numeric_error(args[1]);
-			return ;
-		}
-		should_exit = handle_exit_with_args(args);
-	}
+    if (strarrlen(args) > 1)
+    {
+        if (!ft_isalldigit(args[1]))
+        {
+            handle_numeric_error(args[1]);
+            return ;
+        }
+        should_exit = handle_exit_with_args(args, node);
+    }
 	else
 		set_exit_status(EXIT_SUCCESS);
 	if (should_exit && !node->argmode)

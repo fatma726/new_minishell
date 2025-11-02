@@ -1,0 +1,29 @@
+
+========================================
+Summary by Category
+========================================
+bastards: 6 passed, 1 failed, 0 skipped / 7 total
+syntax: 35 passed, 0 failed, 3 skipped / 38 total
+env: 1 passed, 0 failed, 0 skipped / 1 total
+parentheses: 0 passed, 0 failed, 32 skipped / 32 total
+unset: 32 passed, 4 failed, 0 skipped / 36 total
+redirections: 50 passed, 2 failed, 0 skipped / 52 total
+pwd: 7 passed, 3 failed, 0 skipped / 10 total
+echo: 89 passed, 0 failed, 0 skipped / 89 total
+pipes: 45 passed, 1 failed, 0 skipped / 46 total
+wildcards: 0 passed, 0 failed, 18 skipped / 18 total
+signals: 0 passed, 0 failed, 3 skipped / 3 total
+cd: 28 passed, 6 failed, 2 skipped / 36 total
+heredoc: 3 passed, 0 failed, 14 skipped / 17 total
+logical: 0 passed, 0 failed, 20 skipped / 20 total
+export: 50 passed, 6 failed, 0 skipped / 56 total
+exit: 46 passed, 0 failed, 0 skipped / 46 total
+variables: 9 passed, 1 failed, 0 skipped / 10 total
+binaries: 4 passed, 0 failed, 0 skipped / 4 total
+
+========================================
+Overall Results
+========================================
+Total: 521 | [0;32mPassed: 405[0m | [0;31mFailed: 24[0m | [1;33mSkipped: 92[0m
+Pass rate: 77%
+========================================

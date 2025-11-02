@@ -6,7 +6,7 @@
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/22 21:45:00 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/11/02 00:00:00 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_node
 	bool	heredoc_unterminated;
 	bool	heredoc_swallowed_input;
 	bool	is_subshell;
+	bool	pipe_word_has_bar;
 }	t_node;
 
 /* prompt data */
@@ -111,13 +112,13 @@ struct s_hdctx
 };
 
 /* global state */
-int		get_signal_number(void);
+int	get_signal_number(void);
 void	clear_signal_number(void);
 void	set_signal_number(int sig);
 bool	is_interactive_mode(void);
 void	set_interactive_mode(bool value);
-int		_ms_exit_status(int op, int value);
-int		get_exit_status(void);
+int	_ms_exit_status(int op, int value);
+int	get_exit_status(void);
 void	set_exit_status(int status);
 bool	get_nontext_input(void);
 void	set_nontext_input(bool v);
@@ -155,13 +156,15 @@ char	**handle_oror_error(char *left, char *right, char *hashed, char **envp);
 char	**process_command(char *line, char **envp, t_node *n);
 char	**find_command(char **args, char **envp, t_node *node);
 char	**dispatch_builtin(char **args, char **envp, t_node *node);
-char	**apply_wildcard_phase(char **args, char **envp, t_node *node,
-		char *orig);
+char	**apply_wildcard_phase(
+			char **args,
+			char **envp,
+			t_node *node,
+			char *orig);
 char	**expand_wildcard(char **args, char **envp, t_node *node);
 char	**rm_quotes(char **args, t_node *node);
 char	**parser(char *str, char **envp, t_node *node);
 char	**check_standalone_operators(char *line, char **envp, t_node *n);
-char	**subshell(char *str, char **envp, t_node *node);
 char	*hash_handler(char *str, t_node *node);
 
 /* parser */
@@ -195,6 +198,7 @@ char	*expand_envvar(char *str, char **envp, t_node *node);
 char	*expand_loop(char *fmt, char *new_fmt, char *user, char *pwd);
 char	*get_pwd_for_prompt(char **envp, t_node *node);
 bool	isp(char *str);
+bool	islor(char *str);
 bool	isdlr(char *str);
 bool	islr(char *str);
 bool	isrr(char *str);
@@ -234,6 +238,14 @@ const char	*check_triple_redir_split(char **args, int i);
 const char	*check_invalid_operator_sequences(char **args, int i);
 const char	*check_final_token(char **args, int i);
 
+/* parser helpers (exposed for cross-file use) */
+bool	is_echo_with_joined_quote(char *first);
+char	**rebuild_echo_with_rest(char **args, char *rest);
+char	**split_joined_quote_after_cmd(char **args);
+void	sanitize_bar_in_word(char **args, t_node *node);
+char	**handle_parser_errors(char **args, char **envp, t_node *node);
+char	**process_quotes_and_exec(char **args, char **envp, t_node *node);
+
 /* pipe */
 int	prepare_redirections(char **args, char **envp, t_node *node);
 int	maybe_setup_pipe(t_node *node);
@@ -272,9 +284,14 @@ bool	should_expand_vars(char *clean_delimiter);
 int	process_heredoc_loop(struct s_hdctx *ctx);
 char	*get_heredoc_line(void);
 int	check_heredoc_signal(void);
-void	write_heredoc_line(bool expand_vars, char *line, char **envp,
+void	write_heredoc_line(
+		bool expand_vars,
+		char *line,
+		char **envp,
 		t_node *node);
-int	finalize_loop_result(int lines_read, bool got_sigint,
+int	finalize_loop_result(
+		int lines_read,
+		bool got_sigint,
 		struct s_hdctx *ctx);
 int	open_redir_out(char **args, int i, t_node *node, int flags);
 int	exec_redir(char **args, char **envp, t_node *node);
@@ -283,60 +300,66 @@ int	redir_chk(char **args);
 int	redir_excute(char **args, char **envp, t_node *node, int flag);
 
 /* cmd */
-void		cmd_pwd(t_node *node);
-void		cmd_echo(char **args, t_node *node);
-char		**cmd_env(char **args, char **envs, t_node *node);
-char		**cmd_unset(char **args, char **envp, t_node *node);
-bool		is_valid_identifier(char *str);
-char		**delete_env(char *str, char **envp, t_node *node, int *flag);
-char		**cmd_export(char **args, char **envp, t_node *node);
-bool		is_valid_identifier_start(char c);
-bool		is_valid_identifier_char(char c);
-void		print_invalid_identifier_error(char *arg);
-void		print_escaped_value(char *value);
-char		**cmd_exec(char **args, char **envp, t_node *node);
-void		cmd_exit(char **args, char **envp, t_node *node);
-bool		handle_exit_with_args(char **args);
-bool		ft_isalldigit(char *str);
-bool		exit_will_terminate(char **args);
-void		handle_numeric_error(char *arg);
-void		handle_too_many_args(void);
-void		cleanup_child_and_exit(char **args, char **envp, t_node *node);
-void		cleanup_and_exit(char **args, char **envp, t_node *node);
-char		**cmd_cd(char **args, char **envp, t_node *node);
-char		**execute_cd(char **args, char **envp, t_node *node, int offset);
-bool		validate_cd_args(char **args, int offset);
-char		*expand_tilde(char *path, char **envp);
-bool		update_pwd(char *path, t_node *node);
-bool		checks(char **args, char **envp, t_node *node, int offset);
-char		*build_candidate(char *dir, char *cmd);
-bool		is_builtin_command(char **args);
-void		exec_proc(char **args, char **envp, t_node *node);
-char		**exec_pipe(char *path, char **args, char **envp, t_node *node);
-void		chkdir(char **args, char **envp, bool end, t_node *node);
-void		handle_unset_option_error(char **args);
-void		process_unset_args(char **args, char **envp, t_node *node, int *flag);
-char		**export_print(char **envp);
-void		handle_export_option_error(char **args);
-void		process_export_args(char **args, char ***envp, t_node *node);
-bool		process_export_arg(char *arg, char ***envp, t_node *node);
-void		handle_env_i_option(char **args, char **envs, t_node *node);
-void		exec_error(char **args, char **envp, char **paths, t_node *node);
-void		checkdot(char **args, char **envp, t_node *node);
-void		handle_absolute_path_error(char **args, char **envp, char **paths,
-				t_node *node);
-void		handle_relative_path_error(char **args, char **envp, char **paths,
-				t_node *node);
-void		exec_nopath(t_node *node, char **args, char **envp, char **paths);
-void		exec_proc_loop(char **paths, char **args, char **envp, t_node *node);
-void		exec_proc_loop2(char **paths, char **args, char **envp, t_node *node);
+void	cmd_pwd(t_node *node);
+void	cmd_echo(char **args, t_node *node);
+char	**cmd_env(char **args, char **envs, t_node *node);
+char	**cmd_unset(char **args, char **envp, t_node *node);
+bool	is_valid_identifier(char *str);
+char	**delete_env(char *str, char **envp, t_node *node, int *flag);
+char	**cmd_export(char **args, char **envp, t_node *node);
+bool	is_valid_identifier_start(char c);
+bool	is_valid_identifier_char(char c);
+void	print_invalid_identifier_error(char *arg);
+void	print_escaped_value(char *value);
+char	**cmd_exec(char **args, char **envp, t_node *node);
+void	cmd_exit(char **args, char **envp, t_node *node);
+bool	handle_exit_with_args(char **args, t_node *node);
+bool	ft_isalldigit(char *str);
+bool	exit_will_terminate(char **args);
+void	handle_numeric_error(char *arg);
+void	handle_too_many_args(void);
+void	cleanup_child_and_exit(char **args, char **envp, t_node *node);
+void	cleanup_and_exit(char **args, char **envp, t_node *node);
+char	**cmd_cd(char **args, char **envp, t_node *node);
+char	**execute_cd(char **args, char **envp, t_node *node, int offset);
+bool	validate_cd_args(char **args, int offset);
+char	*expand_tilde(char *path, char **envp);
+bool	update_pwd(char *path, t_node *node);
+bool	checks(char **args, char **envp, t_node *node, int offset);
+char	*build_candidate(char *dir, char *cmd);
+bool	is_builtin_command(char **args);
+void	exec_proc(char **args, char **envp, t_node *node);
+char	**exec_pipe(char *path, char **args, char **envp, t_node *node);
+void	chkdir(char **args, char **envp, bool end, t_node *node);
+void	handle_unset_option_error(char **args);
+void	process_unset_args(char **args, char **envp, t_node *node, int *flag);
+char	**export_print(char **envp);
+void	handle_export_option_error(char **args);
+void	process_export_args(char **args, char ***envp, t_node *node);
+bool	process_export_arg(char *arg, char ***envp, t_node *node);
+void	handle_env_i_option(char **args, char **envs, t_node *node);
+void	exec_error(char **args, char **envp, char **paths, t_node *node);
+void	checkdot(char **args, char **envp, t_node *node);
+void	handle_absolute_path_error(
+		char **args,
+		char **envp,
+		char **paths,
+		t_node *node);
+void	handle_relative_path_error(
+		char **args,
+		char **envp,
+		char **paths,
+		t_node *node);
+void	exec_nopath(t_node *node, char **args, char **envp, char **paths);
+void	exec_proc_loop(char **paths, char **args, char **envp, t_node *node);
+void	exec_proc_loop2(char **paths, char **args, char **envp, t_node *node);
 
 /* input */
-char		*get_line(char *str);
-char		*get_continuation_line(char *prompt);
-int			append_line(char **result, char *line);
-int			process_read_line(char **result, char **cur_prompt, char *orig);
-char		*read_line_non_tty(void);
-void		handle_eof_exit(char **envp, t_node *node);
+char	*get_line(char *str);
+char	*get_continuation_line(char *prompt);
+int	append_line(char **result, char *line);
+int	process_read_line(char **result, char **cur_prompt, char *orig);
+char	*read_line_non_tty(void);
+void	handle_eof_exit(char **envp, t_node *node);
 
 #endif

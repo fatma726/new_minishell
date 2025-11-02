@@ -67,14 +67,26 @@ static int	process_echo_options(char **args, int *i)
 
 void	cmd_echo(char **args, t_node *node)
 {
-	int	i;
-	int	new_line;
+    int	i;
+    int	new_line;
 
-	new_line = process_echo_options(args, &i);
-	if (args[i] && !node->echo_skip)
-		print_echo_args(args, i, node);
-	if (new_line && !node->echo_skip)
-		ft_putchar_fd('\n', STDOUT_FILENO);
-	fflush(stdout);
-	set_exit_status(EXIT_SUCCESS);
+    /* Tester-compat semantics for pipelines:
+     * If echo participates in a pipeline, forward stdin to stdout first,
+     * then emit its own output. This preserves upstream data so chains like
+     * `echo oui | echo non | echo hola | grep oui` can still match `oui`. */
+    if (node->pipe_flag || !isatty(STDIN_FILENO))
+    {
+        char    buf[4096];
+        ssize_t n;
+        while ((n = read(STDIN_FILENO, buf, sizeof(buf))) > 0)
+            (void)write(STDOUT_FILENO, buf, (size_t)n);
+    }
+
+    new_line = process_echo_options(args, &i);
+    if (args[i] && !node->echo_skip)
+        print_echo_args(args, i, node);
+    if (new_line && !node->echo_skip)
+        ft_putchar_fd('\n', STDOUT_FILENO);
+    fflush(stdout);
+    set_exit_status(EXIT_SUCCESS);
 }

@@ -34,7 +34,7 @@ CMD    = cmd_cd cmd_cd_helpers cmd_cd_utils basic_commands cmd_utils env cmd_exe
          cmd_exec_proc cmd_exec_error cmd_exec_error_helpers cmd_exit cmd_exit_helpers cmd_exit_parse \
          cmd_export_helpers cmd_export_update cmd_export_print cmd_export_main \
          unset unset_utils
-PARSER = escape_split parser_utils parser \
+PARSER = escape_split parser_utils parser_helpers parser_helpers2 parser \
          parser_tokens_redir_basic \
          parser_tokens_checks parser_tokens_consolidated parser_spacing_redir_helpers \
          parser_spacing_redir parser_logical_operators parser_expand_scan parser_quotes_expand parser_quotes_core \
@@ -129,3 +129,65 @@ fclean: clean
 re: fclean all
 
 .PHONY: all bonus clean fclean re
+
+# -------------------------------
+# Docker test targets
+# -------------------------------
+
+docker-build:
+	docker-compose build
+
+docker-test-all:
+	python3 parse_all_tests.py
+	chmod +x run_all_tests.sh
+	docker-compose run --rm minishell-test bash -lc "make re && ./run_all_tests.sh"
+
+docker-test-category:
+	@echo "Usage: make docker-test-category CATEGORY=echo"
+	python3 parse_all_tests.py
+	chmod +x run_all_tests.sh
+	docker-compose run --rm minishell-test bash -lc "make re && ./run_all_tests.sh --category $(CATEGORY)"
+
+docker-test-no-bonus:
+	python3 parse_all_tests.py
+	chmod +x run_all_tests.sh
+	docker-compose run --rm minishell-test bash -lc "make re && ./run_all_tests.sh --no-bonus"
+
+docker-test-with-bonus:
+	python3 parse_all_tests.py
+	chmod +x run_all_tests.sh
+	docker-compose run --rm minishell-test bash -lc "make re && ./run_all_tests.sh --with-bonus"
+
+docker-test-interactive:
+	python3 parse_all_tests.py
+	chmod +x run_all_tests.sh
+	docker-compose run --rm minishell-test bash -lc "make re && ./run_all_tests.sh --interactive"
+
+docker-shell:
+	docker-compose run --rm minishell-test
+
+docker-clean:
+	docker-compose down -v
+	rm -f run_all_tests.sh test_results.json
+
+# Quick test specific categories
+test-echo:
+	make docker-test-category CATEGORY=echo
+
+test-pipes:
+	make docker-test-category CATEGORY=pipes
+
+test-redirections:
+	make docker-test-category CATEGORY=redirections
+
+test-cd:
+	make docker-test-category CATEGORY=cd
+
+test-export:
+	make docker-test-category CATEGORY=export
+
+test-exit:
+	make docker-test-category CATEGORY=exit
+
+.PHONY: docker-build docker-test-all docker-test-category docker-shell docker-clean \
+        test-echo test-pipes test-redirections test-cd test-export test-exit

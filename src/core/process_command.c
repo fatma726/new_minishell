@@ -58,9 +58,9 @@ char	**dispatch_line(char *hashed, char **envp, t_node *n)
 
 char	**process_command(char *line, char **envp, t_node *n)
 {
-	char		*hashed;
-	char		**result;
-	char		which;
+    char		*hashed;
+    char		**result;
+    char		which;
 
 	if (!line || is_blank(line))
 		return (free(line), envp);
@@ -74,12 +74,15 @@ char	**process_command(char *line, char **envp, t_node *n)
 		free(line);
 		return (envp);
 	}
-	result = check_standalone_operators(line, envp, n);
+    result = check_standalone_operators(line, envp, n);
 	if (result)
 		return (result);
 	hashed = hash_handler(line, n);
 	envp = dispatch_line(hashed, envp, n);
-	if (n->syntax_flag)
-		set_exit_status(2);
-	return (envp);
+    /* Ensure pipe-in-word 127 status cannot be overwritten later */
+    if (n->pipe_word_has_bar)
+        set_exit_status(127);
+    if (n->syntax_flag)
+        set_exit_status(2);
+    return (envp);
 }

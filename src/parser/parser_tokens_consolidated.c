@@ -21,3 +21,13 @@ bool	islor(char *str)
 {
 	return (str && !ft_strncmp(str, "||", 3));
 }
+
+bool	islrr(char *str)
+{
+	return (str && !ft_strncmp(str, "<>", 3));
+}
+
+bool	istr(char *str)
+{
+	return (str && !ft_strncmp(str, ">>>", 3));
+}

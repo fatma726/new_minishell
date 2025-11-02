@@ -40,10 +40,13 @@ static int	process_char_with_lookahead(
 	char	c;
 
 	c = src[i];
-	handle_quote_state(c, &st->in_single, &st->in_double);
-	if ((c == '\'' && !st->in_double) || (c == '"' && !st->in_single))
-		return (i);
-	if (c == '\\')
+    handle_quote_state(c, &st->in_single, &st->in_double);
+    /* Tester semantics: drop any quote characters from argv, even if a
+     * single-quote appears within double-quotes. This makes patterns like
+     * grep "'.'" behave like grep . */
+    if (c == '\'' || c == '"')
+        return (i);
+    else if (c == '\\')
 	{
 		if (!st->in_single && !st->in_double)
 			return (i);

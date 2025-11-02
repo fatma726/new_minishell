@@ -117,4 +117,5 @@ void	init_node(t_node *node)
 	node->heredoc_swallowed_input = false;
 	node->backup_stdout = -1;
 	node->backup_stdin = -1;
+    node->pipe_word_has_bar = false;
 }

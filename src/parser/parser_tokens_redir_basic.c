@@ -23,11 +23,6 @@ bool	isrr(char *str)
 			|| !ft_strncmp(str, "2>|", 4)));
 }
 
-bool	istr(char *str)
-{
-	return (str && !ft_strncmp(str, ">>>", 3));
-}
-
 bool	isdrr(char *str)
 {
 	return (str && !ft_strncmp(str, ">>", 3));
@@ -36,4 +31,9 @@ bool	isdrr(char *str)
 bool	isdlr(char *str)
 {
 	return (str && !ft_strncmp(str, "<<", 3));
+}
+
+bool	istlr(char *str)
+{
+	return (str && !ft_strncmp(str, "<<-", 4));
 }

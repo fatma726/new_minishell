@@ -15,8 +15,11 @@ char	**cmd_cd(char **args, char **envp, t_node *node)
 {
 	int		offset;
 
-	set_exit_status(EXIT_SUCCESS);
-	if (node->pipe_flag || node->pipe_idx)
+    set_exit_status(EXIT_SUCCESS);
+    /* In pipelines, allow execution when this is the rightmost segment
+     * (node->pipe_flag is cleared by exec_parents for the last segment),
+     * so that the pipeline exit reflects builtin status. */
+	if (node->pipe_flag)
 		return (envp);
 	offset = 0;
 	if (args[1] && !ft_strncmp(args[1], "--", 3))

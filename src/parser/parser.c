@@ -40,6 +40,10 @@ static bool	check_pipe_ampersand_error(char *str, t_node *node)
 	return (false);
 }
 
+/* helpers moved to parser_helpers.c */
+
+/* helpers moved to parser_helpers.c */
+
 static char	**process_parser_input(char *str, char **envp, t_node *node)
 {
 	char	**args;
@@ -51,44 +55,17 @@ static char	**process_parser_input(char *str, char **envp, t_node *node)
 	args = escape_split(str, charset, node);
 	if (!args)
 		return (NULL);
+	if (args[0] && ft_strchr(args[0], '|') && ft_strncmp(args[0], "|", 2) != 0)
+		sanitize_bar_in_word(args, node);
+	args = split_joined_quote_after_cmd(args);
 	free(str);
 	node->ori_args = strarrdup(args);
 	return (args);
 }
 
-static char	**handle_parser_errors(char **args, char **envp, t_node *node)
-{
-	if (!args)
-		return (envp);
-	if (args[0] && !syntax_check(node->ori_args, envp, node))
-	{
-		handle_syntax_error(envp, node);
-		strarrfree(args);
-		if (node->ori_args)
-		{
-			strarrfree(node->ori_args);
-			node->ori_args = NULL;
-		}
-		return (envp);
-	}
-	return (NULL);
-}
+/* helpers moved to parser_helpers.c */
 
-static char	**process_quotes_and_exec(char **args, char **envp, t_node *node)
-{
-	args = rm_quotes(args, node);
-	if (!args)
-	{
-		clear_history();
-		strarrfree(envp);
-		exit(EXIT_FAILURE);
-	}
-	envp = execute(args, envp, node);
-	strarrfree(args);
-	if (node->ori_args)
-		strarrfree(node->ori_args);
-	return (envp);
-}
+/* helpers moved to parser_helpers.c */
 
 char	**parser(char *str, char **envp, t_node *node)
 {

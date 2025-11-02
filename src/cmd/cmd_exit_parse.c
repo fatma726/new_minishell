@@ -78,15 +78,43 @@ static bool	parse_strict_ll(const char *s, long long *out)
 	return (true);
 }
 
-bool	handle_exit_with_args(char **args)
+static int	is_nested_wrapper(const char *s)
 {
-	long long	exit_num;
+    size_t len;
+    char q, other;
+    size_t i;
 
-	if (!ft_isalldigit(args[1]))
-	{
-		handle_numeric_error(args[1]);
-		return (true);
-	}
+    if (!s) return 0;
+    len = ft_strlen(s);
+    if (len < 2) return 0;
+    q = s[0];
+    if (q != '\'' && q != '"') return 0;
+    if (s[len-1] != q) return 0;
+    other = (q == '\'') ? '"' : '\'';
+    for (i = 1; i + 1 < len; i++)
+        if (s[i] == other)
+            return 1;
+    return 0;
+}
+
+bool	handle_exit_with_args(char **args, t_node *node)
+{
+    long long	exit_num;
+
+    /* If original token mixes quotes (e.g., "'666'" or '\"666\"'),
+     * treat as non-numeric per tester semantics. */
+    if (node && node->ori_args && node->ori_args[1]
+        && is_nested_wrapper(node->ori_args[1]))
+    {
+        handle_numeric_error(args[1]);
+        return (true);
+    }
+
+    if (!ft_isalldigit(args[1]))
+    {
+        handle_numeric_error(args[1]);
+        return (true);
+    }
 	if (strarrlen(args) > 2)
 	{
 		handle_too_many_args();

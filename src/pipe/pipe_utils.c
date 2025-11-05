@@ -86,6 +86,7 @@ static int	has_bar_error(char **args, t_node *node)
 	}
 	return (0);
 }
+
 char	**execute(char **args, char **envp, t_node *node)
 {
 	if (has_bar_error(args, node))

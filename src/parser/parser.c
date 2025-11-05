@@ -81,7 +81,8 @@ char	**parser(char *str, char **envp, t_node *node)
 		return (envp);
 	}
 	args = process_parser_input(str, envp, node);
-	if (handle_parser_errors(args, envp, node))
-		return (envp);
-	return (process_quotes_and_exec(args, envp, node));
+    if (handle_parser_errors(args, envp, node))
+        return (envp);
+    args = split_joined_quote_after_cmd(args);
+    return (process_quotes_and_exec(args, envp, node));
 }

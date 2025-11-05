@@ -1,0 +1,1 @@
+11/05 10:04:08 [1;31mERROR[0;39m [36mc.c.a.c.command.AnalyseCommand:111[0;39m - Could not get tools due to: Could not get remote project configuration: No credentials found. and No tools found for files provided 

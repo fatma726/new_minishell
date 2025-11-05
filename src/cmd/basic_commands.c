@@ -65,10 +65,10 @@ static int	process_echo_options(char **args, int *i)
 
 void	cmd_echo(char **args, t_node *node)
 {
-    int	i;
-    int	new_line;
-    char	buf[4096];
-    ssize_t	n;
+	int		i;
+	int		new_line;
+	char		buf[4096];
+	ssize_t	n;
 
 	if (node->pipe_flag || !isatty(STDIN_FILENO))
 	{

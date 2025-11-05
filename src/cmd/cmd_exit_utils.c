@@ -12,35 +12,9 @@
 
 #include "mandatory.h"
 
-bool	is_nested_wrapper(const char *s)
+bool	is_nested_wrapper(char const *s)
 {
-	size_t	len;
-	char	q;
-	char	other;
-	size_t	i;
-
-	if (!s)
-		return (false);
-	len = ft_strlen(s);
-	if (len < 2)
-		return (false);
-	q = s[0];
-	if (q != '\'' && q != '"')
-		return (false);
-	if (s[len - 1] != q)
-		return (false);
-	if (q == '\'')
-		other = '"';
-	else
-		other = '\'';
-	i = 1;
-	while (i + 1 < len)
-	{
-		if (s[i] == other)
-			return (true);
-		i++;
-	}
-	return (false);
+	return (has_nested_quote(s));
 }
 
 static bool	contains_other_quote(const char *s, size_t start, size_t end,
@@ -58,7 +32,7 @@ static bool	contains_other_quote(const char *s, size_t start, size_t end,
 	return (false);
 }
 
-bool	has_nested_quote(const char *s)
+bool	has_nested_quote(char const *s)
 {
 	size_t	len;
 	char	q;
@@ -80,4 +54,3 @@ bool	has_nested_quote(const char *s)
 		other = '\'';
 	return (contains_other_quote(s, 1, len - 1, other));
 }
-

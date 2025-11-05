@@ -1,0 +1,21 @@
+# Ignore non-mandatory helpers and testers
+minishell_tester/
+tools/
+tests/
+Valgrind_42_Network/
+.vscode/
+.codacy/
+.dist/
+
+# CI and helper artifacts
+.obj/
+codacy_report.txt
+.tester_redirects.log
+ms_fifo
+timeout
+
+# Docker and test scripts
+Dockerfile
+docker-compose.yml
+run_all_tests.sh
+parse_all_tests.py

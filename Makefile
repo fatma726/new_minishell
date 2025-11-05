@@ -62,9 +62,6 @@ all: $(NAME)
 $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(OBJS) -L$(LIBFT_DIR) -lft $(READLINE_LIBS) -o $@
 
-bonus:
-	@echo "Bonus code removed for mandatory-only build."
-
 $(LIBFT): $(LIBFT_OBJS)
 	@ar rcs $@ $^
 
@@ -78,69 +75,23 @@ $(LIBFT_DIR)/%.o: $(LIBFT_DIR)/%.c
 
 clean:
 	@rm -rf $(OBJ_DIR) $(LIBFT_OBJS)
-	@find src bonus -name '*.o' -delete 2>/dev/null || true
+	@find src -name '*.o' -delete 2>/dev/null || true
 
 fclean: clean
 	@rm -f $(NAME) $(LIBFT)
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+.PHONY: all clean fclean re
 
-# -------------------------------
-# Docker test targets
-# -------------------------------
+# Create evaluation-ready zip with mandatory-only files
+dist:
+	@rm -f minishell-v1.0-eval-clean.zip
+	@zip -rq minishell-v1.0-eval-clean.zip \
+		Makefile \
+		.normignore \
+		include \
+		src \
+		libs/Libft
 
-docker-build:
-	docker-compose build
-
-docker-test-all:
-	python3 parse_all_tests.py
-	chmod +x run_all_tests.sh
-	docker-compose run --rm minishell-test bash -lc "make re && ./run_all_tests.sh"
-
-docker-test-category:
-	@echo "Usage: make docker-test-category CATEGORY=echo"
-	python3 parse_all_tests.py
-	chmod +x run_all_tests.sh
-	docker-compose run --rm minishell-test bash -lc "make re && ./run_all_tests.sh --category $(CATEGORY)"
-
-docker-test-no-bonus:
-	python3 parse_all_tests.py
-	chmod +x run_all_tests.sh
-	docker-compose run --rm minishell-test bash -lc "make re && ./run_all_tests.sh --no-bonus"
-
-
-docker-test-interactive:
-	python3 parse_all_tests.py
-	chmod +x run_all_tests.sh
-	docker-compose run --rm minishell-test bash -lc "make re && ./run_all_tests.sh --interactive"
-
-docker-shell:
-	docker-compose run --rm minishell-test
-
-docker-clean:
-	docker-compose down -v
-	rm -f run_all_tests.sh test_results.json
-
-# Quick test specific categories
-test-echo:
-	make docker-test-category CATEGORY=echo
-
-test-pipes:
-	make docker-test-category CATEGORY=pipes
-
-test-redirections:
-	make docker-test-category CATEGORY=redirections
-
-test-cd:
-	make docker-test-category CATEGORY=cd
-
-test-export:
-	make docker-test-category CATEGORY=export
-
-test-exit:
-	make docker-test-category CATEGORY=exit
-
-.PHONY: docker-build docker-test-all docker-test-category docker-shell docker-clean \
-        test-echo test-pipes test-redirections test-cd test-export test-exit
+.PHONY: dist

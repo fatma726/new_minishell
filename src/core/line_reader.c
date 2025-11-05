@@ -65,10 +65,8 @@ char	*read_line_fd(int fd)
 {
 	char		buf[1024];
 	char		*res;
-	size_t		cap;
-	size_t		len;
-	ssize_t		n;
-	ssize_t		pos;
+	size_t		cap, len;
+	ssize_t		n, pos;
 
 	res = NULL;
 	cap = 0;

@@ -73,12 +73,17 @@ cleanup_test_env() {
 }
 
 check_memory_leaks() {
-    if [ ! -f valgrind.log ]; then
+    local logfile="$1"
+    if [ -z "$logfile" ] || [ ! -f "$logfile" ]; then
         echo "no_log"
         return 1
     fi
 
-    if grep -q "definitely lost: [1-9]" valgrind.log ||        grep -q "indirectly lost: [1-9]" valgrind.log ||         grep -q "Invalid read" valgrind.log ||         grep -q "Invalid write" valgrind.log ||         grep -q "FILE DESCRIPTORS" valgrind.log; then
+    if grep -q "definitely lost: [1-9]" "$logfile" || \
+       grep -q "indirectly lost: [1-9]" "$logfile" || \
+       grep -q "Invalid read" "$logfile" || \
+        grep -q "Invalid write" "$logfile" || \
+        grep -q "FILE DESCRIPTORS" "$logfile"; then
         echo "leak_detected"
         return 1
     fi
@@ -118,13 +123,20 @@ run_test() {
     local timeout_nonvg=0
     if [ $nv_status -eq 124 ]; then timeout_nonvg=1; fi
 
-    # 2) Run WITH valgrind for memory checks (ignore its exit for result)
-    timeout "$TIMEOUT_SEC"s bash -lc 'printf "%s" "$0" | $VALGRIND_CMD ./minishell > /dev/null 2> /dev/null' "$cmd"
+    # 2) Run WITH valgrind for memory checks (unique log per test)
+    local slug; slug=$(slugify "$description")
+    local val_path="$ARTIFACT_DIR/logs/$category/${slug}.valgrind.txt"
+    mkdir -p "$(dirname "$val_path")"
+    timeout "$TIMEOUT_SEC"s bash -lc 'printf "%s" "$0" | $VALGRIND_CMD --log-file="$1" ./minishell > /dev/null 2> /dev/null' "$cmd" "$val_path"
     vg_status=$?
     local timeout_vg=0
     if [ $vg_status -eq 124 ]; then timeout_vg=1; fi
 
-    memory_status=$(check_memory_leaks)
+    [ -f "$val_path" ] || echo "No valgrind log (status=$vg_status, timeout=$timeout_vg)" > "$val_path"
+    mkdir -p "$ARTIFACT_DIR/logs/$category" tests/valgrind_logs/batch1
+    cp -f "$val_path" "tests/valgrind_logs/batch1/${slug}.valgrind.txt"
+
+    memory_status=$(check_memory_leaks "$val_path")
 
     local result="PASS"
     if [ $timeout_nonvg -eq 1 ]; then
@@ -136,10 +148,7 @@ run_test() {
     fi
 
     # Save valgrind log per test
-    local slug; slug=$(slugify "$description")
-    mkdir -p "$ARTIFACT_DIR/logs/$category"
-    local val_path="$ARTIFACT_DIR/logs/$category/${slug}.valgrind.txt"
-    if [ -f valgrind.log ]; then cp valgrind.log "$val_path"; else echo "No valgrind log (status=$vg_status, timeout=$timeout_vg)" > "$val_path"; fi
+    # valgrind log already written to $val_path by --log-file
 
     # Append JSON result
     echo "{"cmd":"$(printf '%s' "$cmd" | sed -e 's/\\/\\\\/g' -e 's/"/\"/g')","expected":$expected_exit,"actual":$actual_exit,"result":"$result","category":"$category","description":"$(printf '%s' "$description" | sed 's/"/\"/g')","memory":"$memory_status","timeouts":{"nonvg":$timeout_nonvg,"vg":$timeout_vg}}" >> "$RESULTS_FILE"
@@ -153,7 +162,7 @@ run_test() {
         echo -e "  Expected exit: $expected_exit, Got: $actual_exit"
         if [ "$memory_status" = "leak_detected" ]; then
             echo -e "  ${RED}Memory leak detected!${NC}"
-            grep -A 3 "definitely lost\|indirectly lost\|Invalid" valgrind.log | head -10 || true
+            grep -A 3 "definitely lost\|indirectly lost\|Invalid" "$val_path" | head -10 || true
         fi
         return 1
     fi

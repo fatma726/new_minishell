@@ -11,6 +11,31 @@
 /* ************************************************************************** */
 #include "mandatory.h"
 
+void	handle_exit_message(void)
+{
+	char	exit_msg[5];
+
+	if (isatty(STDIN_FILENO))
+	{
+		ft_strlcpy(exit_msg, "exit", 5);
+		ft_putendl_fd(exit_msg, STDOUT_FILENO);
+	}
+}
+
+bool	exit_will_terminate(char **args)
+{
+	size_t	argc;
+
+	if (!args)
+		return (false);
+	argc = strarrlen(args);
+	if (argc <= 1)
+		return (true);
+	if (argc == 2 && ft_isalldigit(args[1]))
+		return (true);
+	return (false);
+}
+
 bool	ft_isalldigit(char *str)
 {
 	int	i;

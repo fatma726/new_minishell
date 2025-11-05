@@ -1,0 +1,39 @@
+# Suppress known leaks inside GNU readline/history internals and termcap
+# These do not represent leaks in student code and are ignored per 42 subject.
+
+{
+   readline_malloc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   obj:*/libreadline*.so*
+}
+
+{
+   readline_internal
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:realloc
+   ...
+   obj:*/libreadline*.so*
+}
+
+{
+   history_alloc
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:calloc
+   ...
+   obj:*/libhistory*.so*
+}
+
+{
+   termcap_strings
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   fun:malloc
+   ...
+   obj:*/libtinfo*.so*
+}
+

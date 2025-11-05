@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax.c                                         :+:      :+:    :+:   */
+/*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:10 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:10 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -71,7 +71,7 @@ void	handle_syntax_error(char **envp, t_node *node)
 		ft_putstr_fd(error_token, STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
 	}
-	set_exit_status(2);
+	set_exit_status_n(node, 2);
 	if (node)
 		node->syntax_flag = true;
 }

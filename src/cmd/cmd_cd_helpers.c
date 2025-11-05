@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_cd_helpers.c                                 :+:      :+:    :+:   */
+/*   cmd_cd_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:03 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:03 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
 
-bool	handle_home_cd(char **args, char **envp, int offset)
+bool	handle_home_cd(char **args, char **envp, t_node *node, int offset)
 {
 	char	home_error[30];
 
@@ -19,7 +19,7 @@ bool	handle_home_cd(char **args, char **envp, int offset)
 	(void)offset;
 	if (!ft_getenv("HOME", envp))
 	{
-		set_exit_status(EXIT_FAILURE);
+		set_exit_status_n(node, EXIT_FAILURE);
 		ft_strlcpy(home_error, "minishell: cd: HOME not set", 30);
 		ft_putendl_fd(home_error, STDERR_FILENO);
 		return (true);
@@ -38,7 +38,7 @@ bool	handle_oldpwd_cd(char **args, char **envp, t_node *node, int offset)
 	oldpwd = getenv("OLDPWD");
 	if (!oldpwd)
 	{
-		set_exit_status(EXIT_FAILURE);
+		set_exit_status_n(node, EXIT_FAILURE);
 		ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
 		return (true);
 	}
@@ -48,11 +48,11 @@ bool	handle_oldpwd_cd(char **args, char **envp, t_node *node, int offset)
 	return (false);
 }
 
-bool	handle_chdir_error(char **args, int offset)
+bool	handle_chdir_error(char **args, t_node *node, int offset)
 {
 	char	chdir_error[60];
 
-	set_exit_status(EXIT_FAILURE);
+	set_exit_status_n(node, EXIT_FAILURE);
 	ft_strlcpy(chdir_error, "minishell: cd: ", 50);
 	ft_putstr_fd(chdir_error, STDERR_FILENO);
 	ft_putstr_fd(args[1 + offset], STDERR_FILENO);
@@ -74,13 +74,13 @@ bool	checks(char **args, char **envp, t_node *node, int offset)
 	int		chdir_result;
 
 	if (!args[1 + offset])
-		return (handle_home_cd(args, envp, offset));
+		return (handle_home_cd(args, envp, node, offset));
 	if (!ft_strncmp(args[1 + offset], "-", 2))
 		return (handle_oldpwd_cd(args, envp, node, offset));
 	path = args[1 + offset];
 	chdir_result = chdir(path);
 	if (chdir_result == -1)
-		return (handle_chdir_error(args, offset));
+		return (handle_chdir_error(args, node, offset));
 	current_dir = getcwd(NULL, 0);
 	if (current_dir)
 	{

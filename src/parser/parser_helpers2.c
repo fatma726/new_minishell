@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_helpers2.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/11/02 00:18:00 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/11/02 00:18:00 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	sanitize_bar_in_word(char **args, t_node *node)
 		k++;
 	}
 	node->pipe_word_has_bar = true;
-	set_exit_status(127);
+	set_exit_status_n(node, 127);
 }
 
 char	**handle_parser_errors(char **args, char **envp, t_node *node)
@@ -84,18 +84,18 @@ char	**dispatch_builtin(char **a, char **e, t_node *n)
 			return (cmd_cd(a, e, n));
 		if (!ft_strncmp(a[0], ":", 2))
 		{
-			set_exit_status(EXIT_SUCCESS);
+			set_exit_status_n(n, EXIT_SUCCESS);
 			return (e);
 		}
 		if (!ft_strncmp(a[0], "!", 2))
 		{
-			set_exit_status(1);
+			set_exit_status_n(n, 1);
 			return (e);
 		}
 		return (dispatch_builtin_tail(a, e, n));
 	}
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	set_exit_status(127);
+	set_exit_status_n(n, 127);
 	return (e);
 }

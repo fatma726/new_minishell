@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_helpers_utils.c                           :+:      :+:    :+:   */
+/*   syntax_helpers_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:11 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:11 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -34,7 +34,7 @@ static void	process_envvar_value(char **envp, int *i, int j)
 	}
 }
 
-static int	handle_envvar_length(char *str, char **envp, int *i)
+static int	handle_envvar_length(char *str, char **envp, int *i, t_node *node)
 {
 	int	j;
 
@@ -43,7 +43,7 @@ static int	handle_envvar_length(char *str, char **envp, int *i)
 	j = -1;
 	if (str[++i[0]] == '?')
 	{
-		i[5] += getsize(get_exit_status());
+		i[5] += getsize(get_exit_status_n(node));
 		return (1);
 	}
 	i[1] = i[0];
@@ -103,7 +103,7 @@ void	get_length(char *str, char **envp, int *i, t_node *node)
 					|| (i[3] != 1 && str[i[0] + 1] == '\"')
 					|| (i[3] < 2 && str[i[0] + 1] == '\'')))
 			|| !ft_strncmp(str + i[0], "$?", 2))
-		&& handle_envvar_length(str, envp, i))
+		&& handle_envvar_length(str, envp, i, node))
 		return ;
 	else if (!i[3]
 		&& (ft_strchr("<>|", str[i[0]])

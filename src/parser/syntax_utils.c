@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_utils.c                                   :+:      :+:    :+:   */
+/*   syntax_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:11 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:11 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -17,6 +17,8 @@ static bool	is_forbidden_token(char *s)
 		return (false);
 	if (!ft_strncmp(s, "&&", 3))
 		return (true);
+	if (!ft_strncmp(s, "||", 3))
+		return (true);
 	if (!ft_strncmp(s, "<>", 3) || !ft_strncmp(s, "<<<", 4)
 		|| !ft_strncmp(s, ">>>", 4))
 		return (true);
@@ -25,7 +27,7 @@ static bool	is_forbidden_token(char *s)
 
 bool	check_leading_operators_syntax(char **a)
 {
-	if (a[0] && (isp(a[0]) || islor(a[0]) || is_forbidden_token(a[0])))
+	if (a[0] && (isp(a[0]) || is_forbidden_token(a[0])))
 		return (false);
 	if (a[0] && (islr(a[0]) || isrr(a[0]) || isdrr(a[0]) || isdlr(a[0]))
 		&& !a[1])
@@ -41,7 +43,7 @@ bool	check_trailing_operators_syntax(char **a)
 	while (a[i] && a[i + 1])
 		i++;
 	if (i >= 0 && a[i] && (isp(a[i]) || islr(a[i]) || isrr(a[i])
-			|| isdlr(a[i]) || isdrr(a[i]) || islor(a[i]))
+			|| isdlr(a[i]) || isdrr(a[i]) || is_forbidden_token(a[i]))
 		&& !ft_strchr(a[i], '\'') && !ft_strchr(a[i], '"'))
 		return (false);
 	return (true);
@@ -54,7 +56,7 @@ static bool	is_bare_operator(char *s)
 	if (ft_strchr(s, '\'') || ft_strchr(s, '"'))
 		return (false);
 	return (isp(s) || islr(s) || isrr(s) || isdlr(s)
-		|| isdrr(s) || islor(s) || is_forbidden_token(s));
+		|| isdrr(s) || is_forbidden_token(s));
 }
 
 bool	check_consecutive_operators_syntax(char **a)

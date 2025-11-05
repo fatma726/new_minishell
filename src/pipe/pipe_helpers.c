@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe_helpers.c                                   :+:      :+:    :+:   */
+/*   pipe_helpers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:11 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:11 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,13 @@ char	**one_commnad(char **args, char **envp, t_node *node)
 		redir_ret = exec_redir(args, envp, node);
 	if (!has_non_redir_token(args))
 	{
-		if (redir_ret == 0 && get_exit_status() == 0)
-			set_exit_status(0);
+		if (redir_ret == 0 && get_exit_status_n(node) == 0)
+			set_exit_status_n(node, 0);
 		if (args && args[0] && !args[0][0])
 		{
 			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			set_exit_status(127);
+			set_exit_status_n(node, 127);
 		}
 		return (envp);
 	}

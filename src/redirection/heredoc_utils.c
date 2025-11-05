@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc_utils.c                                  :+:      :+:    :+:   */
+/*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:12 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:12 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -54,22 +54,10 @@ static char	*process_tty_input(void)
 char	*get_heredoc_line(void)
 {
 	char		*buf;
-	ssize_t		nread;
-	size_t		len;
 
 	if (isatty(STDIN_FILENO))
 		return (process_tty_input());
-	buf = NULL;
-	len = 0;
-	nread = getline(&buf, &len, stdin);
-	if (nread < 0)
-	{
-		if (buf)
-			free(buf);
-		return (NULL);
-	}
-	if (nread > 0 && buf[nread - 1] == '\n')
-		buf[nread - 1] = '\0';
+	buf = read_line_fd(STDIN_FILENO);
 	return (buf);
 }
 
@@ -78,7 +66,6 @@ int	check_heredoc_signal(void)
 	if (get_signal_number() == SIGINT)
 	{
 		clear_signal_number();
-		set_exit_status(130);
 		return (1);
 	}
 	return (0);

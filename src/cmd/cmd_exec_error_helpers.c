@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exec_error_helpers.c                          :+:      :+:    :+:   */
+/*   cmd_exec_error_helpers.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/24 19:10:23 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/24 19:10:23 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_absolute_path_error(char **args, char **envp, char **paths,
 		ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 		if (paths)
 			strarrfree(paths);
-		set_exit_status(126);
+		set_exit_status_n(node, 126);
 		cleanup_child_and_exit(args, envp, node);
 	}
 	ft_putstr_fd(args[0], STDERR_FILENO);
@@ -32,7 +32,7 @@ void	handle_absolute_path_error(char **args, char **envp, char **paths,
 	ft_putstr_fd("\n", STDERR_FILENO);
 	if (paths)
 		strarrfree(paths);
-	set_exit_status(127);
+	set_exit_status_n(node, 127);
 	cleanup_child_and_exit(args, envp, node);
 }
 
@@ -47,7 +47,7 @@ void	handle_relative_path_error(char **args, char **envp, char **paths,
 	free(msg);
 	if (paths)
 		strarrfree(paths);
-	set_exit_status(127);
+	set_exit_status_n(node, 127);
 	cleanup_child_and_exit(args, envp, node);
 }
 
@@ -105,10 +105,10 @@ void	chkdir(char **args, char **envp, bool end, t_node *node)
 		handle_directory_error(args, err, &status, end);
 		if (end)
 		{
-			set_exit_status(status);
+			set_exit_status_n(node, status);
 			cleanup_child_and_exit(args, envp, node);
 		}
 		else
-			set_exit_status(status);
+			set_exit_status_n(node, status);
 	}
 }

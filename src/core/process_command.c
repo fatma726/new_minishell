@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_command.c                                :+:      :+:    :+:   */
+/*   process_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:07 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:07 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ char	**dispatch_line(char *hashed, char **envp, t_node *n)
 
 char	**process_command(char *line, char **envp, t_node *n)
 {
-    char		*hashed;
-    char		**result;
-    char		which;
+	char		*hashed;
+	char		**result;
+	char		which;
 
 	if (!line || is_blank(line))
 		return (free(line), envp);
@@ -70,19 +70,16 @@ char	**process_command(char *line, char **envp, t_node *n)
 			STDERR_FILENO);
 		ft_putchar_fd(which, STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
-		set_exit_status(2);
+		set_exit_status_n(n, 2);
 		free(line);
 		return (envp);
 	}
-    result = check_standalone_operators(line, envp, n);
+	result = check_standalone_operators(line, envp, n);
 	if (result)
 		return (result);
 	hashed = hash_handler(line, n);
 	envp = dispatch_line(hashed, envp, n);
-    /* Ensure pipe-in-word 127 status cannot be overwritten later */
-    if (n->pipe_word_has_bar)
-        set_exit_status(127);
-    if (n->syntax_flag)
-        set_exit_status(2);
-    return (envp);
+	if (n->syntax_flag)
+		set_exit_status_n(n, 2);
+	return (envp);
 }

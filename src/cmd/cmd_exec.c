@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exec.c                                       :+:      :+:    :+:   */
+/*   cmd_exec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:03 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:03 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ bool	exec_check(char **args, char **envp, t_node *node)
 	return (ret);
 }
 
-static void	handle_signaled_status(int status)
+static void	handle_signaled_status(int status, t_node *node)
 {
 	int	sig;
 
@@ -67,25 +67,25 @@ static void	handle_signaled_status(int status)
 	else if (sig == SIGPIPE)
 	{
 	}
-	set_exit_status(128 + sig);
+	set_exit_status_n(node, 128 + sig);
 }
 
-void	post_wait_set_status(int pid, int background)
+void	post_wait_set_status(int pid, int background, t_node *node)
 {
 	int	status;
 
 	if (background)
 	{
-		set_exit_status(0);
+		set_exit_status_n(node, 0);
 		return ;
 	}
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
-		handle_signaled_status(status);
+		handle_signaled_status(status, node);
 	else if (WIFEXITED(status))
-		set_exit_status(WEXITSTATUS(status));
+		set_exit_status_n(node, WEXITSTATUS(status));
 	else
-		set_exit_status(0);
+		set_exit_status_n(node, 0);
 }
 
 char	**cmd_exec(char **args, char **envp, t_node *node)
@@ -104,6 +104,6 @@ char	**cmd_exec(char **args, char **envp, t_node *node)
 	pid = fork();
 	if (!pid)
 		exec_proc(args, envp, node);
-	post_wait_set_status(pid, background);
+	post_wait_set_status(pid, background, node);
 	return (envp);
 }

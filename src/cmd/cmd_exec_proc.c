@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exec_proc.c                                  :+:      :+:    :+:   */
+/*   cmd_exec_proc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/24 17:20:03 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/24 17:20:03 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -20,7 +20,7 @@ void	exec_proc_loop(char **paths, char **args, char **envp, t_node *node)
 	if (!(node->path))
 	{
 		strarrfree(paths);
-		set_exit_status(EXIT_FAILURE);
+		set_exit_status_n(node, EXIT_FAILURE);
 		cleanup_child_and_exit(NULL, envp, node);
 	}
 	ft_strlcpy(node->path, paths[node->i], n);

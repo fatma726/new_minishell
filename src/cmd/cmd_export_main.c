@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_export_main.c                                :+:      :+:    :+:   */
+/*   cmd_export_main.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:04 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:04 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
 
-void	handle_export_option_error(char **args)
+void	handle_export_option_error(char **args, t_node *node)
 {
 	char	export_error[25];
 	char	invalid_option[50];
@@ -24,7 +24,7 @@ void	handle_export_option_error(char **args)
 	ft_putstr_fd(invalid_option, STDERR_FILENO);
 	ft_strlcpy(usage, "[-fn] [name[=value] ...] or export -p\n", 50);
 	ft_putstr_fd(usage, STDERR_FILENO);
-	set_exit_status(2);
+	set_exit_status_n(node, 2);
 }
 
 void	process_export_args(char **args, char ***envp, t_node *node)
@@ -40,7 +40,7 @@ void	process_export_args(char **args, char ***envp, t_node *node)
 			has_error = true;
 	}
 	if (has_error)
-		set_exit_status(EXIT_FAILURE);
+		set_exit_status_n(node, EXIT_FAILURE);
 }
 
 void	handle_env_i_option(char **args, char **envs, t_node *node)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset_utils.c                                    :+:      :+:    :+:   */
+/*   unset_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:06 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:06 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,14 @@ void	process_unset_args(char **args, char **envp, t_node *node, int *flag)
 			envp = delete_env(args[i], envp, node, flag);
 	}
 	if (has_error)
-		set_exit_status(EXIT_FAILURE);
+		set_exit_status_n(node, EXIT_FAILURE);
 	else if (*flag != 1)
-		set_exit_status(EXIT_FAILURE);
+		set_exit_status_n(node, EXIT_FAILURE);
 	else
-		set_exit_status(EXIT_SUCCESS);
+		set_exit_status_n(node, EXIT_SUCCESS);
 }
 
-void	handle_unset_option_error(char **args)
+void	handle_unset_option_error(char **args, t_node *node)
 {
 	char	prefix[25];
 	char	msg[20];
@@ -59,5 +59,5 @@ void	handle_unset_option_error(char **args)
 	ft_putstr_fd(args[1], STDERR_FILENO);
 	ft_strlcpy(msg, ": invalid option\n", 20);
 	ft_putstr_fd(msg, STDERR_FILENO);
-	set_exit_status(2);
+	set_exit_status_n(node, 2);
 }

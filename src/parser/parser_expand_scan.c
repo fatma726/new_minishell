@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_expand_scan.c                             :+:      :+:    :+:   */
+/*   parser_expand_scan.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:08 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:08 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -106,7 +106,7 @@ void	process_envvar(char **str, char **envp, t_node *node, int *i)
 	else if (i[3] != 1 && str[0][i[0]] == '$' && str[0][i[0] + 1] == '\0')
 		str[1][i[1]++] = str[0][i[0]++];
 	else if (i[3] != 1 && !ft_strncmp(str[0] + i[0], "$?", 2))
-		insert_int(str[1], i);
+		insert_int(str[1], i, node);
 	else
 		no_env(i, str[0], str[1]);
 }

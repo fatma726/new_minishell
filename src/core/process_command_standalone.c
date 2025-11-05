@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   process_command_standalone.c                     :+:      :+:    :+:   */
+/*   process_command_standalone.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:07 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:07 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -18,7 +18,7 @@ static char	**report_syntax_token(const char *tok, char **envp,
 		STDERR_FILENO);
 	ft_putstr_fd(tok, STDERR_FILENO);
 	ft_putendl_fd("'", STDERR_FILENO);
-	set_exit_status(2);
+	set_exit_status_n(n, 2);
 	n->syntax_flag = true;
 	free(line);
 	return (envp);

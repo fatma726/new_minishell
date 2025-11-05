@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_redir2.c                                   :+:      :+:    :+:   */
+/*   utils_redir2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:13 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:13 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -17,7 +17,7 @@ int	print_err(char **args, int i, t_node *node)
 	(void)i;
 	ft_putchar_fd(' ', STDERR_FILENO);
 	ft_putendl_fd(strerror(errno), STDERR_FILENO);
-	set_exit_status(1);
+	set_exit_status_n(node, 1);
 	node->parent_die = 1;
 	if (pipe_check(args, node))
 	{
@@ -72,7 +72,7 @@ int	open_redir_out(char **args, int i, t_node *node, int flags)
 		ft_putstr_fd("minishell: ", STDERR_FILENO);
 		ft_putstr_fd(args[i + 1], STDERR_FILENO);
 		ft_putendl_fd(": ambiguous redirect", STDERR_FILENO);
-		set_exit_status(1);
+		set_exit_status_n(node, 1);
 		return (-1);
 	}
 	fd = open(expanded_path, flags, 0644);

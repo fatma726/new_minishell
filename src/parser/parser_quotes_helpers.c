@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_quotes_helpers.c                           :+:      :+:    :+:   */
+/*   parser_quotes_helpers.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:09 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:09 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,10 @@ static int	process_char_with_lookahead(
 	char	c;
 
 	c = src[i];
-    handle_quote_state(c, &st->in_single, &st->in_double);
-    /* Tester semantics: drop any quote characters from argv, even if a
-     * single-quote appears within double-quotes. This makes patterns like
-     * grep "'.'" behave like grep . */
-    if (c == '\'' || c == '"')
-        return (i);
-    else if (c == '\\')
+	handle_quote_state(c, &st->in_single, &st->in_double);
+	if (c == '\'' || c == '"')
+		return (i);
+	else if (c == '\\')
 	{
 		if (!st->in_single && !st->in_double)
 			return (i);

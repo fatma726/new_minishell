@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                            :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:05 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:05 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -25,7 +25,7 @@ static void	cmd_launch(char **args, char **envs, t_node *node)
 	}
 }
 
-static void	env_error(char *arg)
+static void	env_error(char *arg, t_node *node)
 {
 	char	error_msg[15];
 
@@ -36,7 +36,7 @@ static void	env_error(char *arg)
 	ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
-	set_exit_status(127);
+	set_exit_status_n(node, 127);
 }
 
 static char	**path_check_loop(char **paths, char **args, char **envp, size_t i)
@@ -90,7 +90,7 @@ char	**cmd_env(char **args, char **envs, t_node *node)
 		envs = shlvl_mod(-1, envs);
 	envs = path_check(args, envs, node);
 	if (!ft_strncmp(ft_getenv("_", envs), "env", 4))
-		env_error(args[0]);
+		env_error(args[0], node);
 	else if (args[1] && !node->pipe_flag)
 		cmd_launch(args, envs, node);
 	else
@@ -100,7 +100,7 @@ char	**cmd_env(char **args, char **envs, t_node *node)
 			if (ft_strchr(envs[i], '=') && ft_strncmp(envs[i], "OLDPWD=", 7))
 				ft_putendl_fd(envs[i], STDOUT_FILENO);
 		envs = ft_setenv_envp("_", "env", envs);
-		set_exit_status(EXIT_SUCCESS);
+		set_exit_status_n(node, EXIT_SUCCESS);
 	}
 	if (node->argmode)
 		envs = shlvl_mod(1, envs);

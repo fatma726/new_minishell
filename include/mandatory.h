@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mandatory.h                                       :+:      :+:    :+:   */
+/*   mandatory.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/11/02 00:00:00 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/11/02 00:00:00 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,48 +33,47 @@
 
 # define WILDMARK 31
 
-/* global slots */
-struct s_global_slots
+/* runtime (non-signal state) */
+typedef struct s_runtime
 {
-	sig_atomic_t	signal_number;
-	int				exit_status;
-	sig_atomic_t	interactive;
-};
-
-struct s_global_slots	*ms_slots(void);
+	int	exit_status;
+	bool	interactive;
+	bool	nontext_input;
+}	t_runtime;
 
 /* core node */
 typedef struct s_node
 {
+	t_runtime	*rt;
 	bool	argmode;
-	int		backup_stdin;
-	int		backup_stdout;
-	int		child_die;
+	int	backup_stdin;
+	int	backup_stdout;
+	int	child_die;
 	char	*cmd;
-	int		echo_skip;
+	int	echo_skip;
 	bool	escape_skip;
-	int		exit_flag;
-	int		fds[2];
-	int		i;
+	int	exit_flag;
+	int	fds[2];
+	int	i;
 	bool	last;
-	int		line_nbr;
+	int	line_nbr;
 	char	**ori_args;
-	int		parent_die;
+	int	parent_die;
 	char	*path;
 	char	*path_fallback;
-	int		pipe_flag;
-	int		pipe_idx;
+	int	pipe_flag;
+	int	pipe_idx;
 	char	*pwd;
-	int		quota_idx_j;
-	int		quota_pipe_cnt;
-	int		quota_pipe_idx_arr[10];
-	int		redir_fd;
-	int		redir_fds[2];
-	int		redir_flag;
-	int		redir_idx;
+	int	quota_idx_j;
+	int	quota_pipe_cnt;
+	int	quota_pipe_idx_arr[10];
+	int	redir_fd;
+	int	redir_fds[2];
+	int	redir_flag;
+	int	redir_idx;
 	bool	semicolon_sequence;
-	int		redir_stop;
-	int		right_flag;
+	int	redir_stop;
+	int	right_flag;
 	bool	syntax_flag;
 	bool	heredoc_unterminated;
 	bool	heredoc_swallowed_input;
@@ -87,7 +86,7 @@ typedef struct s_prompt_data
 {
 	char	**fmt;
 	char	*new_fmt;
-	int		j;
+	int	j;
 	char	*user;
 	char	*pwd;
 }	t_prompt_data;
@@ -97,7 +96,7 @@ typedef struct s_quote_state
 {
 	bool	in_single;
 	bool	in_double;
-	int		j;
+	int	j;
 }	t_quote_state;
 
 /* heredoc context */
@@ -115,19 +114,22 @@ struct s_hdctx
 int	get_signal_number(void);
 void	clear_signal_number(void);
 void	set_signal_number(int sig);
-bool	is_interactive_mode(void);
-void	set_interactive_mode(bool value);
-int	_ms_exit_status(int op, int value);
-int	get_exit_status(void);
-void	set_exit_status(int status);
-bool	get_nontext_input(void);
-void	set_nontext_input(bool v);
-void	clear_nontext_input(void);
+int	get_exit_status_n(const t_node *node);
+void	set_exit_status_n(t_node *node, int status);
+bool	is_interactive_n(const t_node *node);
+void	set_interactive_n(t_node *node, bool value);
+bool	get_nontext_input_n(const t_node *node);
+void	set_nontext_input_n(t_node *node, bool v);
+void	clear_nontext_input_n(t_node *node);
 void	set_signal(void);
 void	set_heredoc_signal(void);
 void	set_termios(void);
 void	restore_termios(void);
-void	maybe_write_exit_file(void);
+void	maybe_write_exit_file(t_node *node);
+
+/* line reader */
+char	*read_line_fd(int fd);
+char	*read_line_non_tty(t_node *node);
 
 /* env */
 char	*ft_getenv(const char *name, char **envp);
@@ -156,15 +158,13 @@ char	**handle_oror_error(char *left, char *right, char *hashed, char **envp);
 char	**process_command(char *line, char **envp, t_node *n);
 char	**find_command(char **args, char **envp, t_node *node);
 char	**dispatch_builtin(char **args, char **envp, t_node *node);
-char	**apply_wildcard_phase(
-			char **args,
-			char **envp,
-			t_node *node,
-			char *orig);
+char	**apply_wildcard_phase(char **args, char **envp, t_node *node,
+	char *orig);
 char	**expand_wildcard(char **args, char **envp, t_node *node);
 char	**rm_quotes(char **args, t_node *node);
 char	**parser(char *str, char **envp, t_node *node);
 char	**check_standalone_operators(char *line, char **envp, t_node *n);
+char	**subshell(char *str, char **envp, t_node *node);
 char	*hash_handler(char *str, t_node *node);
 
 /* parser */
@@ -178,8 +178,8 @@ typedef struct s_logical_state
 {
 	char	*str;
 	char	*result;
-	int		*i;
-	int		*j;
+	int	*i;
+	int	*j;
 	t_node	*node;
 }	t_logical_state;
 
@@ -198,7 +198,6 @@ char	*expand_envvar(char *str, char **envp, t_node *node);
 char	*expand_loop(char *fmt, char *new_fmt, char *user, char *pwd);
 char	*get_pwd_for_prompt(char **envp, t_node *node);
 bool	isp(char *str);
-bool	islor(char *str);
 bool	isdlr(char *str);
 bool	islr(char *str);
 bool	isrr(char *str);
@@ -208,22 +207,14 @@ bool	istlr(char *str);
 bool	istr(char *str);
 bool	isdp(char *str);
 bool	isda(char *str);
-bool	is_ampersand(char *str);
-bool	is_open_paren(char *str);
-bool	is_close_paren(char *str);
-bool	is_open_brace(char *str);
-bool	is_close_brace(char *str);
-bool	is_oror(char *str);
-bool	is_andand(char *str);
 void	report_syntax_error(char c, t_node *node);
 char	*add_spaces_around_ampersand(char *str, t_node *node);
 char	*add_spaces_around_redirections(char *str, t_node *node);
-char	*add_spaces_around_logical_operators(char *str, t_node *node);
 char	**escape_split(char *s, char *c, t_node *node);
 bool	syntax_check(char **args, char **envp, t_node *node);
 void	handle_syntax_error(char **envp, t_node *node);
 bool	in_heredoc(char *str, int i);
-void	insert_int(char *str, int *i);
+void	insert_int(char *str, int *i, t_node *node);
 void	get_length(char *str, char **envp, int *i, t_node *node);
 bool	check_leading_operators_syntax(char **a);
 bool	check_trailing_operators_syntax(char **a);
@@ -259,6 +250,8 @@ char	**split_before_pipe_args(char **args, t_node *node);
 char	**repeat(char **args, char **envp, t_node *node);
 char	**one_commnad(char **args, char **envp, t_node *node);
 char	**execute(char **args, char **envp, t_node *node);
+void	repeat_exec(char **args, char **envp, t_node *node, int pid);
+void	maybe_handle_exit(char **args, char **envp, t_node *node);
 char	**handle_parentheses(char **args, char **envp, t_node *node);
 
 /* redirection */
@@ -284,15 +277,10 @@ bool	should_expand_vars(char *clean_delimiter);
 int	process_heredoc_loop(struct s_hdctx *ctx);
 char	*get_heredoc_line(void);
 int	check_heredoc_signal(void);
-void	write_heredoc_line(
-		bool expand_vars,
-		char *line,
-		char **envp,
-		t_node *node);
-int	finalize_loop_result(
-		int lines_read,
-		bool got_sigint,
-		struct s_hdctx *ctx);
+void	write_heredoc_line(bool expand_vars, char *line, char **envp,
+	t_node *node);
+int	finalize_loop_result(int lines_read, bool got_sigint,
+	struct s_hdctx *ctx);
 int	open_redir_out(char **args, int i, t_node *node, int flags);
 int	exec_redir(char **args, char **envp, t_node *node);
 char	*expand_wildcard_redir(char *pattern, t_node *node);
@@ -316,8 +304,11 @@ void	cmd_exit(char **args, char **envp, t_node *node);
 bool	handle_exit_with_args(char **args, t_node *node);
 bool	ft_isalldigit(char *str);
 bool	exit_will_terminate(char **args);
-void	handle_numeric_error(char *arg);
-void	handle_too_many_args(void);
+void	handle_numeric_error(char *arg, t_node *node);
+bool	handle_if_no_exit_flag(char **args, t_node *node);
+bool	process_exit_args(char **args, t_node *node, bool *should_exit);
+bool	has_nested_quote(const char *s);
+void	handle_too_many_args(t_node *node);
 void	cleanup_child_and_exit(char **args, char **envp, t_node *node);
 void	cleanup_and_exit(char **args, char **envp, t_node *node);
 char	**cmd_cd(char **args, char **envp, t_node *node);
@@ -331,35 +322,32 @@ bool	is_builtin_command(char **args);
 void	exec_proc(char **args, char **envp, t_node *node);
 char	**exec_pipe(char *path, char **args, char **envp, t_node *node);
 void	chkdir(char **args, char **envp, bool end, t_node *node);
-void	handle_unset_option_error(char **args);
+void	handle_unset_option_error(char **args, t_node *node);
 void	process_unset_args(char **args, char **envp, t_node *node, int *flag);
 char	**export_print(char **envp);
-void	handle_export_option_error(char **args);
+void	handle_export_option_error(char **args, t_node *node);
 void	process_export_args(char **args, char ***envp, t_node *node);
 bool	process_export_arg(char *arg, char ***envp, t_node *node);
 void	handle_env_i_option(char **args, char **envs, t_node *node);
 void	exec_error(char **args, char **envp, char **paths, t_node *node);
 void	checkdot(char **args, char **envp, t_node *node);
-void	handle_absolute_path_error(
-		char **args,
-		char **envp,
-		char **paths,
-		t_node *node);
-void	handle_relative_path_error(
-		char **args,
-		char **envp,
-		char **paths,
-		t_node *node);
+void	handle_absolute_path_error(char **args, char **envp, char **paths,
+	t_node *node);
+void	handle_relative_path_error(char **args, char **envp, char **paths,
+	t_node *node);
 void	exec_nopath(t_node *node, char **args, char **envp, char **paths);
 void	exec_proc_loop(char **paths, char **args, char **envp, t_node *node);
 void	exec_proc_loop2(char **paths, char **args, char **envp, t_node *node);
 
 /* input */
-char	*get_line(char *str);
+char	*get_line(char *str, t_node *node);
 char	*get_continuation_line(char *prompt);
 int	append_line(char **result, char *line);
 int	process_read_line(char **result, char **cur_prompt, char *orig);
-char	*read_line_non_tty(void);
+char	*read_line_non_tty(t_node *node);
 void	handle_eof_exit(char **envp, t_node *node);
+
+/* extra helpers */
+bool	is_nested_wrapper(const char *s);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exit_parse.c                                 :+:      :+:    :+:   */
+/*   cmd_exit_parse.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/24 17:20:03 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/24 17:20:03 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -78,53 +78,33 @@ static bool	parse_strict_ll(const char *s, long long *out)
 	return (true);
 }
 
-static int	is_nested_wrapper(const char *s)
-{
-    size_t len;
-    char q, other;
-    size_t i;
-
-    if (!s) return 0;
-    len = ft_strlen(s);
-    if (len < 2) return 0;
-    q = s[0];
-    if (q != '\'' && q != '"') return 0;
-    if (s[len-1] != q) return 0;
-    other = (q == '\'') ? '"' : '\'';
-    for (i = 1; i + 1 < len; i++)
-        if (s[i] == other)
-            return 1;
-    return 0;
-}
+/* moved to cmd_exit_helpers.c */
 
 bool	handle_exit_with_args(char **args, t_node *node)
 {
-    long long	exit_num;
+	long long	exit_num;
 
-    /* If original token mixes quotes (e.g., "'666'" or '\"666\"'),
-     * treat as non-numeric per tester semantics. */
-    if (node && node->ori_args && node->ori_args[1]
-        && is_nested_wrapper(node->ori_args[1]))
-    {
-        handle_numeric_error(args[1]);
-        return (true);
-    }
-
-    if (!ft_isalldigit(args[1]))
-    {
-        handle_numeric_error(args[1]);
-        return (true);
-    }
+	if (node && node->ori_args && node->ori_args[1]
+		&& is_nested_wrapper(node->ori_args[1]))
+	{
+			handle_numeric_error(args[1], node);
+		return (true);
+	}
+	if (!ft_isalldigit(args[1]))
+	{
+		handle_numeric_error(args[1], node);
+		return (true);
+	}
 	if (strarrlen(args) > 2)
 	{
-		handle_too_many_args();
+		handle_too_many_args(node);
 		return (false);
 	}
 	if (!parse_strict_ll(args[1], &exit_num))
 	{
-		handle_numeric_error(args[1]);
+		handle_numeric_error(args[1], node);
 		return (true);
 	}
-	set_exit_status((int)((unsigned char)exit_num));
+	set_exit_status_n(node, (int)((unsigned char)exit_num));
 	return (true);
 }

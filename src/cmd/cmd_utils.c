@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_utils.c                                      :+:      :+:    :+:   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:05 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:05 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -37,7 +37,7 @@ char	**cmd_unset(char **args, char **envp, t_node *node)
 	flag = 1;
 	if (args[1] && args[1][0] == '-')
 	{
-		handle_unset_option_error(args);
+		handle_unset_option_error(args, node);
 		return (envp);
 	}
 	process_unset_args(args, envp, node, &flag);
@@ -47,12 +47,12 @@ char	**cmd_unset(char **args, char **envp, t_node *node)
 /* From export.c */
 char	**cmd_export(char **args, char **envp, t_node *node)
 {
-	set_exit_status(EXIT_SUCCESS);
+	set_exit_status_n(node, EXIT_SUCCESS);
 	if (!args[1] || (node->pipe_idx && isp(node->ori_args[1])))
 		return (export_print(envp));
 	else if (args[1][0] == '-')
 	{
-		handle_export_option_error(args);
+		handle_export_option_error(args, node);
 		return (envp);
 	}
 	process_export_args(args, &envp, node);

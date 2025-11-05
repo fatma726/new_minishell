@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_cd.c                                         :+:      :+:    :+:   */
+/*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/24 17:20:03 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/24 17:20:03 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -15,10 +15,7 @@ char	**cmd_cd(char **args, char **envp, t_node *node)
 {
 	int		offset;
 
-    set_exit_status(EXIT_SUCCESS);
-    /* In pipelines, allow execution when this is the rightmost segment
-     * (node->pipe_flag is cleared by exec_parents for the last segment),
-     * so that the pipeline exit reflects builtin status. */
+	set_exit_status_n(node, EXIT_SUCCESS);
 	if (node->pipe_flag)
 		return (envp);
 	offset = 0;

@@ -214,7 +214,7 @@
 ,
 {cmd:echo "'"h'o'la"'",expected:0,actual:0,result:PASS,category:echo,description:Echo complex quote mix,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
-{cmd:echo"'hola'",expected:0,actual:0,result:PASS,category:echo,description:Echo joined quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
+{cmd:echo"'hola'",expected:0,actual:127,result:FAIL_EXIT,category:echo,description:Echo joined quoted,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
 {cmd:echo "'hola'",expected:0,actual:0,result:PASS,category:echo,description:Echo double wrap single hola,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
@@ -795,11 +795,11 @@
 ,
 {cmd:cat >> > >> << >>,expected:2,actual:2,result:PASS,category:redirections,description:Cat mixed operators,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
-{cmd:cat < ls,expected:1,actual:1,result:PASS,category:redirections,description:Cat redirect non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
+{cmd:cat < ls,expected:1,actual:0,result:FAIL_EXIT,category:redirections,description:Cat redirect non-existent,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
-{cmd:cat < ls > ls,expected:1,actual:1,result:PASS,category:redirections,description:Cat redirect both,memory:no_log,timeouts:{nonvg:0,vg:0}}
+{cmd:cat < ls > ls,expected:1,actual:0,result:FAIL_EXIT,category:redirections,description:Cat redirect both,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
-{cmd:cat > ls1 < ls2,expected:1,actual:1,result:PASS,category:redirections,description:Cat out then in error,memory:no_log,timeouts:{nonvg:0,vg:0}}
+{cmd:cat > ls1 < ls2,expected:1,actual:0,result:FAIL_EXIT,category:redirections,description:Cat out then in error,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
 {cmd:>>hola,expected:0,actual:0,result:PASS,category:redirections,description:Append alone,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
@@ -853,9 +853,9 @@
 ,
 {cmd:echo <bonjour <hello,expected:0,actual:0,result:PASS,category:redirections,description:Echo inputs only,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
-{cmd:>bonjour >hello <prout,expected:1,actual:1,result:PASS,category:redirections,description:Multiple out with error in,memory:no_log,timeouts:{nonvg:0,vg:0}}
+{cmd:>bonjour >hello <prout,expected:1,actual:0,result:FAIL_EXIT,category:redirections,description:Multiple out with error in,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
-{cmd:>bonjour <prout >hello,expected:1,actual:1,result:PASS,category:redirections,description:Out error out,memory:no_log,timeouts:{nonvg:0,vg:0}}
+{cmd:>bonjour <prout >hello,expected:1,actual:0,result:FAIL_EXIT,category:redirections,description:Out error out,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,
 {cmd:<bonjour cat | wc > bonjour,expected:0,actual:0,result:PASS,category:redirections,description:In pipe out same file,memory:no_log,timeouts:{nonvg:0,vg:0}}
 ,

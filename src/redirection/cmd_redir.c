@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_redir.c                                      :+:      :+:    :+:   */
+/*   cmd_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:12 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:12 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -63,7 +63,7 @@ int	left_double_redir(char **args, char **envp, int *i, t_node *node)
 				STDERR_FILENO);
 			ft_putstr_fd("newline", STDERR_FILENO);
 			ft_putendl_fd("'", STDERR_FILENO);
-			set_exit_status(2);
+			set_exit_status_n(node, 2);
 			node->redir_stop = 1;
 			return (1);
 		}
@@ -73,7 +73,7 @@ int	left_double_redir(char **args, char **envp, int *i, t_node *node)
 			return (1);
 		move_redir_args(args, node->ori_args, i);
 		*i -= 1;
-		set_exit_status(0);
+		set_exit_status_n(node, 0);
 		return (0);
 	}
 	return (0);

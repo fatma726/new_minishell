@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_exec_error.c                                 :+:      :+:    :+:   */
+/*   cmd_exec_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:03 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:03 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -36,7 +36,7 @@ void	checkdot(char **args, char **envp, t_node *node)
 		msg = ft_strdup(": filename argument required\n");
 		ft_putstr_fd(msg, STDERR_FILENO);
 		free(msg);
-		set_exit_status(2);
+		set_exit_status_n(node, 2);
 		cleanup_child_and_exit(args, envp, node);
 	}
 	else if (!ft_strncmp(args[0], "..", 3) || !ft_strncmp(args[0], ".", 2))
@@ -47,7 +47,7 @@ void	checkdot(char **args, char **envp, t_node *node)
 		msg = ft_strdup(": command not found\n");
 		ft_putstr_fd(msg, STDERR_FILENO);
 		free(msg);
-		set_exit_status(127);
+		set_exit_status_n(node, 127);
 		cleanup_child_and_exit(args, envp, node);
 	}
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_quotes_expand.c                           :+:      :+:    :+:   */
+/*   parser_quotes_expand.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:09 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:09 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -55,18 +55,18 @@ void	strip_wildmarks_inplace(char **args)
 	}
 }
 
-void	insert_int(char *str, int *i)
+void	insert_int(char *str, int *i, t_node *node)
 {
 	int	j;
 
 	j = 1000000000;
 	while (j)
 	{
-		if (get_exit_status() / j)
-			str[i[1]++] = (char)(get_exit_status() / j % 10 + '0');
+		if (get_exit_status_n(node) / j)
+			str[i[1]++] = (char)(get_exit_status_n(node) / j % 10 + '0');
 		j /= 10;
 	}
-	if (!get_exit_status())
+	if (!get_exit_status_n(node))
 		str[i[1]++] = '0';
 	i[0] += 2;
 }

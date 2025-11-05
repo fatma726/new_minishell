@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                         :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatima            #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:08 by fatmtahmdab      ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
+/*   Updated: 2025/10/06 21:32:08 by fatmtahmdabrahym ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "mandatory.h"
@@ -55,9 +55,6 @@ static char	**process_parser_input(char *str, char **envp, t_node *node)
 	args = escape_split(str, charset, node);
 	if (!args)
 		return (NULL);
-	if (args[0] && ft_strchr(args[0], '|') && ft_strncmp(args[0], "|", 2) != 0)
-		sanitize_bar_in_word(args, node);
-	args = split_joined_quote_after_cmd(args);
 	free(str);
 	node->ori_args = strarrdup(args);
 	return (args);
@@ -76,10 +73,10 @@ char	**parser(char *str, char **envp, t_node *node)
 		free(str);
 		return (envp);
 	}
-	if (!isatty(STDIN_FILENO) && get_nontext_input())
+	if (!isatty(STDIN_FILENO) && get_nontext_input_n(node))
 	{
-		clear_nontext_input();
-		set_exit_status(127);
+		clear_nontext_input_n(node);
+		set_exit_status_n(node, 127);
 		free(str);
 		return (envp);
 	}

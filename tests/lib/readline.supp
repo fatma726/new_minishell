@@ -1,0 +1,16 @@
+{
+   readline_ignore_leaks
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   ...
+   obj:/lib/*/libreadline*.so*
+}
+{
+   history_ignore_leaks
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   ...
+   obj:/lib/*/libhistory*.so*
+}

@@ -11,6 +11,29 @@
 /* ************************************************************************** */
 #include "mandatory.h"
 
+static bool	has_non_redir_token(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args && args[i])
+	{
+		if (isdlr(args[i]) || isdrr(args[i]) || islr(args[i])
+			|| islrr(args[i]) || isrr(args[i]) || istlr(args[i]))
+		{
+			if (args[i + 1])
+				i += 2;
+			else
+				i += 1;
+			continue ;
+		}
+		if (args[i][0])
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
 static int	left_redir_post(char **args, char **envp, int *i, t_node *node)
 {
 	if (!node->cmd && args[*i + 2]
@@ -45,12 +68,23 @@ int	left_redir(char **args, char **envp, int *i, t_node *node)
 		return (1);
 	handle_echo_skip(args, node);
 	dup2(fd, STDIN_FILENO);
+	close(fd);
 	if (left_redir_post(args, envp, i, node))
 	{
-		close(fd);
 		return (1);
 	}
 	return (0);
+}
+
+static void	print_heredoc_syntax_error(t_node *node)
+{
+	ft_putstr_fd("bash: -c: line 1: syntax error near unexpected token `",
+		STDERR_FILENO);
+	ft_putstr_fd("newline", STDERR_FILENO);
+	ft_putendl_fd("'", STDERR_FILENO);
+	ft_putstr_fd("bash: -c: line 1: `newline'\n", STDERR_FILENO);
+	set_exit_status_n(node, 2);
+	node->redir_stop = 1;
 }
 
 int	left_double_redir(char **args, char **envp, int *i, t_node *node)
@@ -59,12 +93,7 @@ int	left_double_redir(char **args, char **envp, int *i, t_node *node)
 	{
 		if (!args[*i + 1] || !args[*i + 1][0])
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `",
-				STDERR_FILENO);
-			ft_putstr_fd("newline", STDERR_FILENO);
-			ft_putendl_fd("'", STDERR_FILENO);
-			set_exit_status_n(node, 2);
-			node->redir_stop = 1;
+			print_heredoc_syntax_error(node);
 			return (1);
 		}
 		if (node->redir_fd < 0 && setup_heredoc_file(node))
@@ -73,7 +102,8 @@ int	left_double_redir(char **args, char **envp, int *i, t_node *node)
 			return (1);
 		move_redir_args(args, node->ori_args, i);
 		*i -= 1;
-		set_exit_status_n(node, 0);
+		if (!has_non_redir_token(args))
+			set_exit_status_n(node, 127);
 		return (0);
 	}
 	return (0);

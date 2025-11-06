@@ -1,0 +1,4 @@
+$'export X=1
+unset X
+export | grep ^X=
+'

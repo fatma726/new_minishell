@@ -87,7 +87,7 @@ bool	handle_exit_with_args(char **args, t_node *node)
 	if (node && node->ori_args && node->ori_args[1]
 		&& is_nested_wrapper(node->ori_args[1]))
 	{
-			handle_numeric_error(args[1], node);
+		handle_numeric_error(args[1], node);
 		return (true);
 	}
 	if (!ft_isalldigit(args[1]))

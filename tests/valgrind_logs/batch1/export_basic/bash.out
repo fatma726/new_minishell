@@ -1,0 +1,1 @@
+bash: line 3: $'export HOLA=bonjour\nexport | grep HOLA\n': command not found

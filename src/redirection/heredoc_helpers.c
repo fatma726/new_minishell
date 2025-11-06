@@ -46,5 +46,5 @@ int	finalize_loop_result(int lines_read, bool got_sigint, struct s_hdctx *ctx)
 		unlink(".temp");
 		return (2);
 	}
-	return (2);
+	return (0);
 }

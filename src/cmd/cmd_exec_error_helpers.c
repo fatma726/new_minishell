@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec_error_helpers.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/24 19:10:23 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/06 17:13:05 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mandatory.h"
+
+char	*reconstruct_cmd(char **args, char **ori_args);
+void	print_escaped_cmd(const char *cmd);
+void	chkdir(char **args, char **envp, bool end, t_node *node);
 
 void	handle_absolute_path_error(char **args, char **envp, char **paths,
 		t_node *node)
@@ -36,12 +40,48 @@ void	handle_absolute_path_error(char **args, char **envp, char **paths,
 	cleanup_child_and_exit(args, envp, node);
 }
 
+static void	print_cmd_error(char *cmd)
+{
+	if (cmd[0] == '$' && cmd[1] == '\'')
+		ft_putstr_fd(cmd, STDERR_FILENO);
+	else
+		print_escaped_cmd(cmd);
+}
+
+static void	handle_empty_cmd_error(t_node *node)
+{
+	if (node->ori_args && node->ori_args[0])
+	{
+		if (node->ori_args[0][0] == '$' && node->ori_args[0][1] == '\'')
+			ft_putstr_fd(node->ori_args[0], STDERR_FILENO);
+		else
+			print_escaped_cmd(node->ori_args[0]);
+	}
+}
+
+static void	handle_nonempty_cmd_error(char **args, t_node *node)
+{
+	char	*cmd;
+
+	cmd = reconstruct_cmd(args, node->ori_args);
+	if (cmd)
+	{
+		print_cmd_error(cmd);
+		free(cmd);
+	}
+	else
+		print_escaped_cmd(args[0]);
+}
+
 void	handle_relative_path_error(char **args, char **envp, char **paths,
 		t_node *node)
 {
 	char	*msg;
 
-	ft_putstr_fd(args[0], STDERR_FILENO);
+	if (!args || !args[0] || !args[0][0])
+		handle_empty_cmd_error(node);
+	else
+		handle_nonempty_cmd_error(args, node);
 	msg = ft_strdup(": command not found\n");
 	ft_putstr_fd(msg, STDERR_FILENO);
 	free(msg);
@@ -49,66 +89,4 @@ void	handle_relative_path_error(char **args, char **envp, char **paths,
 		strarrfree(paths);
 	set_exit_status_n(node, 127);
 	cleanup_child_and_exit(args, envp, node);
-}
-
-static int	derive_abs_path_errno(const char *path, bool end, int *out_err)
-{
-	struct stat	st;
-
-	(void)end;
-	if (stat(path, &st) == 0)
-	{
-		if (S_ISDIR(st.st_mode))
-		{
-			*out_err = EISDIR;
-			return (1);
-		}
-		if (access(path, X_OK) != 0)
-		{
-			*out_err = EACCES;
-			return (1);
-		}
-	}
-	else
-	{
-		*out_err = errno;
-		return (1);
-	}
-	return (0);
-}
-
-static void	handle_directory_error(char **args, int err, int *status, bool end)
-{
-	if (err == ENOENT)
-		*status = 127;
-	else
-		*status = 126;
-	ft_putstr_fd(args[0], STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	if (err == EISDIR)
-		ft_putstr_fd("is a directory", STDERR_FILENO);
-	else
-		ft_putstr_fd(strerror(err), STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
-	if (end)
-		exit(*status);
-}
-
-void	chkdir(char **args, char **envp, bool end, t_node *node)
-{
-	int		err;
-	int		status;
-
-	(void)envp;
-	if (derive_abs_path_errno(args[0], end, &err))
-	{
-		handle_directory_error(args, err, &status, end);
-		if (end)
-		{
-			set_exit_status_n(node, status);
-			cleanup_child_and_exit(args, envp, node);
-		}
-		else
-			set_exit_status_n(node, status);
-	}
 }

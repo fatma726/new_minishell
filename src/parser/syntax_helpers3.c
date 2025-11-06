@@ -84,8 +84,11 @@ const char	*get_error_token(char **args)
 
 void	report_syntax_error(char c, t_node *node)
 {
-	ft_putstr_fd("minishell: syntax error near unexpected token `",
+	ft_putstr_fd("bash: -c: line 1: syntax error near unexpected token `",
 		STDERR_FILENO);
+	ft_putchar_fd(c, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+	ft_putstr_fd("bash: -c: line 1: `", STDERR_FILENO);
 	ft_putchar_fd(c, STDERR_FILENO);
 	ft_putstr_fd("'\n", STDERR_FILENO);
 	set_exit_status_n(node, 2);

@@ -1,352 +1,9 @@
 Setting locale to en_US
-mandatory.h: Error!
-Error: SPACE_REPLACE_TAB    (line:  39, col:   8):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  40, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  40, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  41, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  41, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  42, col:   2):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  47, col:  14):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  48, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  48, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  49, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  49, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  50, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  50, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  51, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  51, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  52, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  52, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  53, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  53, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  54, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  54, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  55, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  55, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  56, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  56, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  57, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  57, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  58, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  58, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  59, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  59, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  60, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  60, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  61, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  61, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  62, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  62, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  63, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  63, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  64, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  64, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  65, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  65, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  66, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  66, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  67, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  67, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  68, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  68, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  69, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  69, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  70, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  70, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  71, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  71, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  72, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  72, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  73, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  73, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  74, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  74, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  75, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  75, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  76, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  76, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  77, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  77, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  78, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  78, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  79, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  79, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  80, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  80, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  81, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  81, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  82, col:   2):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  87, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  88, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  89, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  89, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  90, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  91, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  92, col:   2):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  97, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  98, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  99, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  99, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line: 100, col:   2):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 105, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 106, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 107, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 108, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 109, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 110, col:  11):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 110, col:  12):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line: 114, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 115, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 116, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 117, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 118, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 119, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 120, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 121, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 122, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 123, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 124, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 125, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 126, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 127, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 128, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 131, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 132, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 135, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 136, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 137, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 138, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 139, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 140, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 143, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 144, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 145, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 146, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 147, col:   7):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 150, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 151, col:  10):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 154, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 155, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 156, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 157, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 158, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 159, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 160, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 161, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 162, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 163, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 164, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 165, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 166, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 167, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 168, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 173, col:   8):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 174, col:   8):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 175, col:   2):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 179, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 180, col:   9):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 181, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 181, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line: 182, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 182, col:   9):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line: 183, col:  11):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line: 183, col:  12):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line: 184, col:   2):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 186, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 187, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 188, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 189, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 190, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 191, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 192, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 193, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 194, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 195, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 196, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 197, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 198, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 199, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 200, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 201, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 202, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 203, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 204, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 205, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 206, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 207, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 208, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 209, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 210, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 211, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 212, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 213, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 214, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 215, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 216, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 217, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 218, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 219, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 220, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 221, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 222, col:  11):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 223, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 224, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 225, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 226, col:  11):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 227, col:  11):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 228, col:  11):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 229, col:  11):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 230, col:  11):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 233, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 234, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 235, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 236, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 237, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 238, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 241, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 242, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 243, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 244, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 245, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 246, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 247, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 248, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 249, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 250, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 251, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 252, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 253, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 254, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 255, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 258, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 259, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 260, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 261, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 262, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 263, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 264, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 265, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 266, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 267, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 268, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 269, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 270, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 271, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 272, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 273, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 274, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 275, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 276, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 277, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 278, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 279, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 280, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 281, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 282, col:   4):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 283, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 284, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 285, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 286, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 287, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 288, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 291, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 292, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 293, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 294, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 295, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 296, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 297, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 298, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 299, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 300, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 301, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 302, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 303, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 304, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 305, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 306, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 307, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 308, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 309, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 310, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 311, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 312, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 313, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 314, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 315, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 316, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 317, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 318, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 319, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 320, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 321, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 322, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 323, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 324, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 325, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 326, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 327, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 328, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 329, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 330, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 331, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 332, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 333, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 334, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 335, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 336, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 337, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line: 338, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line: 339, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 340, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 341, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 344, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 345, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 346, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 347, col:   4):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 348, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 349, col:   5):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line: 352, col:   5):	Found space when expecting tab
-cmd_exit_parse.c: Error!
-Error: TOO_MANY_TAB         (line:  90, col:   1):	Extra tabs for indent level
+mandatory.h: OK!
+cmd_exec_error_format.c: OK!
+cmd_exit_parse.c: OK!
 cmd_cd_helpers.c: OK!
-cmd_cd.c: Error!
-Error: TOO_FEW_TAB          (line:  16, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  16, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  18, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  18, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  19, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  19, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  20, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  20, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  21, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  21, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  22, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  22, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  23, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  23, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  24, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  24, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  25, col:   1):	Missing tabs for indent level
-Error: SPACE_EMPTY_LINE     (line:  25, col:   5):	Space on empty line
-Error: TOO_FEW_TAB          (line:  26, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  26, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  27, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  27, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  28, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  28, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  29, col:   1):	Missing tabs for indent level
-Error: SPACE_EMPTY_LINE     (line:  29, col:   5):	Space on empty line
-Error: TOO_FEW_TAB          (line:  30, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  30, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  31, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  31, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  32, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  32, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  33, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  33, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  34, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  34, col:   5):	Found space when expecting tab
+cmd_cd.c: OK!
 cmd_export_update.c: OK!
 cmd_export_print.c: OK!
 cmd_cd_utils.c: OK!
@@ -357,14 +14,15 @@ cmd_exec_proc.c: OK!
 cmd_export_main.c: OK!
 cmd_exit_helpers.c: OK!
 env.c: OK!
+cmd_exec_error_format_helpers.c: OK!
 cmd_exit.c: OK!
 cmd_exec_helpers.c: OK!
 cmd_export_helpers.c: OK!
 cmd_exec_error_helpers.c: OK!
 cmd_utils.c: OK!
+cmd_exec_error_helpers2.c: OK!
 cmd_exec.c: OK!
-basic_commands.c: Error!
-Error: MISALIGNED_VAR_DECL  (line:  70, col:  17):	Misaligned variable declaration
+basic_commands.c: OK!
 unset_utils.c: OK!
 pipe_utils.c: OK!
 pipe_helpers.c: OK!
@@ -376,11 +34,9 @@ runtime.c: OK!
 process_command.c: OK!
 stubs.c: OK!
 hash_handler.c: OK!
-line_reader.c: Error!
-Error: MULT_DECL_LINE       (line:  68, col:  20):	Multiple declarations on a single line
-Error: MULT_DECL_LINE       (line:  69, col:  18):	Multiple declarations on a single line
-Error: TOO_MANY_LINES       (line: 101, col:   1):	Function has more than 25 lines
+line_reader.c: OK!
 runtime_flags.c: OK!
+line_reader_helpers.c: OK!
 signal_utils.c: OK!
 Notice: GLOBAL_VAR_DETECTED  (line:  15, col:   1):	Global variable present in file. Make sure it is a reasonable choice.
 input_helpers.c: OK!
@@ -420,17 +76,10 @@ parser_spacing_redir.c: OK!
 parser_expand_scan.c: OK!
 parser_quotes_helpers.c: OK!
 syntax.c: OK!
-parser.c: Error!
-Error: TOO_FEW_TAB          (line:  84, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  84, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  85, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  85, col:   9):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  86, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  86, col:   5):	Found space when expecting tab
-Error: TOO_FEW_TAB          (line:  87, col:   1):	Missing tabs for indent level
-Error: SPACE_REPLACE_TAB    (line:  87, col:   5):	Found space when expecting tab
+parser.c: OK!
 parser_spacing_redir_helpers.c: OK!
 escape_split.c: OK!
+syntax_helpers5.c: OK!
 parser_tokens_consolidated.c: OK!
 ft_strnstr.c: OK!
 ft_isdigit.c: OK!

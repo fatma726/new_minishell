@@ -11,30 +11,9 @@
 /* ************************************************************************** */
 #include "mandatory.h"
 
-static bool	check_brace_syntax(char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		if (ft_strncmp(args[i], "{", 2) == 0)
-		{
-			i++;
-			while (args[i])
-			{
-				if (ft_strncmp(args[i], "}", 2) == 0)
-					return (true);
-				i++;
-			}
-			return (false);
-		}
-		if (ft_strncmp(args[i], "}", 2) == 0)
-			return (false);
-		i++;
-	}
-	return (true);
-}
+const char	*get_full_original_token(char **ori_args);
+const char	*find_fallback_token(char **ori_args);
+bool		check_brace_syntax(char **args);
 
 bool	syntax_check(char **args, char **envp, t_node *node)
 {
@@ -56,24 +35,28 @@ bool	syntax_check(char **args, char **envp, t_node *node)
 void	handle_syntax_error(char **envp, t_node *node)
 {
 	const char	*error_token;
+	const char	*tok;
 
 	(void)envp;
 	error_token = get_error_token(node->ori_args);
 	if (error_token && ft_strncmp(error_token, "{", 2) == 0)
 	{
-		ft_putstr_fd("minishell: syntax error: unexpected end of file\n",
-			STDERR_FILENO);
+		ft_putstr_fd("bash: -c: line 1: ", STDERR_FILENO);
+		ft_putstr_fd("syntax error: unexpected end of file\n", STDERR_FILENO);
+		ft_putstr_fd("bash: -c: line 1: `{`\n", STDERR_FILENO);
+		return (set_exit_status_n(node, 2), node->syntax_flag = true, (void)0);
 	}
+	if (error_token)
+		tok = error_token;
 	else
-	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `",
-			STDERR_FILENO);
-		ft_putstr_fd(error_token, STDERR_FILENO);
-		ft_putstr_fd("'\n", STDERR_FILENO);
-	}
-	set_exit_status_n(node, 2);
-	if (node)
-		node->syntax_flag = true;
+		tok = find_fallback_token(node->ori_args);
+	ft_putstr_fd("bash: -c: line 1: ", STDERR_FILENO);
+	ft_putstr_fd("syntax error near unexpected token `", STDERR_FILENO);
+	(ft_putstr_fd(tok, STDERR_FILENO), ft_putendl_fd("'", STDERR_FILENO));
+	ft_putstr_fd("bash: -c: line 1: `", STDERR_FILENO);
+	ft_putstr_fd(get_full_original_token(node->ori_args), STDERR_FILENO);
+	ft_putendl_fd("'", STDERR_FILENO);
+	(set_exit_status_n(node, 2), node->syntax_flag = true);
 }
 
 bool	in_heredoc(char *str, int i)

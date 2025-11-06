@@ -27,18 +27,18 @@ LIBFT_OBJS := $(addprefix $(LIBFT_DIR)/, $(LIBFT_SRCS:.c=.o))
 
 # Source files
 MAIN   = env_utils env_helpers signal_utils exit_file runtime runtime_flags \
-         input line_reader input_helpers main process_command \
+         input line_reader line_reader_helpers input_helpers main process_command \
          process_command_standalone core_utils strarrutils stubs signals \
          cleanup hash_handler shlvl_utils
 CMD    = cmd_cd cmd_cd_helpers cmd_cd_utils basic_commands cmd_utils env cmd_exec cmd_exec_helpers \
-         cmd_exec_proc cmd_exec_error cmd_exec_error_helpers cmd_exit cmd_exit_helpers cmd_exit_utils cmd_exit_parse \
+         cmd_exec_proc cmd_exec_error cmd_exec_error_helpers cmd_exec_error_helpers2 cmd_exec_error_format cmd_exec_error_format_helpers cmd_exit cmd_exit_helpers cmd_exit_utils cmd_exit_parse \
          cmd_export_helpers cmd_export_update cmd_export_print cmd_export_main \
          unset unset_utils
 PARSER = escape_split parser_utils parser_helpers parser_helpers2 parser \
          parser_tokens_redir_basic \
          parser_tokens_checks parser_tokens_consolidated parser_spacing_redir_helpers \
          parser_spacing_redir parser_expand_scan parser_quotes_expand parser_quotes_core \
-         parser_quotes_helpers parser_quotes_utils syntax_utils syntax_helpers_utils syntax syntax_helpers3 syntax_helpers4
+         parser_quotes_helpers parser_quotes_utils syntax_utils syntax_helpers_utils syntax syntax_helpers3 syntax_helpers4 syntax_helpers5
 REDIR  = cmd_redir exec_redir heredoc_utils heredoc_helpers heredoc_loop heredoc_norm_utils redir_helpers redir_utils utils_redir \
          utils_redir2 utils_redir3
 PIPE   = pipe_core pipe_utils pipe_utils2 pipe_helpers
@@ -95,3 +95,12 @@ dist:
 		libs/Libft
 
 .PHONY: dist
+
+# --- Evaluation targets ---
+leaks:
+	@mkdir -p tests/out tests/valgrind_logs/batch1
+	@bash tests/run_batch.sh tests/manifest.csv
+
+eval:
+	@bash tests/run_batch.sh tests/manifest.csv
+# ---------------------------

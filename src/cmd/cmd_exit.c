@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/24 18:39:59 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/06 17:28:27 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,8 @@ void	cmd_exit(char **args, char **envp, t_node *node)
 	if (should_exit && !node->argmode)
 		handle_exit_message();
 	if (should_exit)
+	{
 		cleanup_and_exit(args, envp, node);
+		return ;
+	}
 }

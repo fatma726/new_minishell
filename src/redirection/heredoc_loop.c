@@ -71,5 +71,7 @@ int	heredoc_loop(char **args, char **envp, int *i, t_node *node)
 	}
 	if (unterminated)
 		node->heredoc_unterminated = true;
+	if (!unterminated && ctx.has_command == false)
+		set_exit_status_n(node, 127);
 	return (unterminated);
 }

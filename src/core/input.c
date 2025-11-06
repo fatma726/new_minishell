@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:07 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/06 17:28:27 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,15 @@ char	*get_line(char *str, t_node *node)
 
 	if (!isatty(STDIN_FILENO))
 		return (read_line_non_tty(node));
+	set_reading_input(true);
 	prompt = ft_strdup(str);
 	if (!prompt)
+	{
+		set_reading_input(false);
 		return (NULL);
+	}
 	line = get_continuation_line(prompt);
+	set_reading_input(false);
 	if (line && !is_blank(line))
 		add_history(line);
 	free(prompt);

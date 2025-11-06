@@ -45,6 +45,11 @@ static int	has_unmatched_quotes(const char *s, char *which)
 			i += 2;
 			continue ;
 		}
+		if (s[i] == '$' && s[i + 1] == '\'')
+		{
+			i += 2;
+			continue ;
+		}
 		handle_quote_state(s[i], &in_single, &in_double);
 		i++;
 	}
@@ -56,6 +61,18 @@ char	**dispatch_line(char *hashed, char **envp, t_node *n)
 	return (subshell(hashed, envp, n));
 }
 
+static char	**handle_unmatched_quote(char *line, char which, t_node *n,
+				char **envp)
+{
+	ft_putstr_fd("minishell: unexpected EOF while looking for matching `",
+		STDERR_FILENO);
+	ft_putchar_fd(which, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+	set_exit_status_n(n, 2);
+	free(line);
+	return (envp);
+}
+
 char	**process_command(char *line, char **envp, t_node *n)
 {
 	char		*hashed;
@@ -64,16 +81,10 @@ char	**process_command(char *line, char **envp, t_node *n)
 
 	if (!line || is_blank(line))
 		return (free(line), envp);
-	if (!isatty(STDIN_FILENO) && has_unmatched_quotes(line, &which))
-	{
-		ft_putstr_fd("minishell: unexpected EOF while looking for matching `",
-			STDERR_FILENO);
-		ft_putchar_fd(which, STDERR_FILENO);
-		ft_putstr_fd("'\n", STDERR_FILENO);
-		set_exit_status_n(n, 2);
-		free(line);
-		return (envp);
-	}
+	if (!isatty(STDIN_FILENO) && has_unmatched_quotes(line, &which)
+		&& ft_strnstr(line, "<<", ft_strlen(line)) == NULL
+		&& ft_strnstr(line, "$'", ft_strlen(line)) == NULL)
+		return (handle_unmatched_quote(line, which, n, envp));
 	result = check_standalone_operators(line, envp, n);
 	if (result)
 		return (result);

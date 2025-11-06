@@ -1,0 +1,1 @@
+bash: line 5: $'cat << EOF\na\nb\nEOF\n': command not found

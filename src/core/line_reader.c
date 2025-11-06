@@ -12,61 +12,19 @@
 
 #include "mandatory.h"
 
-/* Inlined two size_t counters to avoid struct/typedef in .c per norm */
+ssize_t	find_nl(const char *buf, ssize_t n);
+int		ensure_cap2(char **res, size_t *cap, size_t *len, size_t need);
+int		append_buf2(char **res, size_t *len, const char *buf, ssize_t n);
+char	*finalize_line(char *res, size_t len);
+int		process_buffer(char **res, size_t *len, char *buf, ssize_t n);
 
-static ssize_t	find_nl(const char *buf, ssize_t n)
-{
-	ssize_t	k;
-
-	k = 0;
-	while (k < n)
-	{
-		if (buf[k] == '\n')
-			return (k);
-		k++;
-	}
-	return (-1);
-}
-
-static int	ensure_cap2(char **res, size_t *cap, size_t *len, size_t need)
-{
-	char	*tmp;
-
-	if (*cap >= need + 1)
-		return (1);
-	*cap = (need + 1) * 2;
-	tmp = malloc(*cap);
-	if (!tmp)
-		return (0);
-	if (*res)
-	{
-		ft_memcpy(tmp, *res, *len);
-		free(*res);
-	}
-	*res = tmp;
-	return (1);
-}
-
-/*
-** read_line_fd
-** - Reads one line from fd, stripping trailing '\n'.
-** - Returns NULL on EOF with no data or on allocation/read error.
-*/
-static int	append_buf2(char **res, size_t *len, const char *buf, ssize_t n)
-{
-	if (!*res)
-		return (0);
-	ft_memcpy(*res + *len, buf, (size_t)n);
-	*len += (size_t)n;
-	return (1);
-}
-
-char	*read_line_fd(int fd)
+static char	*read_chunks(int fd)
 {
 	char		buf[1024];
 	char		*res;
-	size_t		cap, len;
-	ssize_t		n, pos;
+	size_t		cap;
+	size_t		len;
+	ssize_t		n;
 
 	res = NULL;
 	cap = 0;
@@ -77,25 +35,14 @@ char	*read_line_fd(int fd)
 		if (n <= 0)
 			break ;
 		if (!ensure_cap2(&res, &cap, &len, len + (size_t)n))
-		{
-			free(res);
-			return (NULL);
-		}
-		pos = find_nl(buf, n);
-		if (pos >= 0)
-		{
-			ft_memcpy(res + len, buf, (size_t)pos);
-			len += (size_t)pos;
-			res[len] = '\0';
-			return (res);
-		}
-		append_buf2(&res, &len, buf, n);
+			return (free(res), NULL);
+		if (process_buffer(&res, &len, buf, n))
+			return (finalize_line(res, len));
 	}
-	if (len == 0)
-	{
-		free(res);
-		return (NULL);
-	}
-	res[len] = '\0';
-	return (res);
+	return (finalize_line(res, len));
+}
+
+char	*read_line_fd(int fd)
+{
+	return (read_chunks(fd));
 }

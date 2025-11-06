@@ -67,7 +67,7 @@ void	cmd_echo(char **args, t_node *node)
 {
 	int		i;
 	int		new_line;
-	char		buf[4096];
+	char	buf[4096];
 	ssize_t	n;
 
 	if (node->pipe_flag || !isatty(STDIN_FILENO))

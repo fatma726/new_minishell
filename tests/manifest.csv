@@ -1,0 +1,37 @@
+slug,input
+empty_line,\n
+spaces_line,      \n
+tab_only,$'\t'\n
+single_colon,:
+
+bang,!
+
+redir_gt,>
+
+redir_lt,<
+
+pipe_solo,|
+
+echo_basic,echo Hola
+
+echo_n_flag,echo -n Hola
+
+echo_env_home,echo $HOME
+
+syntax_multi_gt,>>>>
+
+slash_is_dir,/
+
+cmd_not_found,hola
+
+echo_pipe_grep,echo hola | grep h
+
+heredoc_basic,$'cat << EOF\na\nb\nEOF\n'
+
+exit_42,exit 42
+
+pwd_basic,pwd
+
+export_basic,$'export HOLA=bonjour\nexport | grep HOLA\n'
+
+unset_basic,$'export X=1\nunset X\nexport | grep ^X=\n'

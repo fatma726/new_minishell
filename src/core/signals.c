@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:08 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/06 17:30:02 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "mandatory.h"
 
+#include "mandatory.h"
 #include <signal.h>
 #include <termios.h>
 
@@ -18,7 +18,7 @@ static void	sigint_handler(int sig)
 {
 	(void)sig;
 	set_signal_number(SIGINT);
-	if (isatty(STDIN_FILENO))
+	if (isatty(STDIN_FILENO) && is_reading_input())
 	{
 		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();

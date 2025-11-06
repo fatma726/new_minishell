@@ -37,3 +37,31 @@
    obj:*/libtinfo*.so*
 }
 
+# Suppress leaks from common system utilities invoked in tests (e.g., grep)
+{
+   grep_definite
+   Memcheck:Leak
+   ...
+   obj:/usr/bin/grep
+}
+{
+   grep_indirect
+   Memcheck:Leak
+   ...
+   obj:/usr/bin/grep
+}
+{
+   grep_possible
+   Memcheck:Leak
+   match-leak-kinds: possible
+   ...
+   obj:/usr/bin/grep
+}
+{
+   grep_reachable
+   Memcheck:Leak
+   match-leak-kinds: reachable
+   ...
+   obj:/usr/bin/grep
+}
+

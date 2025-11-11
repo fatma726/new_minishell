@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   env_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:06 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 12:33:59 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mandatory.h"
 
 static char	*build_env_pair_for_envp(const char *name, const char *value)
@@ -60,26 +61,4 @@ char	**ft_setenv_envp(const char *name, const char *value, char **envp)
 	return (envp);
 }
 
-static bool	env_has_key_any(char **envp, const char *name)
-{
-	int			i;
-	size_t		len;
-
-	len = ft_strlen(name);
-	i = 0;
-	while (envp[i])
-	{
-		if (!ft_strncmp(envp[i], name, len)
-			&& (envp[i][len] == '=' || envp[i][len] == '\0'))
-			return (true);
-		i++;
-	}
-	return (false);
-}
-
-char	**ensure_oldpwd_export(char **envp)
-{
-	if (!env_has_key_any(envp, "OLDPWD"))
-		envp = ft_setenv_envp("OLDPWD", NULL, envp);
-	return (envp);
-}
+/* moved OLD PWD helpers to env_helpers_oldpwd.c */

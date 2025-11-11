@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parser_spacing_redir.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:09 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 12:33:59 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mandatory.h"
 
 /* struct moved to header (mandatory.h) */
@@ -79,3 +80,5 @@ char	*add_spaces_around_ampersand(char *str, t_node *node)
 	(void)node;
 	return (str);
 }
+
+/* semicolon spacing moved to parser_spacing_semicolons.c */

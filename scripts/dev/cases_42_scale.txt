@@ -1,0 +1,226 @@
+# 42 minishell scale cases – auto part
+
+@case simple_abs_ls
+/bin/ls
+@end
+
+@case simple_abs_ls_la
+/bin/ls -la
+@end
+
+@case empty_command
+
+@end
+
+@case spaces_only
+     
+@end
+
+@case tabs_only
+			
+@end
+
+@case simple_command_no_path
+echo hello
+@end
+
+@case arguments_simple
+/bin/ls src
+@end
+
+@case arguments_quotes_double
+echo "hello world with spaces"
+@end
+
+@case arguments_quotes_single
+echo 'hello world with spaces'
+@end
+
+@case arguments_mixed_quotes
+echo "cat lol.c | cat > lol.c"
+@end
+
+@case echo_plain
+echo
+@end
+
+@case echo_with_arg
+echo hi
+@end
+
+@case echo_with_dash_n
+echo -n hi
+@end
+
+@case echo_with_env_double
+export USER=mini
+echo "$USER"
+@end
+
+@case echo_with_env_single
+export USER=mini
+echo '$USER'
+@end
+
+@case echo_surprise_1
+export USER=USER_VALUE
+echo "'$USER'"
+@end
+
+@case echo_surprise_2
+export USER=USER_VALUE
+echo '"$USER"'
+@end
+
+@case exit_plain
+exit
+@end
+
+@case exit_status_42
+exit 42
+@end
+
+@case exit_status_invalid
+exit abc
+@end
+
+@case env_show
+env
+@end
+
+@case export_new_var
+export FOO=bar
+env
+@end
+
+@case export_replace_var
+export FOO=bar
+export FOO=baz
+env
+@end
+
+@case unset_var
+export FOO=bar
+unset FOO
+env
+@end
+
+@case pwd_basic
+pwd
+@end
+
+@case cd_root_and_pwd
+cd /
+pwd
+@end
+
+@case cd_dot
+cd .
+pwd
+@end
+
+@case cd_dotdot
+cd ..
+pwd
+@end
+
+@case path_without_abs
+ls
+@end
+
+@case path_unset_path_and_check
+unset PATH
+ls
+@end
+
+@case redir_out_trunc
+echo hi > /tmp/msh_out_1
+cat /tmp/msh_out_1
+@end
+
+@case redir_out_append
+echo first > /tmp/msh_out_2
+echo second >> /tmp/msh_out_2
+cat /tmp/msh_out_2
+@end
+
+@case redir_in_fail
+cat < /tmp/file_that_does_not_exist
+@end
+
+@case redir_in_out_mix
+echo hi > /tmp/msh_out_3
+cat < /tmp/msh_out_3 > /tmp/msh_out_4
+cat /tmp/msh_out_4
+@end
+
+@case heredoc_simple
+cat << EOF
+hello from heredoc
+EOF
+@end
+
+@case pipes_simple
+echo hello | cat
+@end
+
+@case pipes_three
+echo hello | cat | wc -c
+@end
+
+@case pipes_with_failing_cmd
+ls filethatdoesnotexist | grep bla | cat
+@end
+
+@case mix_redir_and_pipe
+echo hi > /tmp/msh_out_5
+cat /tmp/msh_out_5 | wc -c
+@end
+
+@case env_var_expansion_many
+export USER=mini
+export HOME=/home/mini
+echo $USER $HOME
+@end
+
+@case return_value_ok
+/bin/ls
+echo $?
+@end
+
+@case return_value_fail
+/bin/ls this_file_does_not_exist
+echo $?
+@end
+
+@case invalid_command_should_not_crash
+dskjhfkjsdhfkjs
+@end
+
+@case long_command_lots_of_args
+echo a b c d e f g h i j k l m n o p q r s t u v w x y z
+@end
+
+# bonus-like
+
+@case bonus_and
+true && echo yes
+@end
+
+@case bonus_or
+false || echo rescued
+@end
+
+@case wildcard_simple
+echo *
+@end
+
+@case wildcard_c_files
+echo src/*.c
+@end
+
+# manual-only (don’t script):
+# - ctrl-C / ctrl-\ / ctrl-D behavior
+# - history navigation
+# - << not saved to history
+

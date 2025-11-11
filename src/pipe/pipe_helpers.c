@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_helpers.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:11 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 13:31:37 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mandatory.h"
-
-#ifdef BUILD_BONUS
-# include "../../bonus/include/bonus.h"
-#endif
 
 static bool	has_non_redir_token(char **args)
 {
@@ -39,80 +35,46 @@ static bool	has_non_redir_token(char **args)
 	return (false);
 }
 
+static char	**handle_empty_command(char **args, char **envp, t_node *node,
+				int redir_ret)
+{
+	if (redir_ret != 0)
+		return (envp);
+	if (args && args[0] && !args[0][0])
+	{
+		ft_putstr_fd("minishell: ", STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		set_exit_status_n(node, 127);
+	}
+	return (envp);
+}
+
 char	**one_commnad(char **args, char **envp, t_node *node)
 {
-	int	redir_ret;
+	int		redir_ret;
+	char	**old_envp;
+	char	**new_envp;
 
 	redir_ret = 0;
 	if (redir_chk(node->ori_args))
 		redir_ret = exec_redir(args, envp, node);
 	if (!has_non_redir_token(args))
+		return (handle_empty_command(args, envp, node, redir_ret));
+	if (node->redir_fd >= 0 && !node->pipe_flag)
 	{
-		if (redir_ret == 0 && get_exit_status_n(node) == 0)
-			set_exit_status_n(node, 0);
-		if (args && args[0] && !args[0][0])
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			set_exit_status_n(node, 127);
-		}
-		return (envp);
+		lseek(node->redir_fd, 0, SEEK_SET);
+		dup2(node->redir_fd, STDIN_FILENO);
+		close(node->redir_fd);
+		node->redir_fd = -1;
 	}
-	envp = find_command(args, envp, node);
-	if (node->redir_flag)
-		backup_restor(node);
-	return (envp);
-}
-
-int	prepare_redirections(char **args, char **envp, t_node *node)
-{
-	int	redir_err;
-
-	node->redir_flag = redir_chk(node->ori_args);
-	redir_err = 0;
-	(void)pipe_check(args, node);
-	if (node->redir_flag)
-		redir_err = redir_excute(args, envp, node, 0);
-	(void)pipe_check(args, node);
-	return (redir_err);
-}
-
-int	maybe_setup_pipe(t_node *node)
-{
-	int	pid;
-
-	pid = 0;
-	if (node->pipe_flag)
+	old_envp = envp;
+	new_envp = find_command(args, envp, node);
+	if (old_envp != new_envp)
 	{
-		if (pipe(node->fds) == -1)
-			return (-1);
-		pid = fork();
-		if (pid < 0)
-		{
-			close(node->fds[0]);
-			close(node->fds[1]);
-			return (-1);
-		}
+		if (old_envp && !is_builtin_command(args))
+			strarrfree(old_envp);
 	}
-	return (pid);
+	return (new_envp);
 }
 
-void	run_parent_segment(char **args, char **envp, t_node *node)
-{
-	char	**new_ori_args;
-	char	**new_args;
-	char	**new_envp;
-
-	backup_restor(node);
-	new_ori_args = strarrdup(node->ori_args + node->pipe_idx);
-	strarrfree(node->ori_args);
-	node->ori_args = new_ori_args;
-	new_args = strarrdup(args + node->pipe_idx);
-	new_envp = strarrdup(envp);
-	node->redir_flag = redir_chk(node->ori_args);
-	node->redir_stop = 0;
-	node->redir_idx = 0;
-	exec_parents(new_args, new_envp, node);
-	strarrfree(new_args);
-	strarrfree(new_envp);
-}
+/* moved pipe helpers to pipe_helpers_more.c */

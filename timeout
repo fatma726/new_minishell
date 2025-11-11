@@ -1,8 +1,0 @@
-#!/bin/sh
-# Minimal timeout shim: ignore timeout argument and run the command.
-# This avoids dependency on GNU coreutils timeout in local runs.
-if [ "$#" -gt 0 ]; then
-    # Drop the first argument (e.g., "8s")
-    shift
-fi
-exec "$@"

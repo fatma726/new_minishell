@@ -6,21 +6,25 @@
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
-/*   Updated: 2025/11/06 17:28:27 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/11/09 08:48:19 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mandatory.h"
 
-static void	mark_nontext(const char *buf, size_t nread, t_node *node)
+char	*read_line_non_tty(t_node *node)
 {
+	char			*line;
 	size_t			i;
 	unsigned char	c;
 
+	line = read_line_fd(STDIN_FILENO);
+	if (!line)
+		return (NULL);
 	i = 0;
-	while (i < nread)
+	while (line[i])
 	{
-		c = (unsigned char)buf[i];
+		c = (unsigned char)line[i];
 		if (c != '\n' && ((c < 32 && c != '\t') || c >= 128))
 		{
 			set_nontext_input_n(node, true);
@@ -28,25 +32,40 @@ static void	mark_nontext(const char *buf, size_t nread, t_node *node)
 		}
 		i++;
 	}
+	return (line);
 }
 
-char	*read_line_non_tty(t_node *node)
+static void	eof_cleanup_node(t_node *node)
 {
-	char	*line;
-
-	line = read_line_fd(STDIN_FILENO);
-	if (!line)
-		return (NULL);
-	mark_nontext(line, ft_strlen(line), node);
-	return (line);
+	if (node->pwd)
+		free(node->pwd);
+	if (node->path_fallback)
+		free(node->path_fallback);
+	strarrfree(node->ori_args);
+	strarrfree(node->full_ori_args);
+	strarrfree(node->parser_tokens);
+	node->parser_tokens = NULL;
+	free(node->parser_tmp_str);
+	node->parser_tmp_str = NULL;
+	if (node->redir_fd >= 0)
+	{
+		close(node->redir_fd);
+		unlink(".temp");
+		node->redir_fd = -1;
+	}
+	if (node->backup_stdin > 2)
+		close(node->backup_stdin);
+	node->backup_stdin = -1;
+	if (node->backup_stdout > 2)
+		close(node->backup_stdout);
+	node->backup_stdout = -1;
 }
 
 void	handle_eof_exit(char **envp, t_node *node)
 {
 	if (node)
 	{
-		free(node->pwd);
-		free(node->path_fallback);
+		eof_cleanup_node(node);
 	}
 	if (envp)
 		strarrfree(envp);
@@ -58,10 +77,7 @@ void	handle_eof_exit(char **envp, t_node *node)
 int	process_read_line(char **result, char **cur_prompt, char *orig)
 {
 	char	*line;
-	char	*tmp_prompt;
 
-	line = NULL;
-	tmp_prompt = NULL;
 	line = readline(*cur_prompt);
 	if (!line)
 	{
@@ -70,15 +86,9 @@ int	process_read_line(char **result, char **cur_prompt, char *orig)
 	}
 	if (!append_line(result, line))
 		return (-1);
-	if (quote_check(*result, (int)ft_strlen(*result), NULL) == 0)
+	if (!check_quote_continuation(*result))
 		return (0);
-	if (*cur_prompt != orig)
-		free(*cur_prompt);
-	tmp_prompt = ft_strdup("> ");
-	if (!tmp_prompt)
-		return (-1);
-	*cur_prompt = tmp_prompt;
-	return (1);
+	return (setup_continuation_prompt(cur_prompt, orig));
 }
 
 char	*get_line(char *str, t_node *node)

@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:05 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 12:52:26 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mandatory.h"
 
 static char	**get_paths(char *path_env, t_node *node)
@@ -66,6 +67,13 @@ void	exec_proc(char **args, char **envp, t_node *node)
 
 	if (!args[0][0])
 		exec_error(args, envp, 0, node);
+	if (node->redir_fd >= 0)
+	{
+		lseek(node->redir_fd, 0, SEEK_SET);
+		dup2(node->redir_fd, STDIN_FILENO);
+		close(node->redir_fd);
+		node->redir_fd = -1;
+	}
 	checkdot(args, envp, node);
 	handle_slash_command(args, envp, node);
 	path_env = ft_getenv("PATH", envp);

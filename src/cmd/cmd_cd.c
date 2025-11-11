@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/24 17:20:03 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/08 12:51:26 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mandatory.h"
 
 static int	compute_offset(char **args)
@@ -32,7 +33,18 @@ static int	invalid_option(char **args, int offset)
 
 static int	too_many_args(char **args, int offset)
 {
-	return (args[1 + offset] && args[2 + offset]);
+	int	count;
+	int	i;
+
+	count = 0;
+	i = 1 + offset;
+	while (args[i])
+	{
+		if (args[i][0] != '\0')
+			count++;
+		i++;
+	}
+	return (count > 1);
 }
 
 char	**cmd_cd(char **args, char **envp, t_node *node)

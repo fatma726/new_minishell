@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_quotes_helpers.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:09 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 13:31:37 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,25 @@ static int	process_char_with_lookahead(
 				char *src, int i, char *dst, t_quote_state *st)
 {
 	char	c;
+	bool	was_in_single;
+	bool	was_in_double;
 
 	c = src[i];
+	was_in_single = st->in_single;
+	was_in_double = st->in_double;
 	handle_quote_state(c, &st->in_single, &st->in_double);
-	if (c == '\'' || c == '"')
+	if (c == '\'' && !was_in_double && was_in_single != st->in_single)
 		return (i);
-	else if (c == '\\')
+	if (c == '"' && !was_in_single && was_in_double != st->in_double)
+		return (i);
+	if (c == '\\' && !st->in_single && !st->in_double && src[i + 1])
+		return (dst[st->j++] = src[i + 1], i + 1);
+	if (c == '\\' && st->in_double)
 	{
-		if (!st->in_single && !st->in_double)
-			return (i);
-		if (st->in_double && src[i + 1] == '"')
-		{
-			dst[st->j++] = '"';
-			return (i + 1);
-		}
+		if (src[i + 1] == '"')
+			return (dst[st->j++] = '"', i + 1);
+		if (src[i + 1])
+			return (dst[st->j++] = src[i + 1], i + 1);
 	}
 	dst[st->j++] = c;
 	return (i);

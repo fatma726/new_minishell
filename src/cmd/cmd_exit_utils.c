@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exit_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/11/04 00:00:00 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 12:14:44 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,36 @@ bool	has_nested_quote(char const *s)
 	else
 		other = '\'';
 	return (contains_other_quote(s, 1, len - 1, other));
+}
+
+bool	handle_if_no_exit_flag(char **args, t_node *node)
+{
+	if (!node->exit_flag)
+	{
+		if (strarrlen(args) > 1)
+			(void)handle_exit_with_args(args, node);
+		else
+			set_exit_status_n(node, EXIT_SUCCESS);
+		return (true);
+	}
+	return (false);
+}
+
+bool	process_exit_args(char **args, t_node *node, bool *should_exit)
+{
+	if (strarrlen(args) > 1)
+	{
+		if (!ft_isalldigit(args[1]))
+		{
+			handle_numeric_error(args[1], node);
+			return (false);
+		}
+		*should_exit = handle_exit_with_args(args, node);
+	}
+	else
+	{
+		set_exit_status_n(node, EXIT_SUCCESS);
+		*should_exit = true;
+	}
+	return (true);
 }

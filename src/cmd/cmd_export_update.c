@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_export_update.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:05 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 12:33:59 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mandatory.h"
 
 void	handle_path_update(char *arg, t_node *node)
@@ -20,18 +21,25 @@ void	handle_path_update(char *arg, t_node *node)
 char	**handle_env_update(char *arg, char **envp, char *name, int j)
 {
 	char	*tmp;
+	char	**new_envp;
 
 	if (!ft_getenv(name, envp))
-		return (ft_setenv_envp(name, arg + j + 1, envp));
+	{
+		new_envp = ft_setenv_envp(name, arg + j + 1, envp);
+		return (new_envp);
+	}
 	else if (j > 0 && arg[j - 1] == '+')
 	{
 		tmp = ft_strjoin(ft_getenv(name, envp), arg + j + 1);
-		envp = ft_setenv_envp(name, tmp, envp);
+		new_envp = ft_setenv_envp(name, tmp, envp);
 		free(tmp);
-		return (envp);
+		return (new_envp);
 	}
 	else
-		return (ft_setenv_envp(name, arg + j + 1, envp));
+	{
+		new_envp = ft_setenv_envp(name, arg + j + 1, envp);
+		return (new_envp);
+	}
 }
 
 bool	validate_export_identifier(char *arg)

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:12 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 13:02:52 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "mandatory.h"
 
+#include "mandatory.h"
 /* helpers split from heredoc_loop.c to satisfy norm constraints */
 char	*clean_delimiter_if_marked(char *delimiter)
 {
@@ -53,12 +53,9 @@ static char	*process_tty_input(void)
 
 char	*get_heredoc_line(void)
 {
-	char		*buf;
-
 	if (isatty(STDIN_FILENO))
 		return (process_tty_input());
-	buf = read_line_fd(STDIN_FILENO);
-	return (buf);
+	return (read_line_fd(STDIN_FILENO));
 }
 
 int	check_heredoc_signal(void)

@@ -1,5 +1,0 @@
---- /minishell/tests/valgrind_logs/batch1/export_basic/norm/bash.out	2025-11-06 13:31:21.775994414 +0000
-+++ /minishell/tests/valgrind_logs/batch1/export_basic/norm/mini.out	2025-11-06 13:31:21.780561436 +0000
-@@ -1 +1 @@
--bash: line 3: $'export HOLA=bonjour\nexport | grep HOLA\n': command not found
-+bash: line 1: $export HOLA=bonjour: command not found

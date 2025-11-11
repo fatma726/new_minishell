@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_quotes_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/21 10:23:12 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/08 13:17:51 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,10 @@ int	pqh_count_step(char *src, int i, t_quote_state *st, int *l)
 	handle_quote_state(c, &st->in_single, &st->in_double);
 	if ((c == '\'' && !st->in_double) || (c == '"' && !st->in_single))
 		return (i);
-	if (c == '\\')
-	{
-		if (!st->in_single && !st->in_double)
-			return (i);
-		if (st->in_double && src[i + 1] == '"')
-		{
-			(*l)++;
-			return (i + 1);
-		}
-	}
+	if (c == '\\' && (!st->in_single && !st->in_double && src[i + 1]))
+		return ((*l)++, i + 1);
+	if (c == '\\' && st->in_double && src[i + 1])
+		return ((*l)++, i + 1);
 	(*l)++;
 	return (i);
 }

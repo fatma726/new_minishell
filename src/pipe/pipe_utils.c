@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:12 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 12:12:08 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ char	**split_before_pipe_args(char **args, t_node *node)
 
 void	backup_restor(t_node *node)
 {
-	dup2(node->backup_stdout, STDOUT_FILENO);
-	dup2(node->backup_stdin, STDIN_FILENO);
+	if (node->backup_stdout >= 0)
+		dup2(node->backup_stdout, STDOUT_FILENO);
+	if (node->backup_stdin >= 0)
+		dup2(node->backup_stdin, STDIN_FILENO);
 }
 
 char	**repeat(char **args, char **envp, t_node *node)
@@ -58,13 +60,17 @@ char	**repeat(char **args, char **envp, t_node *node)
 		if (node->pipe_flag)
 			node->child_die = 1;
 		else
-			return (backup_restor(node), close(node->backup_stdout),
-				close(node->backup_stdin), envp);
+		{
+			backup_restor(node);
+			return (envp);
+		}
 	}
 	pid = maybe_setup_pipe(node);
 	if (pid < 0)
-		return (backup_restor(node), close(node->backup_stdout),
-			close(node->backup_stdin), envp);
+	{
+		backup_restor(node);
+		return (envp);
+	}
 	if (!node->pipe_flag)
 		return (one_commnad(args, envp, node));
 	repeat_exec(args, envp, node, pid);
@@ -94,10 +100,18 @@ char	**execute(char **args, char **envp, t_node *node)
 	maybe_handle_exit(args, envp, node);
 	node->backup_stdout = dup(STDOUT_FILENO);
 	node->backup_stdin = dup(STDIN_FILENO);
+	node->stdout_backup = node->backup_stdout;
+	node->stdin_backup = node->backup_stdin;
 	envp = repeat(args, envp, node);
 	backup_restor(node);
-	close(node->backup_stdout);
-	close(node->backup_stdin);
+	if (node->backup_stdout > 2)
+		close(node->backup_stdout);
+	node->backup_stdout = -1;
+	node->stdout_backup = -1;
+	if (node->backup_stdin > 2)
+		close(node->backup_stdin);
+	node->backup_stdin = -1;
+	node->stdin_backup = -1;
 	if (node->pipe_word_has_bar)
 		set_exit_status_n(node, 127);
 	return (envp);

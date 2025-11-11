@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   syntax.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:10 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/08 12:51:26 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mandatory.h"
 
 const char	*get_full_original_token(char **ori_args);
@@ -72,21 +73,29 @@ bool	in_heredoc(char *str, int i)
 
 int	quote_check(char const *str, int i, t_node *node)
 {
-	int	quote;
-	int	j;
+	bool	in_single;
+	bool	in_double;
+	int		j;
+	char	c;
 
 	if (!str || i < 0)
 		return (0);
-	quote = 0;
+	in_single = false;
+	in_double = false;
 	j = 0;
 	while (j <= i && str[j])
 	{
-		if (str[j] == '\'' && quote != 2)
-			quote = (quote == 1) * 0 + (quote != 1) * 1;
-		else if (str[j] == '"' && quote != 1)
-			quote = (quote == 2) * 0 + (quote != 2) * 2;
+		c = str[j];
+		if (c == '\'' && !in_double)
+			in_single = !in_single;
+		else if (c == '"' && !in_single)
+			in_double = !in_double;
 		j++;
 	}
 	(void)node;
-	return (quote);
+	if (in_single)
+		return (1);
+	if (in_double)
+		return (2);
+	return (0);
 }

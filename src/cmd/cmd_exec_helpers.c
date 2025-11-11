@@ -3,33 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_exec_helpers.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:03 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 12:47:04 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mandatory.h"
-
-char	*build_candidate(char *dir, char *cmd)
-{
-	const char	*d;
-	char		*path;
-	size_t		n;
-
-	if (dir && *dir)
-		d = dir;
-	else
-		d = ".";
-	n = ft_strlen(d) + ft_strlen(cmd) + 2;
-	path = malloc(n);
-	if (!path)
-		return (NULL);
-	ft_strlcpy(path, d, n);
-	ft_strlcat(path, "/", n);
-	ft_strlcat(path, cmd, n);
-	return (path);
-}
 
 bool	is_builtin_command(char **args)
 {
@@ -46,40 +27,48 @@ bool	is_builtin_command(char **args)
 
 void	exec_nopath(t_node *node, char **args, char **envp, char **paths)
 {
-	char	*test;
-	char	*test2;
-
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGPIPE, SIG_IGN);
-	test = ft_strjoin(node->pwd, "/");
-	test2 = ft_strjoin(test, args[0]);
-	free(test);
-	if (!access(test2, X_OK))
-	{
-		envp = ft_setenv_envp("_", test2, envp);
-		execve(test2, args, envp);
-	}
-	free(test2);
 	exec_error(args, envp, paths, node);
+}
+
+/* helpers moved to cmd_exec_helpers_more2.c */
+
+static void	free_split(char **v)
+{
+	int	i;
+
+	i = 0;
+	while (v && v[i])
+		free(v[i++]);
+	if (v)
+		free(v);
 }
 
 char	**exec_pipe(char *path, char **args, char **envp, t_node *node)
 {
 	char	**temp;
+	char	**old_envp;
+	char	**new_envp;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGPIPE, SIG_IGN);
-	envp = ft_setenv_envp("_", path, envp);
+	old_envp = envp;
+	new_envp = ft_setenv_envp("_", path, envp);
+	if (old_envp != new_envp && old_envp)
+		strarrfree(old_envp);
 	if (node->pipe_flag)
 	{
 		temp = split_before_pipe_args(args, node);
-		execve(path, temp, envp);
-		free(temp);
+		execve(path, temp, new_envp);
+		free_split(temp);
 	}
 	else
-		execve(path, args, envp);
+		execve(path, args, new_envp);
+	if (new_envp != envp && new_envp)
+		strarrfree(new_envp);
 	return (envp);
 }
 
@@ -93,4 +82,5 @@ void	exec_proc_loop2(char **paths, char **args, char **envp, t_node *node)
 		exec_pipe(node->path, args, envp, node);
 	}
 	free(node->path);
+	node->path = NULL;
 }

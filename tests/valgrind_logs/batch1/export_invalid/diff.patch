@@ -1,5 +1,0 @@
---- /minishell/tests/valgrind_logs/batch1/export_invalid/norm/bash.out	2025-11-06 12:55:10.329339110 +0000
-+++ /minishell/tests/valgrind_logs/batch1/export_invalid/norm/mini.out	2025-11-06 12:55:10.335497113 +0000
-@@ -1 +1 @@
--bash: line 1: export: `=bonjour': not a valid identifier
-+minishell: export: `=bonjour': not a valid identifier

@@ -6,7 +6,7 @@
 /*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
-/*   Updated: 2025/11/06 17:28:27 by fatmtahmdab      ###   ########.fr       */
+/*   Updated: 2025/11/10 12:33:59 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ typedef struct s_runtime
 	bool		nontext_input;
 }	t_runtime;
 
+/* signal state */
+typedef struct s_signal_state
+{
+	volatile sig_atomic_t	signal_number;
+	volatile sig_atomic_t	reading_input;
+}	t_signal_state;
+
 /* core node */
 typedef struct s_node
 {
@@ -48,6 +55,9 @@ typedef struct s_node
 	bool		argmode;
 	int			backup_stdin;
 	int			backup_stdout;
+	int			stdin_backup;
+	int			stdout_backup;
+	int			stderr_backup;
 	int			child_die;
 	char		*cmd;
 	int			echo_skip;
@@ -58,6 +68,9 @@ typedef struct s_node
 	bool		last;
 	int			line_nbr;
 	char		**ori_args;
+	char		**full_ori_args;
+	char		**parser_tokens;
+	char		*parser_tmp_str;
 	int			parent_die;
 	char		*path;
 	char		*path_fallback;
@@ -72,6 +85,9 @@ typedef struct s_node
 	int			redir_flag;
 	int			redir_idx;
 	bool		semicolon_sequence;
+	/* expansion flags */
+	bool		skip_dollar_q;
+	bool		only_dollar_q;
 	int			redir_stop;
 	int			right_flag;
 	bool		syntax_flag;
@@ -80,6 +96,14 @@ typedef struct s_node
 	bool		is_subshell;
 	bool		pipe_word_has_bar;
 }	t_node;
+
+/* segment processing context to reduce arg count */
+typedef struct s_segctx
+{
+	int		start;
+	int		end;
+	char	**old_ori_args;
+}	t_segctx;
 
 /* prompt data */
 typedef struct s_prompt_data
@@ -110,6 +134,14 @@ struct s_hdctx
 	t_node		*node;
 };
 
+/* child context - tracks allocations made in child path */
+typedef struct s_childctx
+{
+	char		**parsed_args;
+	char		**quoted_args;
+	char		**paths;
+}	t_childctx;
+
 /* global state */
 int			get_signal_number(void);
 void		clear_signal_number(void);
@@ -132,6 +164,13 @@ void		maybe_write_exit_file(t_node *node);
 /* line reader */
 char		*read_line_fd(int fd);
 char		*read_line_non_tty(t_node *node);
+struct s_lr
+{
+	char		*res;
+	size_t		cap;
+	size_t		len;
+};
+char		*read_chunks(int fd);
 
 /* env */
 char		*ft_getenv(char const *name, char **envp);
@@ -210,11 +249,13 @@ bool		isdrr(char *str);
 bool		islrr(char *str);
 bool		istlr(char *str);
 bool		istr(char *str);
+bool		is_semicolon(char *str);
 bool		isdp(char *str);
 bool		isda(char *str);
 void		report_syntax_error(char c, t_node *node);
 char		*add_spaces_around_ampersand(char *str, t_node *node);
 char		*add_spaces_around_redirections(char *str, t_node *node);
+char		*add_spaces_around_semicolons(char *str, t_node *node);
 char		**escape_split(char *s, char *c, t_node *node);
 bool		syntax_check(char **args, char **envp, t_node *node);
 void		handle_syntax_error(char **envp, t_node *node);
@@ -241,6 +282,24 @@ char		**split_joined_quote_after_cmd(char **args);
 void		sanitize_bar_in_word(char **args, t_node *node);
 char		**handle_parser_errors(char **args, char **envp, t_node *node);
 char		**process_quotes_and_exec(char **args, char **envp, t_node *node);
+
+/* parser segment helpers */
+char		**process_last_segment_ctx(char **args, char **envp,
+				t_node *node, t_segctx *ctx);
+char		**process_semicolon_segment_ctx(char **args, char **envp,
+				t_node *node, t_segctx *ctx);
+int			next_semicolon_index(char **args, int start);
+
+/* expansion helpers split */
+bool		is_inside_double_quotes(char const *str, int i);
+void		handle_envvar(int *i, char **str, char **envp, t_node *node);
+void		process_var_value(char **str, char *var_value,
+				int *i, t_node *node);
+
+/* syntax length helpers */
+int			handle_envvar_length(char *str, char **envp,
+				int *i, t_node *node);
+void		handle_redirection_length(char *str, int *i);
 
 /* pipe */
 int			prepare_redirections(char **args, char **envp, t_node *node);
@@ -315,8 +374,9 @@ void		handle_numeric_error(char *arg, t_node *node);
 bool		handle_if_no_exit_flag(char **args, t_node *node);
 bool		process_exit_args(char **args, t_node *node, bool *should_exit);
 bool		has_nested_quote(char const *s);
-void		handle_too_many_args(t_node *node);
+void		cleanup_child_resources(char **args, char **envp, t_node *node);
 void		cleanup_child_and_exit(char **args, char **envp, t_node *node);
+void		cleanup_child_ctx(t_childctx *ctx);
 void		cleanup_and_exit(char **args, char **envp, t_node *node);
 char		**cmd_cd(char **args, char **envp, t_node *node);
 char		**execute_cd(char **args, char **envp, t_node *node, int offset);
@@ -344,6 +404,7 @@ void		handle_absolute_path_error(char **args, char **envp,
 void		handle_relative_path_error(char **args, char **envp,
 				char **paths, t_node *node);
 void		exec_nopath(t_node *node, char **args, char **envp, char **paths);
+void		close_child_backups(t_node *node);
 void		exec_proc_loop(char **paths, char **args, char **envp,
 				t_node *node);
 void		exec_proc_loop2(char **paths, char **args, char **envp,
@@ -356,6 +417,8 @@ int			append_line(char **result, char *line);
 int			process_read_line(char **result, char **cur_prompt, char *orig);
 char		*read_line_non_tty(t_node *node);
 void		handle_eof_exit(char **envp, t_node *node);
+int			check_quote_continuation(char *result);
+int			setup_continuation_prompt(char **cur_prompt, char *orig);
 
 /* extra helpers */
 bool		is_nested_wrapper(char const *s);

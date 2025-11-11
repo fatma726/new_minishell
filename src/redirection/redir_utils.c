@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:13 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 12:47:10 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "mandatory.h"
 
+#include "mandatory.h"
 /* From right_redir.c */
 int	right_redir(char **args, int *i, t_node *node)
 {
@@ -61,13 +61,15 @@ int	setup_heredoc_file(t_node *node)
 
 void	cleanup_heredoc_file(t_node *node)
 {
+	if (node->redir_fd < 0)
+		return ;
 	lseek(node->redir_fd, 0, SEEK_SET);
 	if (dup2(node->redir_fd, STDIN_FILENO) == -1)
 	{
 		close(node->redir_fd);
+		node->redir_fd = -1;
 		return ;
 	}
-	close(node->redir_fd);
 }
 
 void	move_redir_args(char **args, char **ori_args, int *i)

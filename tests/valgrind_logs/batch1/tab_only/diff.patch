@@ -1,5 +1,0 @@
---- /minishell/tests/valgrind_logs/batch1/tab_only/norm/bash.out	2025-11-06 13:31:06.167421853 +0000
-+++ /minishell/tests/valgrind_logs/batch1/tab_only/norm/mini.out	2025-11-06 13:31:06.175384350 +0000
-@@ -1 +1 @@
--bash: line 1: $'\t': command not found
-+bash: line 1: $'': command not found

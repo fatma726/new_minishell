@@ -1,7 +1,0 @@
---- /minishell/tests/valgrind_logs/batch1/syntax_multi_gt/norm/bash.out	2025-11-06 13:31:14.006029155 +0000
-+++ /minishell/tests/valgrind_logs/batch1/syntax_multi_gt/norm/mini.out	2025-11-06 13:31:14.012268185 +0000
-@@ -1,2 +1,2 @@
--bash: -c: line 1: syntax error near unexpected token `>>'
--bash: -c: line 1: `>>>>'
-+bash: -c: line 1: syntax error near unexpected token `>'
-+bash: -c: line 1: `>>'

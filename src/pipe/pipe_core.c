@@ -3,64 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_core.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:11 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 12:52:26 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mandatory.h"
 
-#ifdef BUILD_BONUS
-# include "../../bonus/include/bonus.h"
-#endif
-
-static void	process_input_redirections(char **args, char **envp, t_node *node)
-{
-	int	i;
-
-	i = 0;
-	while (i < node->pipe_idx - 1 && !isp(node->ori_args[i]))
-	{
-		if (islr(node->ori_args[i]) || islrr(node->ori_args[i]))
-		{
-			left_redir(args, envp, &i, node);
-			break ;
-		}
-		i++;
-	}
-}
+void	process_input_redirections(char **args, char **envp, t_node *node);
+void	exec_child_envp_handle(char **args, char **envp, t_node *node);
+void	apply_heredoc_stdin(t_node *node);
+void	setup_child_fds(t_node *node);
+void	reset_child_signals(void);
+void	child_fast_exit(t_node *node);
 
 void	exec_child(char **args, char **envp, t_node *node)
 {
-	char	**child_args;
-
+	close_child_backups(node);
 	node->exit_flag = 0;
 	if (!node->child_die && node->redir_flag)
 		process_input_redirections(args, envp, node);
-	close(node->fds[0]);
-	if (!node->right_flag)
-		dup2(node->fds[1], STDOUT_FILENO);
-	close(node->fds[1]);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGPIPE, SIG_IGN);
+	apply_heredoc_stdin(node);
+	setup_child_fds(node);
+	reset_child_signals();
 	if (!node->child_die)
+		exec_child_envp_handle(args, envp, node);
+	else
 	{
-		child_args = split_before_pipe_args(args, node);
-		envp = shlvl_mod(1, envp);
-		envp = find_command(child_args, envp, node);
-		envp = shlvl_mod(-1, envp);
-		strarrfree(child_args);
+		child_fast_exit(node);
 	}
-	cleanup_child_and_exit(args, envp, node);
 }
 
 void	exec_parents(char **args, char **envp, t_node *node)
 {
 	node->exit_flag = 0;
-	close(node->fds[1]);
 	dup2(node->fds[0], STDIN_FILENO);
 	close(node->fds[0]);
 	node->pipe_flag = 0;
@@ -95,27 +73,4 @@ int	pipe_check(char **args, t_node *node)
 	}
 	node->pipe_flag = 0;
 	return (0);
-}
-
-void	init_node(t_node *node)
-{
-	node->child_die = 0;
-	node->echo_skip = 0;
-	node->escape_skip = false;
-	node->argmode = false;
-	node->exit_flag = 1;
-	node->parent_die = 0;
-	node->pipe_flag = 0;
-	node->pipe_idx = 0;
-	node->quota_pipe_cnt = 0;
-	node->redir_idx = 0;
-	node->redir_stop = 0;
-	node->right_flag = 0;
-	node->redir_fd = -1;
-	node->cmd = NULL;
-	node->heredoc_unterminated = false;
-	node->heredoc_swallowed_input = false;
-	node->backup_stdout = -1;
-	node->backup_stdin = -1;
-	node->pipe_word_has_bar = false;
 }

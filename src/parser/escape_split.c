@@ -3,18 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   escape_split.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:08 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/08 13:17:51 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mandatory.h"
 
 static bool	sep(char **s, size_t i, size_t *i3, t_node *node)
 {
+	bool	in_quote;
+	bool	is_escaped;
+
 	i3[3] = (size_t)quote_check(s[0], (int)i, node);
-	return (!s[0][i] || (!i3[3] && ft_strchr(s[1], s[0][i])));
+	in_quote = (bool)i3[3];
+	if (in_quote)
+		return (false);
+	if (!s[0][i])
+		return (true);
+	is_escaped = (i > 0 && s[0][i - 1] == '\\'
+			&& !quote_check(s[0], (int)i - 1, node));
+	if (is_escaped)
+		return (false);
+	return (ft_strchr(s[1], s[0][i]) != NULL);
 }
 
 static void	loop(char **s, char **returned, size_t *i, t_node *n)

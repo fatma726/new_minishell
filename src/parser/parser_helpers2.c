@@ -43,6 +43,11 @@ char	**handle_parser_errors(char **args, char **envp, t_node *node)
 			strarrfree(node->ori_args);
 			node->ori_args = NULL;
 		}
+		if (node->full_ori_args)
+		{
+			strarrfree(node->full_ori_args);
+			node->full_ori_args = NULL;
+		}
 		return (envp);
 	}
 	return (NULL);

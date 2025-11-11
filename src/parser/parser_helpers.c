@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_helpers.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/11/02 00:10:00 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 13:31:37 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,61 @@ char	**split_joined_quote_after_cmd(char **args)
 	return (args);
 }
 
+/* segment helpers moved to parser_segments.c to satisfy norm */
+
+static char	**process_semicolon_loop(char **args, char **envp,
+								t_node *node, char **old_ori_args)
+{
+	int			semi_idx;
+	int			start;
+	t_segctx	ctx;
+
+	start = 0;
+	while (1)
+	{
+		semi_idx = next_semicolon_index(args, start);
+		if (semi_idx == -1)
+		{
+			ctx.start = start;
+			ctx.end = strarrlen(args);
+			ctx.old_ori_args = old_ori_args;
+			envp = process_last_segment_ctx(args, envp, node, &ctx);
+			break ;
+		}
+		ctx.start = start;
+		ctx.end = semi_idx;
+		ctx.old_ori_args = old_ori_args;
+		envp = process_semicolon_segment_ctx(args, envp, node, &ctx);
+		start = semi_idx + 1;
+	}
+	return (envp);
+}
+
 char	**process_quotes_and_exec(char **args, char **envp, t_node *node)
 {
+	char	**old_ori_args;
+
 	args = rm_quotes(args, node);
 	if (!args)
+		return (strarrfree(envp), exit(EXIT_FAILURE), envp);
+	old_ori_args = node->ori_args;
+	envp = process_semicolon_loop(args, envp, node, old_ori_args);
+	if (args)
+		strarrfree(args);
+	if (old_ori_args)
 	{
-		strarrfree(envp);
-		exit(EXIT_FAILURE);
+		strarrfree(old_ori_args);
+		node->ori_args = NULL;
 	}
-	envp = execute(args, envp, node);
-	strarrfree(args);
-	if (node->ori_args)
-		strarrfree(node->ori_args);
+	if (node->full_ori_args && node->full_ori_args != old_ori_args)
+		strarrfree(node->full_ori_args);
+	node->full_ori_args = NULL;
+	if (node->parser_tokens && node->parser_tokens != args)
+		strarrfree(node->parser_tokens);
+	node->parser_tokens = NULL;
+	if (node->parser_tmp_str)
+		free(node->parser_tmp_str);
+	node->parser_tmp_str = NULL;
 	return (envp);
 }
 /* moved some helpers to parser_helpers2.c to satisfy Norminette */

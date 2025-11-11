@@ -1,3 +1,0 @@
-$'export HOLA=bonjour
-export | grep HOLA
-'

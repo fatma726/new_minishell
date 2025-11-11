@@ -1,5 +1,0 @@
---- /minishell/tests/valgrind_logs/batch1/unset_basic/norm/bash.out	2025-11-06 13:31:22.786185959 +0000
-+++ /minishell/tests/valgrind_logs/batch1/unset_basic/norm/mini.out	2025-11-06 13:31:22.792236113 +0000
-@@ -1 +1 @@
--bash: line 4: $'export X=1\nunset X\nexport | grep ^X=\n': command not found
-+bash: line 1: $export X=1: command not found

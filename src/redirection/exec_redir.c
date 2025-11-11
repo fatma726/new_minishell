@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatmtahmdabrahym <fatmtahmdabrahym@student +#+  +:+       +#+        */
+/*   By: fatmtahmdabrahym <fatmtahmdabrahym@stud    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 1970/01/01 00:00:00 by fatmtahmdabrahym  #+#    #+#             */
-/*   Updated: 2025/10/06 21:32:12 by fatmtahmdabrahym ###   ########.fr       */
+/*   Created: 1970/01/01 00:00:00 by fatmtahmdab       #+#    #+#             */
+/*   Updated: 2025/11/10 13:31:37 by fatmtahmdab      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "mandatory.h"
 
 static int	handle_heredoc_prepass(char **args, char **envp, t_node *node)
@@ -66,8 +67,6 @@ static int	handle_standalone_heredoc(char **args, char **envp, t_node *node)
 		&& !ret)
 		if (isdlr(node->ori_args[i]))
 			ret = left_double_redir(args, envp, &i, node);
-	if (!ret)
-		set_exit_status_n(node, 0);
 	return (ret);
 }
 
@@ -85,15 +84,10 @@ int	exec_redir(char **args, char **envp, t_node *node)
 		ret = handle_main_redirs(args, envp, node);
 	if (!node->cmd && !ret)
 		ret = handle_standalone_heredoc(args, envp, node);
-	if (node->redir_fd >= 0 && !node->semicolon_sequence)
-	{
-		cleanup_heredoc_file(node);
-		unlink(".temp");
-		node->redir_fd = -1;
-	}
 	if (node->cmd)
 		free(node->cmd);
-	return (node->cmd = NULL, ret);
+	node->cmd = NULL;
+	return (ret);
 }
 
 int	print_err2(char **args, int i)
